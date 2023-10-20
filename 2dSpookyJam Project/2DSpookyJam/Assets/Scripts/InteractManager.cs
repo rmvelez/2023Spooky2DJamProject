@@ -54,12 +54,10 @@ public class InteractManager : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("collider enter");
-
         //if an interactable enters our trigger area
         if (other.CompareTag("Interactable"))
         {
-            Debug.Log("trigger enter");
+            //Debug.Log("trigger enter");
             //then track it
             TrackObject(other.gameObject);
 
