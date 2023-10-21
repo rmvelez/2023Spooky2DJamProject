@@ -6,13 +6,27 @@ public class Ghost : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D rigidBody;
 
-    [SerializeField] private Vector2 target;
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject lamp;
 
-    private const float SLOW_SPEED = 1;
-    private const float FAST_SPEED = 0.5f;
+    [SerializeField] private float slowSpeed = 1;
+    [SerializeField] private float fastSpeed = 0.5f;
 
+    [SerializeField] private float outerCircle = 10;
+    [SerializeField] private float innerCircle = 5;
+
+    [SerializeField] private float patrolRange = 5; // the maximum distance the target can be from the ghost (if lamp is lit) or the lamp (if not lit)
+
+    private enum States
+    {
+        Idle,
+        Curious,
+        Hostile,
+        Wary
+    }
+
+    private Vector2 target;
+    
     private int state;
     private bool lampLit = false;
 
@@ -33,17 +47,17 @@ public class Ghost : MonoBehaviour
         if (lampLit) return;
         switch (state)
         {
-            case 0:
-                rigidBody.position += Vector2.MoveTowards(rigidBody.position, target, SLOW_SPEED);
+            case (int)States.Idle:
+                rigidBody.position += Vector2.MoveTowards(rigidBody.position, target, slowSpeed);
                 break;
-            case 1:
-                rigidBody.position += Vector2.MoveTowards(rigidBody.position, target, SLOW_SPEED);
+            case (int)States.Curious:
+                rigidBody.position += Vector2.MoveTowards(rigidBody.position, target, slowSpeed);
                 break;
-            case 2:
-                rigidBody.position += Vector2.MoveTowards(rigidBody.position, target, FAST_SPEED);
+            case (int)States.Hostile:
+                rigidBody.position += Vector2.MoveTowards(rigidBody.position, target, fastSpeed);
                 break;
-            case 3:
-                rigidBody.position += Vector2.MoveTowards(rigidBody.position, target, FAST_SPEED);
+            case (int)States.Wary:
+                rigidBody.position += Vector2.MoveTowards(rigidBody.position, target, slowSpeed);
                 break;
         }
     }
@@ -54,33 +68,20 @@ public class Ghost : MonoBehaviour
         {
             switch (state)
             {
-                case 0:
-                    state = 1;
-                    //target = player.position;
+                case (int)States.Idle:
+                    state = (int)States.Curious;
+                    target = player.transform.position;
                     break;
-                case 3:
-                    state = 2;
-                    //target = player.position;
+                case (int)States.Wary:
+                    state = (int)States.Hostile;
+                    target = player.transform.position;
                     break;
             }
         }
-        else if (collider.gameObject.tag == "player inner circle")
+        else if (collider.gameObject.tag == "player inner circle" && state != (int)States.Hostile)
         {
-            switch (state)
-            {
-                case 0:
-                    state = 2;
-                    //target = player.position;
-                    break;
-                case 1:
-                    ; state = 2;
-                    //target = player.position;
-                    break;
-                case 3:
-                    state = 2;
-                    //target = player.position;
-                    break;
-            }
+            state = (int)States.Hostile;
+            target = player.transform.position;
         }
     }
 
@@ -90,21 +91,36 @@ public class Ghost : MonoBehaviour
         {
             switch (state)
             {
-                case 1:
-                    state = 0;
-                    //target = lamp.position;
+                case (int)States.Curious:
+                    state = (int)States.Idle;
+                    target = lamp.transform.position;
                     break;
-                case 3:
-                    state = 2;
-                    //target = player.position;
+                case (int)States.Hostile:
+                    state = (int)States.Wary;
+                    target = player.transform.position;
                     break;
             }
         }
     }
 
+    private void Patrol()
+    {
+        if (Vector2.Distance(rigidBody.position, target) >= 0.1f) return; // ALTERNATIVELY: if ((rigidBody.position - target).magnitude >= 0.1f)
+        float bearing = Random.Range(-Mathf.PI, Mathf.PI);
+        Vector3 patrolCentre = lampLit ? transform.position : lamp.transform.position;
+        target = new Vector2(patrolCentre.x, patrolCentre.y) + patrolRange * new Vector2(Mathf.Cos(bearing), Mathf.Sin(bearing));
+
+        // ----------------------------------------------------------------
+        //                      COME BACK TO THIS:
+        //                      -----------------
+        //
+        //                      lastSeenPlayerPos
+        // ----------------------------------------------------------------
+    }
+
     public void SetLampLit()
     {
         lampLit = true;
-        //target = lamp.position;
+        target = lamp.transform.position;
     }
 }
