@@ -7,7 +7,7 @@ public class Lamp : MonoBehaviour, IInteractable
 {
     public bool isLit = false;
     [SerializeField] private Light2D light;
-    [SerializeField] private GameObject ghost;
+    [SerializeField] private Ghost ghost;
 
     private float intensity;
 
@@ -37,6 +37,6 @@ public class Lamp : MonoBehaviour, IInteractable
         isLit = true;
         light.intensity = intensity;
 
-        ghost.GetComponent<Ghost>().SetLampLit();
+        ghost.SetLampLit();
     }
 }

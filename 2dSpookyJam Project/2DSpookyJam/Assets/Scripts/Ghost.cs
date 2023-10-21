@@ -254,6 +254,7 @@ public class Ghost : MonoBehaviour
     public void SetLampLit()
     {
         lampLit = true;
+        Debug.Log("ghost received lamp lit signal");
         //target = lamp.position;
     }
 }

@@ -530,7 +530,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &657322699
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -815,6 +815,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isLit: 0
   light: {fileID: 871754045}
+  ghost: {fileID: 1743481879}
 --- !u!212 &975097864
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1287,7 +1288,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &1743481878
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1352,11 +1353,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 381bde8c4116f804895b07ede471d43f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rigidBody: {fileID: 0}
-  target: {x: 0, y: 0}
+  ghostState: 0
+  target: {x: -7, y: 0}
   player: {fileID: 0}
   lamp: {fileID: 975097862}
-  state: 0
+  innerRange: 5
+  outerRange: 2
+  fastSpeed: 0.25
+  slowSpeed: 0.125
   lampLit: 0
 --- !u!4 &1743481880
 Transform:
