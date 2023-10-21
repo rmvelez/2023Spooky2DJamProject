@@ -52,6 +52,9 @@ public class Ghost : MonoBehaviour
         if(moveTo.magnitude >= .01)
         {
             this.transform.position = moveTo;
+        } else
+        {
+
         }
     }
     
