@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] public float OilLevel;
     [SerializeField] private int lampLightCost;
     [SerializeField] private int OilIncrement;
-    [SerializeField] private int oilMax;
+    [SerializeField] public int oilMax;
     [SerializeField] private int oilStartingLevel;
     [SerializeField] private float OilLossOverTime;
     [SerializeField] private float refillCost;
