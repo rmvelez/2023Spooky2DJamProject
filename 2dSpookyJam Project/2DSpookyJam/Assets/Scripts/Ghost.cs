@@ -12,6 +12,7 @@ public class Ghost : MonoBehaviour
 
     //[SerializeField] private Rigidbody2D rigidBody;
 
+
     [SerializeField] private Vector2 target;
     [Tooltip("theoretically set by referencing GameManager.playerController")]
     [SerializeField] private GameObject player;
@@ -24,7 +25,19 @@ public class Ghost : MonoBehaviour
     [SerializeField] private float fastSpeed = 1;
     [SerializeField] private float slowSpeed = 0.5f;
     private float currentSpeed ;
+    
+    [SerializeField] private float patrolRange = 5; // the maximum distance the target can be from the ghost (if lamp is lit) or the lamp (if not lit)
 
+    private enum States
+    {
+        Idle,
+        Curious,
+        Hostile,
+        Wary
+    }
+
+    private Vector2 target;
+    
     private int state;
     [SerializeField] private bool lampLit = false;
 
@@ -70,16 +83,20 @@ public class Ghost : MonoBehaviour
         switch (state)
         {
             case 0: //idle
-                rigidBody.position += Vector2.MoveTowards(rigidBody.position, target, SLOW_SPEED);
+            case (int)States.Idle:
+                rigidBody.position += Vector2.MoveTowards(rigidBody.position, target, slowSpeed);
                 break;
             case 1: //curious
-                rigidBody.position += Vector2.MoveTowards(rigidBody.position, target, SLOW_SPEED);
+            case (int)States.Curious:
+                rigidBody.position += Vector2.MoveTowards(rigidBody.position, target, slowSpeed);
                 break;
             case 2: // hostile?
-                rigidBody.position += Vector2.MoveTowards(rigidBody.position, target, FAST_SPEED);
+            case (int)States.Hostile:
+                rigidBody.position += Vector2.MoveTowards(rigidBody.position, target, fastSpeed);
                 break;
             case 3:  // wary?
-                rigidBody.position += Vector2.MoveTowards(rigidBody.position, target, FAST_SPEED);
+            case (int)States.Wary:
+                rigidBody.position += Vector2.MoveTowards(rigidBody.position, target, slowSpeed);
                 break;
         }*/
 
@@ -202,19 +219,24 @@ public class Ghost : MonoBehaviour
         {
             switch (state)
             {
-                case 0:
-                    state = 1;
-                    //target = player.position;
+                case (int)States.Idle:
+                    state = (int)States.Curious;
+                    target = player.transform.position;
                     break;
-                case 3:
-                    state = 2;
-                    //target = player.position;
+                case (int)States.Wary:
+                    state = (int)States.Hostile;
+                    target = player.transform.position;
                     break;
             }
         }
         else if (collider.gameObject.CompareTag("player inner circle"))
         {
-            switch (state)
+
+        //following lines were a merge conflict, following contains each copy of the code
+        
+        //start of original code (merge source B
+        
+        switch (state)
             {
                 case 0:
                     state = 2;
@@ -229,6 +251,10 @@ public class Ghost : MonoBehaviour
                     //target = player.position;
                     break;
             }
+            
+            //meswif's code, brought from patrol branch (merge source C)
+            state = (int)States.Hostile;
+            target = player.transform.position;
         }
     }
 
@@ -238,23 +264,39 @@ public class Ghost : MonoBehaviour
         {
             switch (state)
             {
-                case 1:
-                    state = 0;
-                    //target = lamp.position;
+                case (int)States.Curious:
+                    state = (int)States.Idle;
+                    target = lamp.transform.position;
                     break;
-                case 3:
-                    state = 2;
-                    //target = player.position;
+                case (int)States.Hostile:
+                    state = (int)States.Wary;
+                    target = player.transform.position;
                     break;
             }
         }
     }
     */
 
+    private void Patrol()
+    {
+        if (Vector2.Distance(rigidBody.position, target) >= 0.1f) return; // ALTERNATIVELY: if ((rigidBody.position - target).magnitude >= 0.1f)
+        float bearing = Random.Range(-Mathf.PI, Mathf.PI);
+        Vector3 patrolCentre = lampLit ? transform.position : lamp.transform.position;
+        target = new Vector2(patrolCentre.x, patrolCentre.y) + patrolRange * new Vector2(Mathf.Cos(bearing), Mathf.Sin(bearing));
+
+        // ----------------------------------------------------------------
+        //                      COME BACK TO THIS:
+        //                      -----------------
+        //
+        //                      lastSeenPlayerPos
+        // ----------------------------------------------------------------
+    }
+
     public void SetLampLit()
     {
         lampLit = true;
         Debug.Log("ghost received lamp lit signal");
+        // target = lamp.transform.position; //do we want to set this? I thought when the lamp gets lit the ghost would go into idle and start patrolling randomly
         //target = lamp.position;
     }
 }
