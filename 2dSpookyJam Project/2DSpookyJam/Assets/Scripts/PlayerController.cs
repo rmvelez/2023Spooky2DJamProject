@@ -8,6 +8,8 @@ using UnityEngine.Rendering.Universal;
 
 public class PlayerController : MonoBehaviour
 {
+    private GameManager gameManager;
+
     [SerializeField] private Rigidbody2D rigidBody;
 
     [SerializeField] private SpriteRenderer spriteRenderer;
@@ -40,6 +42,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        gameManager = GameManager.Instance;
 
         playerInput = GetComponent<PlayerInput>();
         if (playerInput == null)
@@ -146,6 +149,23 @@ public class PlayerController : MonoBehaviour
         if (context.canceled)
         {
             moveInput.y = 0;
+        }
+    }
+
+
+    public void PauseActionPerformed(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            if (gameManager.paused) //if we're already paused
+            {
+                gameManager.ResumeGame(); //resume
+            }
+            else
+            {
+                gameManager.PauseGame();
+            }
+
         }
     }
 
