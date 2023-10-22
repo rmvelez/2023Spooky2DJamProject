@@ -66,11 +66,16 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        gameManager.onGamePause.RemoveListener(SwitchActionMapUI);
-        gameManager.onGameResume.RemoveListener(SwitchActionMapPlayer);
+
 
         Move(moveInput);
 
+    }
+
+    private void OnDestroy()
+    {
+        gameManager.onGamePause.RemoveListener(SwitchActionMapUI);
+        gameManager.onGameResume.RemoveListener(SwitchActionMapPlayer);
     }
 
     public void Move(Vector2 direction)
@@ -111,6 +116,8 @@ public class PlayerController : MonoBehaviour
                 movementAnimationDirection = WALK_DOWN_DIRECTION;
             }
 
+        } else { //not moving
+        
 
             switch (movementAnimationDirection)
             {
@@ -130,13 +137,10 @@ public class PlayerController : MonoBehaviour
                     movementAnimationDirection = IDLE_DOWN_DIRECTION;
                     break;
             }
-
+        }
             //prev anim direction?
 
-            playerAnimator.SetInteger("movement", movementAnimationDirection);
-
-
-        }
+            playerAnimator.SetInteger("movement", movementAnimationDirection);        
     }
 
     #region input actions
