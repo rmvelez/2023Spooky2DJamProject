@@ -62,7 +62,7 @@ AnimatorController:
   m_Name: Lamp
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: isOn
+  - m_Name: isLit
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -115,7 +115,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: isOn
+    m_ConditionEvent: isLit
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -5005286009457337966}
