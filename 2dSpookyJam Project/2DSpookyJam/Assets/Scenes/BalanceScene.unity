@@ -1354,14 +1354,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ghostState: 0
-  target: {x: -7, y: 0}
+  target: {x: -5, y: 0}
   player: {fileID: 0}
   lamp: {fileID: 975097862}
-  innerRange: 5
-  outerRange: 3
+  innerRange: 4
+  outerRange: 7
   fastSpeed: 0.025
   slowSpeed: 0.0125
-  patrolRange: 5
+  patrolRange: 3
   lampLit: 0
 --- !u!4 &1743481880
 Transform:
