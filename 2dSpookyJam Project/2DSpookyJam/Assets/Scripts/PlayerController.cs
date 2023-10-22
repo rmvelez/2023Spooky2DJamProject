@@ -8,6 +8,8 @@ using UnityEngine.Rendering.Universal;
 
 public class PlayerController : MonoBehaviour
 {
+    private GameManager gameManager;
+
     [SerializeField] private Rigidbody2D rigidBody;
 
     [SerializeField] private SpriteRenderer spriteRenderer;
@@ -40,6 +42,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        gameManager = GameManager.Instance;
 
         playerInput = GetComponent<PlayerInput>();
         if (playerInput == null)
@@ -53,12 +56,15 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        gameManager.onGamePause.AddListener(SwitchActionMapUI);
+        gameManager.onGameResume.AddListener(SwitchActionMapPlayer);
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        gameManager.onGamePause.RemoveListener(SwitchActionMapUI);
+        gameManager.onGameResume.RemoveListener(SwitchActionMapPlayer);
 
         Move(moveInput);
 
@@ -129,6 +135,8 @@ public class PlayerController : MonoBehaviour
             playerAnimator.SetInteger("movement", movementAnimationDirection);        
     }
 
+    #region input actions
+
     public void MoveActionPerformed(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();
@@ -148,6 +156,23 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+
+    public void PauseActionPerformed(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            if (gameManager.paused) //if we're already paused
+            {
+                gameManager.ResumeGame(); //resume
+            }
+            else
+            {
+                gameManager.PauseGame();
+            }
+
+        }
+    }
+
     public void MoverHorizActionPerformed(InputAction.CallbackContext context)
     {
         if (context.started)
@@ -161,6 +186,34 @@ public class PlayerController : MonoBehaviour
             moveInput.x = 0;
         }
     }
+    #endregion input actions
+
+
+    #region action maps
+
+    public void SwitchActionMapPlayer() { SwitchActionMap("Player"); }
+    public void SwitchActionMapUI() { SwitchActionMap("PauseMenu"); }
+    public void SwitchActionMap(string mapName)
+    {
+        Debug.Log("switching action map");
+        playerInput.currentActionMap.Disable();
+        playerInput.SwitchCurrentActionMap(mapName);
+
+        switch (mapName)
+        {
+            case "PauseMenu":
+                UnityEngine.Cursor.visible = true;
+                UnityEngine.Cursor.lockState = CursorLockMode.None;
+                break;
+            case "Minigame":
+            default:
+            case "Player":
+                UnityEngine.Cursor.visible = false;
+                UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+                break;
+        }
+    }
+    #endregion action maps
 
 
 }
