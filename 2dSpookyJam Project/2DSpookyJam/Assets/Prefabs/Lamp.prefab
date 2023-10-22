@@ -125,7 +125,7 @@ MonoBehaviour:
   light: {fileID: 5516396122767475931}
   ghost: {fileID: 0}
   spriteRenderer: {fileID: 0}
-  animator: {fileID: 0}
+  animator: {fileID: 1390058341976989849}
 --- !u!70 &8943095439923695205
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
