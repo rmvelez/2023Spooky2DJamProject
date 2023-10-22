@@ -56,12 +56,15 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        gameManager.onGamePause.AddListener(SwitchActionMapUI);
+        gameManager.onGameResume.AddListener(SwitchActionMapPlayer);
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        gameManager.onGamePause.RemoveListener(SwitchActionMapUI);
+        gameManager.onGameResume.RemoveListener(SwitchActionMapPlayer);
 
         Move(moveInput);
 
@@ -133,6 +136,8 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    #region input actions
+
     public void MoveActionPerformed(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();
@@ -182,6 +187,34 @@ public class PlayerController : MonoBehaviour
             moveInput.x = 0;
         }
     }
+    #endregion input actions
+
+
+    #region action maps
+
+    public void SwitchActionMapPlayer() { SwitchActionMap("Player"); }
+    public void SwitchActionMapUI() { SwitchActionMap("PauseMenu"); }
+    public void SwitchActionMap(string mapName)
+    {
+        Debug.Log("switching action map");
+        playerInput.currentActionMap.Disable();
+        playerInput.SwitchCurrentActionMap(mapName);
+
+        switch (mapName)
+        {
+            case "PauseMenu":
+                UnityEngine.Cursor.visible = true;
+                UnityEngine.Cursor.lockState = CursorLockMode.None;
+                break;
+            case "Minigame":
+            default:
+            case "Player":
+                UnityEngine.Cursor.visible = false;
+                UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+                break;
+        }
+    }
+    #endregion action maps
 
 
 }

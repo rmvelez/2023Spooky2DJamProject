@@ -948,6 +948,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numLitLamps: 0
+  paused: 0
+  onGamePause:
+    m_PersistentCalls:
+      m_Calls: []
+  onGameResume:
+    m_PersistentCalls:
+      m_Calls: []
   OilLevel: 100
   lampLightCost: 0
   OilIncrement: 30
@@ -1206,6 +1213,38 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: ced9d0a7-7675-4d72-9e3c-781f640c539e
     m_ActionName: Moving/RefillLantern[/Keyboard/r]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1486860148}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: PauseActionPerformed
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: ec47e5b6-a9ed-4216-b8e0-3a0a9dcac4ab
+    m_ActionName: Moving/Pause[/Keyboard/escape,/Keyboard/p]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1486860148}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: PauseActionPerformed
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: a54a3283-de03-45d8-93fa-d0b760242dbd
+    m_ActionName: PauseMenu/Pause[/Keyboard/escape,/Keyboard/p]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Moving
