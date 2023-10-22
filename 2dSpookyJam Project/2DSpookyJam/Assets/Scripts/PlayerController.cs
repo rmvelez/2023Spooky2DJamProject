@@ -102,6 +102,8 @@ public class PlayerController : MonoBehaviour
                 movementAnimationDirection = WALK_DOWN_DIRECTION;
             }
 
+        } else { //not moving
+        
 
             switch (movementAnimationDirection)
             {
@@ -121,13 +123,10 @@ public class PlayerController : MonoBehaviour
                     movementAnimationDirection = IDLE_DOWN_DIRECTION;
                     break;
             }
-
+        }
             //prev anim direction?
 
-            playerAnimator.SetInteger("movement", movementAnimationDirection);
-
-
-        }
+            playerAnimator.SetInteger("movement", movementAnimationDirection);        
     }
 
     public void MoveActionPerformed(InputAction.CallbackContext context)
