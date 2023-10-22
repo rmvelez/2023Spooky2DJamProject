@@ -45,7 +45,6 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        gameManager = GameManager.Instance;
 
         playerInput = GetComponent<PlayerInput>();
         if (playerInput == null)
@@ -59,6 +58,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameManager = GameManager.Instance;
         gameManager.onGamePause.AddListener(SwitchActionMapUI);
         gameManager.onGameResume.AddListener(SwitchActionMapPlayer);
     }
