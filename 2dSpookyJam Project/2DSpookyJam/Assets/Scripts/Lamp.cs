@@ -9,6 +9,11 @@ public class Lamp : MonoBehaviour, IInteractable
     [SerializeField] private Light2D light;
     [SerializeField] private Ghost ghost;
 
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private Animator animator;
+
+
+
     private float intensity;
 
     //[SerializeField] private 
@@ -36,6 +41,8 @@ public class Lamp : MonoBehaviour, IInteractable
     {
         isLit = true;
         light.intensity = intensity;
+
+        animator.SetBool("isLit", true);
 
         ghost.SetLampLit();
     }
