@@ -5,7 +5,6 @@ using UnityEngine;
 public class HUDControl : MonoBehaviour
 {
     // reference to the sprite for the oil meter
-    public SpriteRenderer barSprite;
 
     public SpriteRenderer reserveBar;
     public SpriteRenderer lanternBar;
@@ -51,18 +50,20 @@ public class HUDControl : MonoBehaviour
         reserveLevel = gameManager.OilLevel;
 
         // the percentage of oil to be displayed in the bar
-        float reserveProgressPercent = (reserveLevel / reserveMax) * 9.25f;
+        float reserveProgressPercent = (reserveLevel / reserveMax) ;
 
         // updates the position and scale of the bar based on the amount of oil the player has
-        reserveBar.transform.localPosition = new Vector3(ReserveBarStartPos.x - (reserveProgressPercent / 2), 4, 0);
+        reserveBar.transform.localPosition = new Vector3( -2.15f * (1-reserveProgressPercent), 0,0);
+
+        //reserveBar.transform.localPosition = new Vector3(ReserveBarStartPos.x - (reserveProgressPercent / 2), , 0);
         reserveBar.transform.localScale = new Vector3(reserveProgressPercent, 1, 1);
 
 
         lanternLevel = gameManager.lantern.lanternOilLevelCurrent;
 
-        float lanternProgPercent = (lanternLevel / lanternMax) * 9.25f;
+        float lanternProgPercent = (lanternLevel / lanternMax);
 
-        lanternBar.transform.localPosition = new Vector3(LanternBarStartPos.x - (lanternProgPercent / 2), 4, 0);
+        lanternBar.transform.localPosition = new Vector3(2.7f * (1-lanternProgPercent), 0, 0);
         lanternBar.transform.localScale = new Vector3(lanternProgPercent, 1, 1);
 
     }
