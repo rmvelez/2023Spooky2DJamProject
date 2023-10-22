@@ -19,14 +19,14 @@ public class Ghost : MonoBehaviour
     [SerializeField] private GameObject lamp;
     private Transform lastSeenPlayerPos;
 
-    [SerializeField] private float innerRange;
-    [SerializeField] private float outerRange;
+    [SerializeField] private float innerRange = 4;
+    [SerializeField] private float outerRange = 7;
 
     [SerializeField] private float fastSpeed = 1;
     [SerializeField] private float slowSpeed = 0.5f;
     private float currentSpeed ;
     
-    [SerializeField] private float patrolRange = 5; // the maximum distance the target can be from the ghost (if lamp is lit) or the lamp (if not lit)
+    [SerializeField] private float patrolRange = 3; // the maximum distance the target can be from the ghost (if lamp is lit) or the lamp (if not lit)
 
     private enum States
     {
@@ -66,7 +66,7 @@ public class Ghost : MonoBehaviour
             this.transform.position = moveTo;
         } else
         {
-
+            if (ghostState == GhostState.wary) ghostState = GhostState.idle;
         }
     }
     
@@ -116,18 +116,18 @@ public class Ghost : MonoBehaviour
 
                     break;
                 }
-                else if (distanceToPlayer <= innerRange) //inside (entering) the inner circle
-                { //and we enter the inner circle
-                    ghostState = GhostState.hostile;
-                    currentSpeed = fastSpeed;
+                //else if (distanceToPlayer <= innerRange) //inside (entering) the inner circle
+                //{ //and we enter the inner circle
+                //    ghostState = GhostState.hostile;
+                //    currentSpeed = fastSpeed;
 
-                    target = player.transform.position;
-                    break;
-                }
-
+                //    target = player.transform.position;
+                //    break;
+                //}
+                // ^ commented out the above code as it is redundant - if distance > outer range it will certainly be > inner range!
                 break;
             case GhostState.curious: //if we're in curious state (state 1)
-                if (distanceToPlayer >= outerRange) //player exits outer range 
+                if (distanceToPlayer > outerRange) //player exits outer range 
                 {
                     Debug.Log("this should only happen once when player exits outer range");
                     ghostState = GhostState.idle;
@@ -140,20 +140,27 @@ public class Ghost : MonoBehaviour
                     ghostState = GhostState.hostile; //curious to hostile upon entering inner range
                     target = player.transform.position;
                     currentSpeed = fastSpeed;
-                    
+
+                    GetComponent<SpriteRenderer>().color = Color.green;
+
                     break;
                 }
+                else target = player.transform.position;
                 break;
             case GhostState.hostile:
-                if (distanceToPlayer >= outerRange) //player exits outer range 
+                if (distanceToPlayer > outerRange) //player exits outer range 
                 {
                     ghostState = GhostState.wary; //hostile to wary upon exiting outer range
                     lastSeenPlayerPos = player.transform;
                     currentSpeed = slowSpeed;
 
                     target = lastSeenPlayerPos.position;
+
+                    GetComponent<SpriteRenderer>().color = Color.white;
+
                     break;
                 }
+                target = player.transform.position;
                 break;
             case GhostState.wary: //in wary state (state 3)
                 if (distanceToPlayer <= outerRange) //entering outer range
@@ -162,6 +169,9 @@ public class Ghost : MonoBehaviour
 
                     currentSpeed = fastSpeed;   
                     target = player.transform.position;
+
+                    GetComponent<SpriteRenderer>().color = Color.green;
+
                     break;
                 }
                 break;
@@ -283,7 +293,7 @@ public class Ghost : MonoBehaviour
         float bearing = Random.Range(-Mathf.PI, Mathf.PI);
         Vector3 patrolCentre = lampLit ? transform.position : lamp.transform.position;
         //Vector2 patrolCentre = lampLit ? lastSeenPlayerPos.position : lamp.transform.position;
-        target = new Vector2(patrolCentre.x, patrolCentre.y) + patrolRange * new Vector2(Mathf.Cos(bearing), Mathf.Sin(bearing));
+        target = new Vector2(patrolCentre.x, patrolCentre.y) + patrolRange * Random.Range(0f, 1f) * new Vector2(Mathf.Cos(bearing), Mathf.Sin(bearing));
 
         // ----------------------------------------------------------------
         //                      COME BACK TO THIS:
