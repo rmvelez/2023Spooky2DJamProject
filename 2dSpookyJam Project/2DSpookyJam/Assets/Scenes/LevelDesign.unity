@@ -514,8 +514,8 @@ Camera:
   m_GameObject: {fileID: 73908829}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -565,7 +565,7 @@ Transform:
   m_GameObject: {fileID: 73908829}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: -1.7, y: 57.6, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4534,11 +4534,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3372731754556985449, guid: 9a4dd4a2e62b8ec4a9d49e0a148a359c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2
+      value: -1.82
       objectReference: {fileID: 0}
     - target: {fileID: 3372731754556985449, guid: 9a4dd4a2e62b8ec4a9d49e0a148a359c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 64
+      value: 57.57
       objectReference: {fileID: 0}
     - target: {fileID: 3372731754556985449, guid: 9a4dd4a2e62b8ec4a9d49e0a148a359c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4586,6 +4586,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6285497184056888174, guid: 9a4dd4a2e62b8ec4a9d49e0a148a359c, type: 3}
   m_PrefabInstance: {fileID: 857497414}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &857497416 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5379192006280101408, guid: 9a4dd4a2e62b8ec4a9d49e0a148a359c, type: 3}
+  m_PrefabInstance: {fileID: 857497414}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 857497415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89c1eb6abaee5a04ab3bfdb349e1f547, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &880534680
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7997,6 +8008,66 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 930884745922700281, guid: 2b47551750272db43af793e4f6a4b2be, type: 3}
   m_PrefabInstance: {fileID: 1990969926}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2001636699
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2001636701}
+  - component: {fileID: 2001636700}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2001636700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2001636699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a998cbb9934b3f4dbe9355252e110f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  numLitLamps: 0
+  paused: 0
+  onGamePause:
+    m_PersistentCalls:
+      m_Calls: []
+  onGameResume:
+    m_PersistentCalls:
+      m_Calls: []
+  OilLevel: 100
+  lampLightCost: 0
+  OilIncrement: 30
+  oilMax: 100
+  oilStartingLevel: 100
+  OilLossOverTime: 0
+  refillCost: 15
+  playerController: {fileID: 857497416}
+--- !u!4 &2001636701
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2001636699}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.3729804, y: 1.4631877, z: 0.06773671}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2021497915
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8518,3 +8589,4 @@ SceneRoots:
   - {fileID: 857497414}
   - {fileID: 787853340}
   - {fileID: 1114417641}
+  - {fileID: 2001636701}
