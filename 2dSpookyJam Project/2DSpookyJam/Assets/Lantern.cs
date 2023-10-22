@@ -42,7 +42,6 @@ public class Lantern : MonoBehaviour
 
     public void Refill(InputAction.CallbackContext context)
     {
-        Debug.Log("called");
         if (context.started)
         {
             lanternOilLevelCurrent = Mathf.Min(lanternOilLevelMax, lanternOilLevelCurrent + lanternRefillAmount);

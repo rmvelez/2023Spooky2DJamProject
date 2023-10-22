@@ -12,7 +12,7 @@ public class Lamp : MonoBehaviour, IInteractable
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Animator animator;
 
-
+    private GameManager gameManager;
 
     private float intensity;
 
@@ -24,6 +24,8 @@ public class Lamp : MonoBehaviour, IInteractable
         intensity = light.intensity;
         light.intensity = 0;
 
+
+        gameManager = GameManager.Instance;
     }
 
     // Update is called once per frame
@@ -45,5 +47,6 @@ public class Lamp : MonoBehaviour, IInteractable
         animator.SetBool("isLit", true);
 
         ghost.SetLampLit();
+        gameManager.numLamps++;
     }
 }

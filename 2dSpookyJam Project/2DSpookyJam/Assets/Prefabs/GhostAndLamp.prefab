@@ -299,6 +299,8 @@ MonoBehaviour:
   fastSpeed: 0.025
   slowSpeed: 0.0125
   patrolRange: 5
+  animator: {fileID: 3410409635289493062}
+  spriteRenderer: {fileID: 2042963321171769120}
   lampLit: 0
 --- !u!212 &2042963321171769120
 SpriteRenderer:
@@ -342,7 +344,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: eb8775056cb44de42986ebb73d7fdb1d, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.627451}
+  m_Color: {r: 0.41037738, g: 1, b: 0.7260194, a: 0.7372549}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -407,8 +409,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: -0.042699993, y: -0.039499998, z: 0}
-    m_Extent: {x: 1.3571999, y: 1.6998, z: 0}
+    m_Center: {x: -0.05465001, y: -0.036900043, z: 0}
+    m_Extent: {x: 1.36205, y: 1.6983, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0

@@ -248,7 +248,7 @@ MonoBehaviour:
   hitBoxCollider: {fileID: 199821008946692668}
   light: {fileID: 5506944497775594392}
   playerInput: {fileID: 8371392941504028850}
-  playerSpeed: 3
+  playerSpeed: 5
   moveInput: {x: 0, y: 0}
   playerDirection: 0
   playerAnimator: {fileID: 7302706808608059347}
