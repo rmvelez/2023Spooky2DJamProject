@@ -63,11 +63,16 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        gameManager.onGamePause.RemoveListener(SwitchActionMapUI);
-        gameManager.onGameResume.RemoveListener(SwitchActionMapPlayer);
+
 
         Move(moveInput);
 
+    }
+
+    private void OnDestroy()
+    {
+        gameManager.onGamePause.RemoveListener(SwitchActionMapUI);
+        gameManager.onGameResume.RemoveListener(SwitchActionMapPlayer);
     }
 
     public void Move(Vector2 direction)
