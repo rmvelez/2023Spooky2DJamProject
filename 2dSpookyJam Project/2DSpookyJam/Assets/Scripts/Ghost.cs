@@ -28,6 +28,9 @@ public class Ghost : MonoBehaviour
     
     [SerializeField] private float patrolRange = 3; // the maximum distance the target can be from the ghost (if lamp is lit) or the lamp (if not lit)
 
+    [SerializeField] private Animator animator;
+    [SerializeField] private SpriteRenderer spriteRenderer;
+
     private enum States
     {
         Idle,
@@ -43,12 +46,16 @@ public class Ghost : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        animator.SetFloat("CameraMovement", 1);
+
         gameManager = GameManager.Instance;
         //rigidBody = GetComponent<Rigidbody2D>();
 
         currentSpeed = slowSpeed;
 
         player = gameManager.playerController.gameObject;
+
+        gameManager.numLamps++;
     }
 
     // Update is called once per frame
@@ -60,10 +67,24 @@ public class Ghost : MonoBehaviour
             Patrol();
             //call patrol();
         }
+
+        animator.SetBool("isAggro", ghostState == GhostState.hostile);
+
+
         Vector2 moveTo = Vector2.MoveTowards(transform.position, target, currentSpeed);
         if(moveTo.magnitude >= .01)
         {
             this.transform.position = moveTo;
+
+            if(moveTo.x >= 0)
+            {
+                spriteRenderer.flipX = true; //when x is flipped, it's looking left
+            } else
+            {
+                spriteRenderer.flipX = false;
+
+            }
+
         } else
         {
             if (ghostState == GhostState.wary) ghostState = GhostState.idle;
@@ -141,7 +162,7 @@ public class Ghost : MonoBehaviour
                     target = player.transform.position;
                     currentSpeed = fastSpeed;
 
-                    GetComponent<SpriteRenderer>().color = Color.green;
+                    //GetComponent<SpriteRenderer>().color = Color.green;
 
                     break;
                 }
@@ -156,7 +177,7 @@ public class Ghost : MonoBehaviour
 
                     target = lastSeenPlayerPos.position;
 
-                    GetComponent<SpriteRenderer>().color = Color.white;
+                    //GetComponent<SpriteRenderer>().color = Color.white;
 
                     break;
                 }
@@ -170,7 +191,7 @@ public class Ghost : MonoBehaviour
                     currentSpeed = fastSpeed;   
                     target = player.transform.position;
 
-                    GetComponent<SpriteRenderer>().color = Color.green;
+                    //GetComponent<SpriteRenderer>().color = Color.green;
 
                     break;
                 }

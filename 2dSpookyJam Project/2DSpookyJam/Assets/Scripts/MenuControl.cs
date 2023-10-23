@@ -24,6 +24,11 @@ public class MenuControl : MonoBehaviour
         ShowScreen(menu);
     }
 
+    public void PlayGame()
+    {
+        SceneManager.LoadScene("LevelDesign");
+    }
+
     // displays the main menu
     public void ShowMainMenu()
     {

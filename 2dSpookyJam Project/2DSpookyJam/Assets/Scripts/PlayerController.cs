@@ -16,6 +16,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Collider2D hitBoxCollider;
     [SerializeField] private Light2D light; //spotlight?
 
+    [SerializeField] private Lantern lantern;
+
+
 
     [Header("movement")]
 
@@ -42,7 +45,6 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        gameManager = GameManager.Instance;
 
         playerInput = GetComponent<PlayerInput>();
         if (playerInput == null)
@@ -56,6 +58,9 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameManager = GameManager.Instance;
+
+
         gameManager.onGamePause.AddListener(SwitchActionMapUI);
         gameManager.onGameResume.AddListener(SwitchActionMapPlayer);
     }
@@ -63,11 +68,16 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        gameManager.onGamePause.RemoveListener(SwitchActionMapUI);
-        gameManager.onGameResume.RemoveListener(SwitchActionMapPlayer);
+
 
         Move(moveInput);
 
+    }
+
+    private void OnDestroy()
+    {
+        gameManager.onGamePause.RemoveListener(SwitchActionMapUI);
+        gameManager.onGameResume.RemoveListener(SwitchActionMapPlayer);
     }
 
     public void Move(Vector2 direction)

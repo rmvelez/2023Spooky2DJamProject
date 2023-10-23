@@ -15,8 +15,8 @@ public class Lantern : MonoBehaviour
     [SerializeField] private float outerMin;
     private float outerRange;
     
-    [SerializeField] private float lanternOilLevelCurrent;
-    [SerializeField] private float lanternOilLevelMax;
+    [SerializeField] public float lanternOilLevelCurrent;
+    [SerializeField] public float lanternOilLevelMax;
     [SerializeField] private float lanternOilDecreasePerSecond;
     [Tooltip("how much oil is added to the lantern when refilled")]
     [SerializeField] private float lanternRefillAmount;
@@ -42,7 +42,6 @@ public class Lantern : MonoBehaviour
 
     public void Refill(InputAction.CallbackContext context)
     {
-        Debug.Log("called");
         if (context.started)
         {
             lanternOilLevelCurrent = Mathf.Min(lanternOilLevelMax, lanternOilLevelCurrent + lanternRefillAmount);

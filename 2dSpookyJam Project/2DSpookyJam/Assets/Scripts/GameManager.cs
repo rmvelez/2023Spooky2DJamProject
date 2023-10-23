@@ -8,14 +8,15 @@ public class GameManager : MonoBehaviour
 
     public static GameManager _instance;
     public static GameManager Instance { get { return _instance; } }
-    public int numLitLamps;
 
     public bool paused;
 
     public UnityEvent onGamePause;
     public UnityEvent onGameResume;
 
-
+    [Header("lamps")]
+    public int numLamps;
+    public int numLitLamps;
 
 
 
@@ -29,6 +30,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float refillCost;
 
     public PlayerController playerController;
+    public Lantern lantern;
 
 
     private void Awake()

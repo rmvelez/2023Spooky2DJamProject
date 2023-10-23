@@ -48,8 +48,8 @@ MonoBehaviour:
   m_LightType: 3
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
-  m_Color: {r: 1, g: 0.957595, b: 0, a: 1}
-  m_Intensity: 1
+  m_Color: {r: 0.98039216, g: 0.7490196, b: 0.26666668, a: 1}
+  m_Intensity: 0.5
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 00000000
@@ -255,6 +255,7 @@ GameObject:
   - component: {fileID: 3139148079544501145}
   - component: {fileID: 2042963321171769120}
   - component: {fileID: 3410409635289493062}
+  - component: {fileID: 5863539906250791863}
   m_Layer: 0
   m_Name: Ghost
   m_TagString: Untagged
@@ -290,14 +291,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ghostState: 0
-  target: {x: -7, y: 0}
+  target: {x: 0, y: 0}
   player: {fileID: 0}
   lamp: {fileID: 4986347587348805137}
-  innerRange: 5
-  outerRange: 3
+  innerRange: 9
+  outerRange: 5
   fastSpeed: 0.025
   slowSpeed: 0.0125
   patrolRange: 5
+  animator: {fileID: 3410409635289493062}
+  spriteRenderer: {fileID: 2042963321171769120}
   lampLit: 0
 --- !u!212 &2042963321171769120
 SpriteRenderer:
@@ -341,7 +344,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: eb8775056cb44de42986ebb73d7fdb1d, type: 3}
-  m_Color: {r: 0.5330188, g: 1, b: 0.8185537, a: 1}
+  m_Color: {r: 0.41037738, g: 1, b: 0.7260194, a: 0.7372549}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -372,6 +375,77 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5863539906250791863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6470181893697632344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ComponentVersion: 1
+  m_LightType: 1
+  m_BlendStyleIndex: 0
+  m_FalloffIntensity: 0.5
+  m_Color: {r: 1, g: 1, b: 1, a: 0.1254902}
+  m_Intensity: 0.1
+  m_LightVolumeIntensity: 1
+  m_LightVolumeIntensityEnabled: 0
+  m_ApplyToSortingLayers: 00000000
+  m_LightCookieSprite: {fileID: 0}
+  m_DeprecatedPointLightCookieSprite: {fileID: 0}
+  m_LightOrder: 0
+  m_AlphaBlendOnOverlap: 0
+  m_OverlapOperation: 0
+  m_NormalMapDistance: 3
+  m_NormalMapQuality: 2
+  m_UseNormalMap: 0
+  m_ShadowIntensityEnabled: 0
+  m_ShadowIntensity: 0.75
+  m_ShadowVolumeIntensityEnabled: 0
+  m_ShadowVolumeIntensity: 0.75
+  m_LocalBounds:
+    m_Center: {x: -0.05465001, y: -0.036900043, z: 0}
+    m_Extent: {x: 1.36205, y: 1.6983, z: 0}
+  m_PointLightInnerAngle: 360
+  m_PointLightOuterAngle: 360
+  m_PointLightInnerRadius: 0
+  m_PointLightOuterRadius: 2
+  m_ShapeLightParametricSides: 5
+  m_ShapeLightParametricAngleOffset: 0
+  m_ShapeLightParametricRadius: 1
+  m_ShapeLightFalloffSize: 0.5
+  m_ShapeLightFalloffOffset: {x: 0, y: 0}
+  m_ShapePath:
+  - {x: -0.5020019, y: -0.027300622, z: 0}
+  - {x: -0.9070854, y: -0.19569816, z: 0}
+  - {x: -0.83376867, y: -0.53087246, z: 0}
+  - {x: -0.5077528, y: -0.51963055, z: 0}
+  - {x: -0.45438766, y: -0.88491505, z: 0}
+  - {x: -0.24225575, y: -1.1819786, z: 0}
+  - {x: 0.17800607, y: -1.2391148, z: 0}
+  - {x: 0.6728842, y: -1.2137026, z: 0}
+  - {x: 0.81679577, y: -0.85942835, z: 0}
+  - {x: 0.6051996, y: -1.0704856, z: 0}
+  - {x: 0.34409627, y: -1.0493088, z: 0}
+  - {x: 0.25669903, y: -0.76695323, z: 0}
+  - {x: 0.3483306, y: -0.49191022, z: 0}
+  - {x: 0.16676372, y: -0.12616259, z: 0}
+  - {x: 0.40284517, y: -0.22734001, z: 0}
+  - {x: 0.6524018, y: -0.20085223, z: 0}
+  - {x: 0.6951349, y: 0.10991817, z: 0}
+  - {x: 0.41955608, y: 0.2823196, z: 0}
+  - {x: 0.06227832, y: 0.43023524, z: 0}
+  - {x: 0.2736439, y: 0.7590226, z: 0}
+  - {x: 0.10924826, y: 1.158265, z: 0}
+  - {x: -0.27499858, y: 1.1575752, z: 0}
+  - {x: -0.5000004, y: 0.80530274, z: 0}
+  - {x: -0.31347954, y: 0.45372, z: 0}
+  - {x: -0.63141423, y: 0.25606337, z: 0}
 --- !u!1 &7909167485572745303
 GameObject:
   m_ObjectHideFlags: 0
@@ -397,8 +471,8 @@ Transform:
   m_GameObject: {fileID: 7909167485572745303}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.7135116, y: -0.17688581, z: 0.04398194}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4547941313151324472}
