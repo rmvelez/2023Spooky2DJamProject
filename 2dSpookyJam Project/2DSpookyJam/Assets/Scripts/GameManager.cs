@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float refillCost;
 
     public PlayerController playerController;
+    public Lantern lantern;
 
 
     private void Awake()

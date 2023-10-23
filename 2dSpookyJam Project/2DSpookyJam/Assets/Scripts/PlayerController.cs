@@ -16,6 +16,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Collider2D hitBoxCollider;
     [SerializeField] private Light2D light; //spotlight?
 
+    [SerializeField] private Lantern lantern;
+
+
 
     [Header("movement")]
 
