@@ -64,7 +64,7 @@ public class InteractManager : MonoBehaviour
 
         } else if (other.CompareTag("Ghost"))
         {
-            gameManager.switchToScene(GameManager.LOSESCENE);
+            gameManager.SwitchToScene(GameManager.LOSESCENE);
         }
     }
 
@@ -84,7 +84,6 @@ public class InteractManager : MonoBehaviour
         //make sure we still have objects
         if (trackedObjects.Count > 0)
         {
-            Debug.Log("poing");
             //retrieve the first one
             GameObject gameObj = trackedObjects[0];
 

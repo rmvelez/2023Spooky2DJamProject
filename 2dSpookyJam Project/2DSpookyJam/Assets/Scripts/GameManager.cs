@@ -35,6 +35,9 @@ public class GameManager : MonoBehaviour
 
     public const string LOSESCENE = "LoseScene";
     public const string WINSCENE = "WinScene";
+    public const bool GHOST = false;
+    public const bool LANTERN = true;
+
 
     private void Awake()
     {
@@ -73,12 +76,16 @@ public class GameManager : MonoBehaviour
     {
         numLitLamps++;
         OilLevel -= lampLightCost;
+        if(numLitLamps == numLamps)
+        {
+            SwitchToScene(WINSCENE);
+        }
 
     }
 
     public void RefillLantern()
     {
-        OilLevel -= refillCost;
+        OilLevel = Mathf.Max(OilLevel- refillCost, 0);
     }
 
     public void PauseGame()
@@ -96,7 +103,18 @@ public class GameManager : MonoBehaviour
         onGameResume.Invoke();
     }
 
-    public void switchToScene(string sceneName){
+    public void SwitchToScene(string sceneName)
+    {
+        SwitchToScene(sceneName, false);
+    }
+
+    //ghost is false, lantern is true
+    public void SwitchToScene(string sceneName, bool reason){
+        
+
+        if(sceneName == LOSESCENE) {
+            //set scorekeepers reason
+        }
         SceneManager.LoadScene(sceneName);
     }
 
