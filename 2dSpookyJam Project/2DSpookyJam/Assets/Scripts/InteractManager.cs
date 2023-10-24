@@ -64,7 +64,7 @@ public class InteractManager : MonoBehaviour
 
         } else if (other.CompareTag("Ghost"))
         {
-            gameManager.SwitchToScene(GameManager.LOSESCENE);
+            gameManager.SwitchToScene(GameManager.LOSESCENE, ScoreKeeper.LossReason.Ghost);
         }
     }
 

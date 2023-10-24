@@ -43,7 +43,7 @@ public class Lantern : MonoBehaviour
             lanternOilLevelCurrent = 0;
             if (GameManager.Instance.OilLevel <=0)
             {
-                GameManager.Instance.SwitchToScene(GameManager.LOSESCENE, GameManager.LANTERN);
+                GameManager.Instance.SwitchToScene(GameManager.LOSESCENE, ScoreKeeper.LossReason.Lantern);
             }
         }
 

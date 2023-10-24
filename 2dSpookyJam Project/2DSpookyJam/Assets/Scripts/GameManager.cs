@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     public static GameManager _instance;
     public static GameManager Instance { get { return _instance; } }
 
+    private static ScoreKeeper _scoreKeeper;
+
     public bool paused;
 
     public UnityEvent onGamePause;
@@ -105,16 +107,18 @@ public class GameManager : MonoBehaviour
 
     public void SwitchToScene(string sceneName)
     {
-        SwitchToScene(sceneName, false);
+       
+        SwitchToScene(sceneName, ScoreKeeper.LossReason.Win);
     }
 
     //ghost is false, lantern is true
-    public void SwitchToScene(string sceneName, bool reason){
-        
+    public void SwitchToScene(string sceneName, ScoreKeeper.LossReason reason){
 
-        if(sceneName == LOSESCENE) {
-            //set scorekeepers reason
-        }
+        _scoreKeeper = ScoreKeeper.Instance;
+
+        _scoreKeeper.score = numLitLamps;
+        _scoreKeeper.loadEnding(numLitLamps, reason);
+
         SceneManager.LoadScene(sceneName);
     }
 
