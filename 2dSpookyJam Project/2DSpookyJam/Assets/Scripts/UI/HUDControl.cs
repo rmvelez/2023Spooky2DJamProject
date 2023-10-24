@@ -1,9 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.UIElements;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class HUDControl : MonoBehaviour
 {
+
+    [SerializeField] private UIDocument UIDoc;
+    private Label UILitNumber;
+    private Label UITotNumber;
+
     // reference to the sprite for the oil meter
 
     public SpriteRenderer reserveBar;
@@ -25,6 +32,8 @@ public class HUDControl : MonoBehaviour
     // reference to the game manager
     private GameManager gameManager;
 
+    private bool init = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -41,11 +50,21 @@ public class HUDControl : MonoBehaviour
         ReserveBarStartPos = reserveBar.transform.position;
         LanternBarStartPos = lanternBar.transform.position;
 
+        UILitNumber = UIDoc.rootVisualElement.Q<Label>("litNumber");
+        UITotNumber = UIDoc.rootVisualElement.Q<Label>("totNumber");
+        
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (init)
+        {
+            UITotNumber.text = string.Concat("/", gameManager.numLamps.ToString());
+            init = false;
+        }
+
         // sets the oilLevel to the oilLevel in game manager, which decreases in value over time
         reserveLevel = gameManager.OilLevel;
 
@@ -65,6 +84,8 @@ public class HUDControl : MonoBehaviour
 
         lanternBar.transform.localPosition = new Vector3(2.7f * (1-lanternProgPercent), 0, 0);
         lanternBar.transform.localScale = new Vector3(lanternProgPercent, 1, 1);
+
+        UILitNumber.text = gameManager.numLitLamps.ToString();
 
     }
 }

@@ -3560,6 +3560,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: HUD
       objectReference: {fileID: 0}
+    - target: {fileID: 2863872833681820619, guid: 15d054c9bfe83664cade4925f480d27e, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 73908831}
+    - target: {fileID: 2863872833681820619, guid: 15d054c9bfe83664cade4925f480d27e, type: 3}
+      propertyPath: m_RenderMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2937521981925927874, guid: 15d054c9bfe83664cade4925f480d27e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3600,8 +3608,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8658220354314406345, guid: 15d054c9bfe83664cade4925f480d27e, type: 3}
+      propertyPath: m_text
+      value: 5/7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8658220354314406345, guid: 15d054c9bfe83664cade4925f480d27e, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8662302805049164068, guid: 15d054c9bfe83664cade4925f480d27e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 2119499530274154830, guid: 15d054c9bfe83664cade4925f480d27e, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15d054c9bfe83664cade4925f480d27e, type: 3}
