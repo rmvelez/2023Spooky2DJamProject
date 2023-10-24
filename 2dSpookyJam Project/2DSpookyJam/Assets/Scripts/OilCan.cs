@@ -22,7 +22,10 @@ public class OilCan : MonoBehaviour , IInteractable
     public void Interact()
     {
         Debug.Log("called");
-        gameManager.OilLevel += oilIncreaseLevel;
+        float newOilLevel = gameManager.OilLevel + oilIncreaseLevel;
+        float oilMax = gameManager.oilMax;
+        gameManager.OilLevel = newOilLevel <= oilMax ? newOilLevel : oilMax;
+        Destroy(gameObject);
     }
 
     // Update is called once per frame
