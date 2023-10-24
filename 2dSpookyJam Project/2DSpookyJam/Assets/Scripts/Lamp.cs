@@ -47,6 +47,6 @@ public class Lamp : MonoBehaviour, IInteractable
         animator.SetBool("isLit", true);
 
         ghost.SetLampLit();
-        gameManager.numLamps++;
+        gameManager.LightLamp();
     }
 }

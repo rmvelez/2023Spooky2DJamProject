@@ -36,8 +36,17 @@ public class Lantern : MonoBehaviour
     {
         light.intensity = (lanternOilLevelCurrent/ lanternOilLevelMax) * intensityMax;
         light.pointLightOuterRadius= ((lanternOilLevelCurrent / lanternOilLevelMax) * outerRange ) + outerMin;
-        lanternOilLevelCurrent = Mathf.Max( lanternOilLevelCurrent-  lanternOilDecreasePerSecond * Time.deltaTime ,  0); 
-        
+        lanternOilLevelCurrent -= lanternOilDecreasePerSecond * Time.deltaTime;
+            //Mathf.Max( lanternOilLevelCurrent-  lanternOilDecreasePerSecond * Time.deltaTime ,  0); 
+        if(lanternOilLevelCurrent <= 0)
+        {
+            lanternOilLevelCurrent = 0;
+            if (GameManager.Instance.OilLevel <=0)
+            {
+                GameManager.Instance.SwitchToScene(GameManager.LOSESCENE, ScoreKeeper.LossReason.Lantern);
+            }
+        }
+
     }
 
     public void Refill(InputAction.CallbackContext context)

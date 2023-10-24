@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
 
     public static GameManager _instance;
     public static GameManager Instance { get { return _instance; } }
+
+    private static ScoreKeeper _scoreKeeper;
 
     public bool paused;
 
@@ -31,6 +34,11 @@ public class GameManager : MonoBehaviour
 
     public PlayerController playerController;
     public Lantern lantern;
+
+    public const string LOSESCENE = "LoseScene";
+    public const string WINSCENE = "WinScene";
+    public const bool GHOST = false;
+    public const bool LANTERN = true;
 
 
     private void Awake()
@@ -70,12 +78,16 @@ public class GameManager : MonoBehaviour
     {
         numLitLamps++;
         OilLevel -= lampLightCost;
+        if(numLitLamps == numLamps)
+        {
+            SwitchToScene(WINSCENE);
+        }
 
     }
 
     public void RefillLantern()
     {
-        OilLevel -= refillCost;
+        OilLevel = Mathf.Max(OilLevel- refillCost, 0);
     }
 
     public void PauseGame()
@@ -92,4 +104,22 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         onGameResume.Invoke();
     }
+
+    public void SwitchToScene(string sceneName)
+    {
+       
+        SwitchToScene(sceneName, ScoreKeeper.LossReason.Win);
+    }
+
+    //ghost is false, lantern is true
+    public void SwitchToScene(string sceneName, ScoreKeeper.LossReason reason){
+
+        _scoreKeeper = ScoreKeeper.Instance;
+
+        _scoreKeeper.score = numLitLamps;
+        _scoreKeeper.loadEnding(numLitLamps, reason);
+
+        SceneManager.LoadScene(sceneName);
+    }
+
 }
