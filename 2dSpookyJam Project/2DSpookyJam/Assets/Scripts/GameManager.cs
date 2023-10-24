@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -32,6 +33,8 @@ public class GameManager : MonoBehaviour
     public PlayerController playerController;
     public Lantern lantern;
 
+    public const string LOSESCENE = "LoseScene";
+    public const string WINSCENE = "WinScene";
 
     private void Awake()
     {
@@ -92,4 +95,9 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         onGameResume.Invoke();
     }
+
+    public void switchToScene(string sceneName){
+        SceneManager.LoadScene(sceneName);
+    }
+
 }

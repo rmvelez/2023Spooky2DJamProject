@@ -43,6 +43,7 @@ public class PlayerController : MonoBehaviour
     private const int IDLE_UP_DIRECTION = 5;
     private const int IDLE_DOWN_DIRECTION = 6;
 
+    #region Unity Built in
     private void Awake()
     {
 
@@ -79,7 +80,9 @@ public class PlayerController : MonoBehaviour
         gameManager.onGamePause.RemoveListener(SwitchActionMapUI);
         gameManager.onGameResume.RemoveListener(SwitchActionMapPlayer);
     }
+    #endregion Unity Built in
 
+    #region move
     public void Move(Vector2 direction)
     {
 
@@ -144,6 +147,7 @@ public class PlayerController : MonoBehaviour
 
             playerAnimator.SetInteger("movement", movementAnimationDirection);        
     }
+    #endregion move
 
     #region input actions
 

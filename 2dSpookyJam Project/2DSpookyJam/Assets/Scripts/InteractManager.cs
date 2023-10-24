@@ -19,11 +19,12 @@ public class InteractManager : MonoBehaviour
     [Tooltip("the player controller on the player (drag it here)")]
     [SerializeField] private PlayerController playerController;
 
+    private GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        gameManager = GameManager.Instance;
     }
 
     public void InteractActionPerformed(InputAction.CallbackContext context)
@@ -61,6 +62,9 @@ public class InteractManager : MonoBehaviour
             //then track it
             TrackObject(other.gameObject);
 
+        } else if (other.CompareTag("Ghost"))
+        {
+            gameManager.switchToScene(GameManager.LOSESCENE);
         }
     }
 

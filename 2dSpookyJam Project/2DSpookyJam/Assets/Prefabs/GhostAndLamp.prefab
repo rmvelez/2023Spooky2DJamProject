@@ -256,9 +256,10 @@ GameObject:
   - component: {fileID: 2042963321171769120}
   - component: {fileID: 3410409635289493062}
   - component: {fileID: 5863539906250791863}
+  - component: {fileID: 2564056190929030165}
   m_Layer: 0
   m_Name: Ghost
-  m_TagString: Untagged
+  m_TagString: Ghost
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -392,7 +393,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 1, b: 1, a: 0.1254902}
-  m_Intensity: 0.1
+  m_Intensity: 0.5
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 00000000
@@ -409,8 +410,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: -0.05465001, y: -0.036900043, z: 0}
-    m_Extent: {x: 1.36205, y: 1.6983, z: 0}
+    m_Center: {x: -0.045100033, y: -0.034350038, z: 0}
+    m_Extent: {x: 1.3647001, y: 1.69585, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -446,6 +447,41 @@ MonoBehaviour:
   - {x: -0.5000004, y: 0.80530274, z: 0}
   - {x: -0.31347954, y: 0.45372, z: 0}
   - {x: -0.63141423, y: 0.25606337, z: 0}
+--- !u!70 &2564056190929030165
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6470181893697632344}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 1.9200002, y: 2.5600002}
+  m_Direction: 0
 --- !u!1 &7909167485572745303
 GameObject:
   m_ObjectHideFlags: 0
