@@ -3,3 +3,7 @@
 *.wav filter=lfs diff=lfs merge=lfs -text
 Assets/TextMesh[[:space:]]Pro/Resources/Fonts[[:space:]]&[[:space:]]Materials/* filter=lfs diff=lfs merge=lfs -text
 **/Fonts[[:space:]]&[[:space:]]Materials/ filter=lfs diff=lfs merge=lfs -text
+Fonts[[:space:]] filter=lfs diff=lfs merge=lfs -text
+/Fonts[[:space:]] filter=lfs diff=lfs merge=lfs -text
+Fonts filter=lfs diff=lfs merge=lfs -text
+FontsAndMaterials/* filter=lfs diff=lfs merge=lfs -text
