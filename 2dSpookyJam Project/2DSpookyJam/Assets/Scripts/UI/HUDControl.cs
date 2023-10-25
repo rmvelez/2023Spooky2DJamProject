@@ -9,7 +9,7 @@ using UnityEngine.UIElements;
 public class HUDControl : MonoBehaviour
 {
 
-    [SerializeField] private UIDocument UIDoc;
+    //[SerializeField] private UIDocument UIDoc;
     [SerializeField] private TMP_Text UILitNumber;
     private string UITotNumber;
     //[SerializeField] private TextMeshPro UITotNumber;
