@@ -18,6 +18,14 @@ public class Lamp : MonoBehaviour, IInteractable
 
     //[SerializeField] private 
 
+
+    void OnEnable()
+    {
+
+        gameManager = GameManager.Instance;
+        gameManager.numLamps++;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +33,6 @@ public class Lamp : MonoBehaviour, IInteractable
         light.intensity = 0;
 
 
-        gameManager = GameManager.Instance;
     }
 
     // Update is called once per frame
