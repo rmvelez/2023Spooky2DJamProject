@@ -22,8 +22,6 @@ public class Lamp : MonoBehaviour, IInteractable
     void OnEnable()
     {
 
-        gameManager = GameManager.Instance;
-        gameManager.numLamps++;
     }
 
     // Start is called before the first frame update
@@ -32,6 +30,8 @@ public class Lamp : MonoBehaviour, IInteractable
         intensity = light.intensity;
         light.intensity = 0;
 
+        gameManager = GameManager.Instance;
+        gameManager.numLamps++;
 
     }
 
