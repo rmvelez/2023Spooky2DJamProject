@@ -295,8 +295,8 @@ MonoBehaviour:
   target: {x: 0, y: 0}
   player: {fileID: 0}
   lamp: {fileID: 4986347587348805137}
-  innerRange: 9
-  outerRange: 5
+  innerRange: 5
+  outerRange: 9
   fastSpeed: 0.025
   slowSpeed: 0.0125
   patrolRange: 5
@@ -410,8 +410,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: -0.045100033, y: -0.034350038, z: 0}
-    m_Extent: {x: 1.3647001, y: 1.69585, z: 0}
+    m_Center: {x: -0.044700027, y: -0.03210002, z: 0}
+    m_Extent: {x: 1.3564, y: 1.6977999, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0

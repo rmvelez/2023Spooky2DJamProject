@@ -76,11 +76,11 @@ public class Ghost : MonoBehaviour
     void FixedUpdate()
     {
         CheckPlayerPos();
-        if(ghostState == GhostState.idle)
-        {
-            Patrol();
-            //call patrol();
-        }
+        //if(ghostState == GhostState.idle)
+        //{
+        //    Patrol();
+        //    //call patrol();
+        //}
 
         animator.SetBool("isAggro", ghostState == GhostState.hostile);
 
@@ -101,7 +101,6 @@ public class Ghost : MonoBehaviour
             {
                 if(direction.y > 0) //we're moving up
                 {
-                    Debug.Log("looking up");
                     animator.SetInteger("movement", UP_DIRECTION);
                 } else // we're moving down - defaults to down when equal
                 {
@@ -111,12 +110,10 @@ public class Ghost : MonoBehaviour
 
             if (direction.x >= 0)
             {
-                Debug.Log("looking left");
                 spriteRenderer.flipX = false; //when x is flipped, it's looking left
             }
             else
             {
-                Debug.Log("looking right");
                 spriteRenderer.flipX = true;
             }
 
@@ -173,6 +170,9 @@ public class Ghost : MonoBehaviour
                     currentSpeed = slowSpeed;
 
                     break;
+                }  else if (Vector2.Distance(transform.position, target) < .1) //if we've reached our destination
+                {
+                    Patrol();
                 }
                 //else if (distanceToPlayer <= innerRange) //inside (entering) the inner circle
                 //{ //and we enter the inner circle
@@ -190,8 +190,8 @@ public class Ghost : MonoBehaviour
                     Debug.Log("this should only happen once when player exits outer range");
                     ghostState = GhostState.idle;
                     currentSpeed = slowSpeed;
-
-                    target = this.transform.position;
+                    lastSeenPlayerPos = player.transform;
+                    target = lastSeenPlayerPos.position;
                 }
                 else if (distanceToPlayer <= innerRange) //player enters inner range
                 {
@@ -230,6 +230,14 @@ public class Ghost : MonoBehaviour
 
                     //GetComponent<SpriteRenderer>().color = Color.green;
 
+                    break;
+                }
+                if(Vector2.Distance(transform.position, target) < .1)
+                {
+                    Debug.Log("ping");
+                    ghostState = GhostState.idle;
+                    currentSpeed = slowSpeed;
+                    Patrol();
                     break;
                 }
                 break;
@@ -344,13 +352,14 @@ public class Ghost : MonoBehaviour
     }
     */
 
+    //sets target to a new random position within range of the relevant point 
     private void Patrol()
     {
         //if (Vector2.Distance(rigidBody.position, target) >= 0.1f) return; // ALTERNATIVELY: if ((rigidBody.position - target).magnitude >= 0.1f)
-        if (Vector2.Distance(transform.position, target) >= 0.1f) return; // ALTERNATIVELY: if ((rigidBody.position - target).magnitude >= 0.1f)
+        //if (Vector2.Distance(transform.position, target) >= 0.1f) return; // ALTERNATIVELY: if ((rigidBody.position - target).magnitude >= 0.1f)
         
         float bearing = UnityEngine.Random.Range(-Mathf.PI, Mathf.PI);
-        Vector3 patrolCentre = lampLit ? transform.position : lamp.transform.position;
+        Vector3 patrolCentre = lampLit ? lastSeenPlayerPos.position : lamp.transform.position;
         //Vector2 patrolCentre = lampLit ? lastSeenPlayerPos.position : lamp.transform.position;
         target = new Vector2(patrolCentre.x, patrolCentre.y) + patrolRange * UnityEngine.Random.Range(0f, 1f) * new Vector2(Mathf.Cos(bearing), Mathf.Sin(bearing));
 
