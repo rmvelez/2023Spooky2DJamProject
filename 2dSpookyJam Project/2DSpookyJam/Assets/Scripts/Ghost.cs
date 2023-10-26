@@ -69,7 +69,6 @@ public class Ghost : MonoBehaviour
 
         player = gameManager.playerController.gameObject;
 
-        gameManager.numLamps++;
     }
 
     // Update is called once per frame
