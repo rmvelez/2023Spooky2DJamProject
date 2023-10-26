@@ -70,6 +70,8 @@ public class Ghost : MonoBehaviour
         player = gameManager.playerController.gameObject;
 
         gameManager.numLamps++;
+
+        target = lamp.transform.position;
     }
 
     // Update is called once per frame
@@ -187,11 +189,11 @@ public class Ghost : MonoBehaviour
             case GhostState.curious: //if we're in curious state (state 1)
                 if (distanceToPlayer > outerRange) //player exits outer range 
                 {
-                    Debug.Log("this should only happen once when player exits outer range");
+                    //Debug.Log("this should only happen once when player exits outer range");
                     ghostState = GhostState.idle;
                     currentSpeed = slowSpeed;
                     lastSeenPlayerPos = player.transform;
-                    target = lastSeenPlayerPos.position;
+                    target = lastSeenPlayerPos.position + (transform.position - lastSeenPlayerPos.position).normalized * innerRange;
                 }
                 else if (distanceToPlayer <= innerRange) //player enters inner range
                 {
@@ -361,7 +363,7 @@ public class Ghost : MonoBehaviour
         float bearing = UnityEngine.Random.Range(-Mathf.PI, Mathf.PI);
         Vector3 patrolCentre = lampLit ? lastSeenPlayerPos.position : lamp.transform.position;
         //Vector2 patrolCentre = lampLit ? lastSeenPlayerPos.position : lamp.transform.position;
-        target = new Vector2(patrolCentre.x, patrolCentre.y) + patrolRange * UnityEngine.Random.Range(0f, 1f) * new Vector2(Mathf.Cos(bearing), Mathf.Sin(bearing));
+        target = new Vector2(patrolCentre.x, patrolCentre.y) + patrolRange * new Vector2(Mathf.Cos(bearing), Mathf.Sin(bearing));
 
         // ----------------------------------------------------------------
         //                      COME BACK TO THIS:
