@@ -8,12 +8,13 @@ public class ScoreKeeper : MonoBehaviour
     public static ScoreKeeper _instance;
     public static ScoreKeeper Instance { get { return _instance; } }
 
-    public float score;
+    public int score;
+    public int total;
     public enum LossReason { Ghost, Lantern, Win}
     public LossReason reason;
     public string explanation;
 
-    public void setExplanation()
+    public string getExplanation()
     {
         if( reason == LossReason.Ghost)
         {
@@ -22,15 +23,18 @@ public class ScoreKeeper : MonoBehaviour
         {
             explanation = "You ran out of oil";
         }
+
+        return explanation;
     }
 
-    public void loadEnding(float score,  LossReason reason)
+    public void loadEnding(int score,  LossReason reason, int total )
     {
         this.reason = reason; 
         this.score = score;
+        this.total = total;
     }
 
-    public void loadEnding(float score)
+    public void loadEnding(int score, int total)
     {
         this.score = score;
     }

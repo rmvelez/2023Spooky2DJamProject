@@ -117,7 +117,7 @@ public class GameManager : MonoBehaviour
         _scoreKeeper = ScoreKeeper.Instance;
 
         _scoreKeeper.score = numLitLamps;
-        _scoreKeeper.loadEnding(numLitLamps, reason);
+        _scoreKeeper.loadEnding(numLitLamps, reason, numLamps);
 
         SceneManager.LoadScene(sceneName);
     }
