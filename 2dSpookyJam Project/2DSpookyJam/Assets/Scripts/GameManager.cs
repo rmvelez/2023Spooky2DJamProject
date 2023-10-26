@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
     public UnityEvent onGamePause;
     public UnityEvent onGameResume;
 
+    public float gameTime;
+
     [Header("lamps")]
     public int numLamps;
     public int numLitLamps;
@@ -71,7 +73,11 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        gameTime = Time.timeSinceLevelLoad;
+        if(gameTime >= (60 * 5))
+        {
+            SwitchToScene(LOSESCENE, ScoreKeeper.LossReason.Timeout);
+        } 
     }
 
     public void LightLamp()

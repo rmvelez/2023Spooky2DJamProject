@@ -10,7 +10,7 @@ public class ScoreKeeper : MonoBehaviour
 
     public int score;
     public int total;
-    public enum LossReason { Ghost, Lantern, Win}
+    public enum LossReason { Ghost, Lantern, Win, Timeout}
     public LossReason reason;
     public string explanation;
 
@@ -22,6 +22,8 @@ public class ScoreKeeper : MonoBehaviour
         } else if (reason == LossReason.Lantern)
         {
             explanation = "You ran out of oil";
+        } else if (reason == LossReason.Timeout){
+            explanation = "you ran out of time";
         }
 
         return explanation;
