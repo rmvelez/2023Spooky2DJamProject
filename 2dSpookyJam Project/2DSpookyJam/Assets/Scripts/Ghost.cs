@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,6 +31,19 @@ public class Ghost : MonoBehaviour
 
     [SerializeField] private Animator animator;
     [SerializeField] private SpriteRenderer spriteRenderer;
+
+
+
+    private const int SIDE_DIRECTION = 1;
+    private const int UP_DIRECTION = 2;
+    private const int DOWN_DIRECTION = 3;
+    //private const int IDLE_LEFT_DIRECTION = 0;
+    //private const int IDLE_RIGHT_DIRECTION = 0;
+    
+    //private const int AGGRO_SIDE_DIRECTION = 4;
+    //private const int AGGRO_UP_DIRECTION = 5;
+    //private const int AGGRO_DOWN_DIRECTION = 6;
+    
 
     private enum States
     {
@@ -72,18 +86,41 @@ public class Ghost : MonoBehaviour
 
 
         Vector2 moveTo = Vector2.MoveTowards(transform.position, target, currentSpeed);
+        Vector2 direction = moveTo - (Vector2) transform.position;
+
         if(moveTo.magnitude >= .01)
         {
             this.transform.position = moveTo;
 
-            if(moveTo.x >= 0)
+            if( MathF.Abs( direction.x) > MathF.Abs(direction.y)) //if we're moving horizontally more than vertically
             {
-                spriteRenderer.flipX = true; //when x is flipped, it's looking left
-            } else
-            {
-                spriteRenderer.flipX = false;
+                animator.SetInteger("movement", SIDE_DIRECTION);
+                
 
+            } else //we're moving vertically more than horizontally
+            {
+                if(direction.y > 0) //we're moving up
+                {
+                    Debug.Log("looking up");
+                    animator.SetInteger("movement", UP_DIRECTION);
+                } else // we're moving down - defaults to down when equal
+                {
+                    animator.SetInteger("movement", DOWN_DIRECTION);
+                }
             }
+
+            if (direction.x >= 0)
+            {
+                Debug.Log("looking left");
+                spriteRenderer.flipX = false; //when x is flipped, it's looking left
+            }
+            else
+            {
+                Debug.Log("looking right");
+                spriteRenderer.flipX = true;
+            }
+
+
 
         } else
         {
@@ -199,6 +236,7 @@ public class Ghost : MonoBehaviour
         }
     }
 
+
     /*
     void OnTriggerEnter2D(Collider2D collider)
     {
@@ -311,10 +349,10 @@ public class Ghost : MonoBehaviour
         //if (Vector2.Distance(rigidBody.position, target) >= 0.1f) return; // ALTERNATIVELY: if ((rigidBody.position - target).magnitude >= 0.1f)
         if (Vector2.Distance(transform.position, target) >= 0.1f) return; // ALTERNATIVELY: if ((rigidBody.position - target).magnitude >= 0.1f)
         
-        float bearing = Random.Range(-Mathf.PI, Mathf.PI);
+        float bearing = UnityEngine.Random.Range(-Mathf.PI, Mathf.PI);
         Vector3 patrolCentre = lampLit ? transform.position : lamp.transform.position;
         //Vector2 patrolCentre = lampLit ? lastSeenPlayerPos.position : lamp.transform.position;
-        target = new Vector2(patrolCentre.x, patrolCentre.y) + patrolRange * Random.Range(0f, 1f) * new Vector2(Mathf.Cos(bearing), Mathf.Sin(bearing));
+        target = new Vector2(patrolCentre.x, patrolCentre.y) + patrolRange * UnityEngine.Random.Range(0f, 1f) * new Vector2(Mathf.Cos(bearing), Mathf.Sin(bearing));
 
         // ----------------------------------------------------------------
         //                      COME BACK TO THIS:
