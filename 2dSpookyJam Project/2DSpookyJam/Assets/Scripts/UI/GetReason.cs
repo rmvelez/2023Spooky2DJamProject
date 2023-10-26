@@ -14,7 +14,7 @@ public class GetReason : MonoBehaviour
     void Start()
     {
         scoreKeeper = ScoreKeeper.Instance;
-        string[] strings = { scoreKeeper.getExplanation(), "\nyou scored ", scoreKeeper.score.ToString(), " out of ", scoreKeeper.total.ToString() };
+        string[] strings = { scoreKeeper.getExplanation(), ".\nyou lit ", scoreKeeper.score.ToString(), " out of ", scoreKeeper.total.ToString(), " lanterns." };
         m_Text.text = string.Concat(strings);
 //            scoreKeeper.explanation, "\nyou scored ", score, "out of")
     }
