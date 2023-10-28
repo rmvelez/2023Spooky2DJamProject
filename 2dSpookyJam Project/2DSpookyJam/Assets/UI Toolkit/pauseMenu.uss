@@ -3,7 +3,7 @@
     background-color: rgba(188, 188, 188, 0);
     -unity-slice-left: 80;
     width: 629px;
-    height: 110px;
+    height: 141px;
     color: rgb(255, 255, 255);
     -unity-background-scale-mode: stretch-to-fill;
     -unity-slice-top: 19;
@@ -15,7 +15,7 @@
     border-bottom-width: 0;
     border-left-width: 0;
     -unity-font: url('project://database/Assets/TextMesh%20Pro/Fonts/MetalMania-Regular.ttf?fileID=12800000&guid=cda89137266883e458e8f7d2c8b856ed&type=3#MetalMania-Regular');
-    -unity-font-definition: url('project://database/Assets/TextMesh%20Pro/Fonts/MetalMania-Regular%20SDF.asset?fileID=11400000&guid=3e8fbcf4eec14ca41809ee1c1825877f&type=2#MetalMania-Regular SDF');
+    -unity-font-definition: url('project://database/Assets/TextMesh%20Pro/Fonts/MetalMania-Regular-SDF.asset?fileID=11400000&guid=3e8fbcf4eec14ca41809ee1c1825877f&type=2#MetalMania-Regular SDF');
     font-size: 48px;
     padding-bottom: 16px;
     margin-bottom: 28px;
@@ -37,11 +37,11 @@
     border-bottom-width: 0;
     border-left-width: 0;
     -unity-font: url('project://database/Assets/TextMesh%20Pro/Fonts/MetalMania-Regular.ttf?fileID=12800000&guid=cda89137266883e458e8f7d2c8b856ed&type=3#MetalMania-Regular');
-    -unity-font-definition: url('project://database/Assets/TextMesh%20Pro/Fonts/MetalMania-Regular%20SDF.asset?fileID=11400000&guid=3e8fbcf4eec14ca41809ee1c1825877f&type=2#MetalMania-Regular SDF');
+    -unity-font-definition: url('project://database/Assets/TextMesh%20Pro/Fonts/MetalMania-Regular-SDF.asset?fileID=11400000&guid=3e8fbcf4eec14ca41809ee1c1825877f&type=2#MetalMania-Regular SDF');
     font-size: 48px;
     padding-bottom: 16px;
     margin-bottom: 28px;
-    -unity-background-image-tint-color: rgb(77, 189, 136);
+    -unity-background-image-tint-color: rgb(237, 255, 246);
     -unity-text-align: middle-center;
-    color: rgb(130, 191, 141);
+    color: rgb(255, 255, 255);
 }
