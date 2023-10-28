@@ -124,11 +124,11 @@ public class Ghost : MonoBehaviour
             #endregion animation var setting
 
 
-            Vector2 ignore = new Vector2();
-            if(CheckIfPointIsInLight(transform.position, out ignore))
-            {
-                Debug.Log(transform.parent.gameObject.name +  " ghost is in light " + ignore.ToString());
-            }
+            //Vector2 ignore = new Vector2();
+            //if(CheckIfPointIsInLight(transform.position, out ignore))
+            //{
+            //    Debug.Log(transform.parent.gameObject.name +  " ghost is in light " + ignore.ToString());
+            //}
         }
         else //if we're not moving
         {
