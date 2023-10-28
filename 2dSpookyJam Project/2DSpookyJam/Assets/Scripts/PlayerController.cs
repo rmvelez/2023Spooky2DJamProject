@@ -205,25 +205,24 @@ public class PlayerController : MonoBehaviour
 
     #region action maps
 
-    public void SwitchActionMapPlayer() { SwitchActionMap("Player"); }
+    public void SwitchActionMapPlayer() { SwitchActionMap("Moving"); }
     public void SwitchActionMapUI() { SwitchActionMap("PauseMenu"); }
     public void SwitchActionMap(string mapName)
     {
-        Debug.Log("switching action map");
+        Debug.Log("switching action map to " + mapName);
         playerInput.currentActionMap.Disable();
         playerInput.SwitchCurrentActionMap(mapName);
 
         switch (mapName)
         {
             case "PauseMenu":
-                UnityEngine.Cursor.visible = true;
-                UnityEngine.Cursor.lockState = CursorLockMode.None;
+                //UnityEngine.Cursor.visible = true;
+                //UnityEngine.Cursor.lockState = CursorLockMode.None;
                 break;
-            case "Minigame":
             default:
-            case "Player":
-                UnityEngine.Cursor.visible = false;
-                UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+            case "Moving":
+                //UnityEngine.Cursor.visible = false;
+                //UnityEngine.Cursor.lockState = CursorLockMode.Locked;
                 break;
         }
     }

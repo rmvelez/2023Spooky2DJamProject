@@ -4507,6 +4507,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   score: 0
+  total: 0
   reason: 0
   explanation: 
 --- !u!4 &1244970956
@@ -6884,6 +6885,7 @@ MonoBehaviour:
   onGameResume:
     m_PersistentCalls:
       m_Calls: []
+  gameTime: 0
   numLamps: 0
   numLitLamps: 0
   OilLevel: 100

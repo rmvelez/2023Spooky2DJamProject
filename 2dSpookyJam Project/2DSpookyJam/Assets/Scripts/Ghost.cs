@@ -100,7 +100,6 @@ public class Ghost : MonoBehaviour
             {
                 if(direction.y > 0) //we're moving up
                 {
-                    Debug.Log("looking up");
                     animator.SetInteger("movement", UP_DIRECTION);
                 } else // we're moving down - defaults to down when equal
                 {
@@ -110,12 +109,10 @@ public class Ghost : MonoBehaviour
 
             if (direction.x >= 0)
             {
-                Debug.Log("looking left");
                 spriteRenderer.flipX = false; //when x is flipped, it's looking left
             }
             else
             {
-                Debug.Log("looking right");
                 spriteRenderer.flipX = true;
             }
 
