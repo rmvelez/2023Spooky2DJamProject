@@ -7,7 +7,7 @@ public class Ghost : MonoBehaviour
 {
     private GameManager gameManager;
 
-    private enum GhostState { idle, curious, hostile, wary} //consider refactoring idle to patrol
+    private enum GhostState { idle, curious, hostile, wary, fleeing} //consider refactoring idle to patrol
     [SerializeField] private GhostState ghostState;
     
 
@@ -17,7 +17,7 @@ public class Ghost : MonoBehaviour
     [SerializeField] private Vector2 target;
     [Tooltip("theoretically set by referencing GameManager.playerController")]
     [SerializeField] private GameObject player;
-    [SerializeField] private GameObject lamp;
+    [SerializeField] private Lamp lamp;
     private Transform lastSeenPlayerPos;
 
     [SerializeField] private float innerRange = 4;
@@ -32,7 +32,8 @@ public class Ghost : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private SpriteRenderer spriteRenderer;
 
-
+    [Tooltip("how far from the light's outer range the ghost can enter - as a percent of the range")]
+    [SerializeField] private float lightRange;
 
     private const int SIDE_DIRECTION = 1;
     private const int UP_DIRECTION = 2;
@@ -70,7 +71,7 @@ public class Ghost : MonoBehaviour
         player = gameManager.playerController.gameObject;
 
 
-        target = lamp.transform.position;
+        target = lamp.gameObject.transform.position;
     }
 
     // Update is called once per frame
@@ -89,7 +90,9 @@ public class Ghost : MonoBehaviour
         Vector2 moveTo = Vector2.MoveTowards(transform.position, target, currentSpeed);
         Vector2 direction = moveTo - (Vector2) transform.position;
 
-        if(moveTo.magnitude >= .01)
+        #region animation var setting
+
+        if (moveTo.magnitude >= .01)
         {
             this.transform.position = moveTo;
 
@@ -118,11 +121,13 @@ public class Ghost : MonoBehaviour
                 spriteRenderer.flipX = true;
             }
 
+            #endregion animation var setting
 
 
-        } else
+        }
+        else //if we're not moving
         {
-            if (ghostState == GhostState.wary) ghostState = GhostState.idle;
+            if (ghostState == GhostState.wary) ghostState = GhostState.idle; //could theoretically do this by checking if we've reached our destination?
         }
     }
     
@@ -379,4 +384,31 @@ public class Ghost : MonoBehaviour
         // target = lamp.transform.position; //do we want to set this? I thought when the lamp gets lit the ghost would go into idle and start patrolling randomly
         //target = lamp.position;
     }
+
+    [Tooltip("checks if the point is within the range of the light. returns closest point not within light as vec2 out var, or a zero vector if it's not within light")]
+    private bool CheckIfPointIsInLight(Vector2 point, out Vector2 closestPointOutsideLight)
+    {
+        //most likely issues are with local to global point translation, or just plain linear algebra
+
+        Vector2 distToLight = point - (Vector2)lamp.transform.position;
+        //if the distance to the light is less than how far it should be from the lamp (outer radius times lightrange). everything is squared cause it's faster
+        //
+        if (distToLight.sqrMagnitude < MathF.Pow(lamp.lampLight.pointLightOuterRadius * lightRange, 2))
+        { //sqr magnitude is faster than magnitude because it avoids root operations, just make sure to square everything
+            Debug.Log("point is within light");
+
+            closestPointOutsideLight = (distToLight.normalized * lightRange ) + (Vector2) lamp.lampLight.transform.position;
+
+            return true;
+        }
+        else
+        {
+            Debug.Log("point is NOT within light");
+
+            closestPointOutsideLight = point;
+
+            return false;
+        }
+    }
+
 }

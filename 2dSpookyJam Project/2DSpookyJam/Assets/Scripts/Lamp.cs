@@ -6,7 +6,7 @@ using UnityEngine.Rendering.Universal;
 public class Lamp : MonoBehaviour, IInteractable
 {
     public bool isLit = false;
-    [SerializeField] private Light2D light;
+    public Light2D lampLight;
     [SerializeField] private Ghost ghost;
 
     [SerializeField] private SpriteRenderer spriteRenderer;
@@ -27,8 +27,8 @@ public class Lamp : MonoBehaviour, IInteractable
     // Start is called before the first frame update
     void Start()
     {
-        intensity = light.intensity;
-        light.intensity = 0;
+        intensity = lampLight.intensity;
+        lampLight.intensity = 0;
 
         gameManager = GameManager.Instance;
         gameManager.numLamps++;
@@ -49,7 +49,7 @@ public class Lamp : MonoBehaviour, IInteractable
     public void Light()
     {
         isLit = true;
-        light.intensity = intensity;
+        lampLight.intensity = intensity;
 
         animator.SetBool("isLit", true);
 
