@@ -3936,6 +3936,82 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1322536180667234740, guid: 9a4dd4a2e62b8ec4a9d49e0a148a359c, type: 3}
+      propertyPath: intensityCurve.m_PreInfinity
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1322536180667234740, guid: 9a4dd4a2e62b8ec4a9d49e0a148a359c, type: 3}
+      propertyPath: intensityCurve.m_Curve.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1322536180667234740, guid: 9a4dd4a2e62b8ec4a9d49e0a148a359c, type: 3}
+      propertyPath: intensityCurve.m_Curve.Array.data[0].time
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1322536180667234740, guid: 9a4dd4a2e62b8ec4a9d49e0a148a359c, type: 3}
+      propertyPath: intensityCurve.m_Curve.Array.data[1].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1322536180667234740, guid: 9a4dd4a2e62b8ec4a9d49e0a148a359c, type: 3}
+      propertyPath: intensityCurve.m_Curve.Array.data[2].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1322536180667234740, guid: 9a4dd4a2e62b8ec4a9d49e0a148a359c, type: 3}
+      propertyPath: intensityCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1322536180667234740, guid: 9a4dd4a2e62b8ec4a9d49e0a148a359c, type: 3}
+      propertyPath: intensityCurve.m_Curve.Array.data[1].value
+      value: 0.000000003403481
+      objectReference: {fileID: 0}
+    - target: {fileID: 1322536180667234740, guid: 9a4dd4a2e62b8ec4a9d49e0a148a359c, type: 3}
+      propertyPath: intensityCurve.m_Curve.Array.data[2].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1322536180667234740, guid: 9a4dd4a2e62b8ec4a9d49e0a148a359c, type: 3}
+      propertyPath: intensityCurve.m_Curve.Array.data[0].inSlope
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1322536180667234740, guid: 9a4dd4a2e62b8ec4a9d49e0a148a359c, type: 3}
+      propertyPath: intensityCurve.m_Curve.Array.data[1].inSlope
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1322536180667234740, guid: 9a4dd4a2e62b8ec4a9d49e0a148a359c, type: 3}
+      propertyPath: intensityCurve.m_Curve.Array.data[2].inSlope
+      value: 3.288005
+      objectReference: {fileID: 0}
+    - target: {fileID: 1322536180667234740, guid: 9a4dd4a2e62b8ec4a9d49e0a148a359c, type: 3}
+      propertyPath: intensityCurve.m_Curve.Array.data[0].outSlope
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1322536180667234740, guid: 9a4dd4a2e62b8ec4a9d49e0a148a359c, type: 3}
+      propertyPath: intensityCurve.m_Curve.Array.data[1].inWeight
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1322536180667234740, guid: 9a4dd4a2e62b8ec4a9d49e0a148a359c, type: 3}
+      propertyPath: intensityCurve.m_Curve.Array.data[1].outSlope
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1322536180667234740, guid: 9a4dd4a2e62b8ec4a9d49e0a148a359c, type: 3}
+      propertyPath: intensityCurve.m_Curve.Array.data[2].inWeight
+      value: 0.07173014
+      objectReference: {fileID: 0}
+    - target: {fileID: 1322536180667234740, guid: 9a4dd4a2e62b8ec4a9d49e0a148a359c, type: 3}
+      propertyPath: intensityCurve.m_Curve.Array.data[2].outSlope
+      value: 3.288005
+      objectReference: {fileID: 0}
+    - target: {fileID: 1322536180667234740, guid: 9a4dd4a2e62b8ec4a9d49e0a148a359c, type: 3}
+      propertyPath: intensityCurve.m_Curve.Array.data[0].outWeight
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1322536180667234740, guid: 9a4dd4a2e62b8ec4a9d49e0a148a359c, type: 3}
+      propertyPath: intensityCurve.m_Curve.Array.data[1].outWeight
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1322536180667234740, guid: 9a4dd4a2e62b8ec4a9d49e0a148a359c, type: 3}
+      propertyPath: intensityCurve.m_Curve.Array.data[1].tangentMode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3372731754556985449, guid: 9a4dd4a2e62b8ec4a9d49e0a148a359c, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -3983,6 +4059,14 @@ PrefabInstance:
     - target: {fileID: 3372731754556985449, guid: 9a4dd4a2e62b8ec4a9d49e0a148a359c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5506944497775594392, guid: 9a4dd4a2e62b8ec4a9d49e0a148a359c, type: 3}
+      propertyPath: m_FalloffIntensity
+      value: 0.335
+      objectReference: {fileID: 0}
+    - target: {fileID: 5506944497775594392, guid: 9a4dd4a2e62b8ec4a9d49e0a148a359c, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6285497184056888174, guid: 9a4dd4a2e62b8ec4a9d49e0a148a359c, type: 3}
       propertyPath: m_Name
