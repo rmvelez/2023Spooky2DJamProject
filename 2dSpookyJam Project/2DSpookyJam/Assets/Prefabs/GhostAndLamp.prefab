@@ -302,7 +302,7 @@ MonoBehaviour:
   patrolRange: 5
   animator: {fileID: 3410409635289493062}
   spriteRenderer: {fileID: 2042963321171769120}
-  lightRange: 0
+  lightRange: 0.75
   lampLit: 0
 --- !u!212 &2042963321171769120
 SpriteRenderer:
@@ -411,8 +411,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: -0.039900005, y: -0.03820002, z: 0}
-    m_Extent: {x: 1.3631, y: 1.6927, z: 0}
+    m_Center: {x: -0.045700014, y: -0.043600023, z: 0}
+    m_Extent: {x: 1.3678999, y: 1.698, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0

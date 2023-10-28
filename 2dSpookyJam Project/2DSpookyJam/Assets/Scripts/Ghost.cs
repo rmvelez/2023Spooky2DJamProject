@@ -124,6 +124,11 @@ public class Ghost : MonoBehaviour
             #endregion animation var setting
 
 
+            Vector2 ignore = new Vector2();
+            if(CheckIfPointIsInLight(transform.position, out ignore))
+            {
+                Debug.Log(transform.parent.gameObject.name +  " ghost is in light " + ignore.ToString());
+            }
         }
         else //if we're not moving
         {
@@ -390,20 +395,20 @@ public class Ghost : MonoBehaviour
     {
         //most likely issues are with local to global point translation, or just plain linear algebra
 
-        Vector2 distToLight = point - (Vector2)lamp.transform.position;
+        Vector2 distToLight = point - (Vector2)lamp.lampLight.transform.position;
         //if the distance to the light is less than how far it should be from the lamp (outer radius times lightrange). everything is squared cause it's faster
         //
         if (distToLight.sqrMagnitude < MathF.Pow(lamp.lampLight.pointLightOuterRadius * lightRange, 2))
         { //sqr magnitude is faster than magnitude because it avoids root operations, just make sure to square everything
-            Debug.Log("point is within light");
+            //Debug.Log("point is within light");
 
-            closestPointOutsideLight = (distToLight.normalized * lightRange ) + (Vector2) lamp.lampLight.transform.position;
+            closestPointOutsideLight = (distToLight.normalized * (lightRange * lamp.lampLight.pointLightOuterRadius) ) + (Vector2) lamp.lampLight.transform.position;
 
             return true;
         }
         else
         {
-            Debug.Log("point is NOT within light");
+            //Debug.Log("point is NOT within light");
 
             closestPointOutsideLight = point;
 
