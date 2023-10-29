@@ -16,6 +16,8 @@ public class Lamp : MonoBehaviour, IInteractable
 
     private float intensity;
 
+    private AudioSource lampSound;
+
     //[SerializeField] private 
 
 
@@ -32,6 +34,8 @@ public class Lamp : MonoBehaviour, IInteractable
 
         gameManager = GameManager.Instance;
         gameManager.numLamps++;
+
+        lampSound = this.gameObject.GetComponent<AudioSource>();
 
     }
 
@@ -55,5 +59,6 @@ public class Lamp : MonoBehaviour, IInteractable
 
         ghost.SetLampLit();
         gameManager.LightLamp();
+        lampSound.Play();
     }
 }
