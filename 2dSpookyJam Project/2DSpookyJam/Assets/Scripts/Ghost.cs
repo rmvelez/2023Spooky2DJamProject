@@ -48,6 +48,8 @@ public class Ghost : MonoBehaviour
     private Vector3 patrolCentre;
     private bool onEdgeOfCircle;
 
+    private AudioSource ghostSound;
+
     //= lampLit ? lastSeenPlayerPos.position : lamp.transform.position;
 
     private enum States
@@ -76,6 +78,8 @@ public class Ghost : MonoBehaviour
 
 
         target = lamp.gameObject.transform.position;
+
+        ghostSound = this.gameObject.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -223,6 +227,7 @@ public class Ghost : MonoBehaviour
                     ghostState = GhostState.hostile; //curious to hostile upon entering inner range
                     target = player.transform.position;
                     currentSpeed = fastSpeed;
+                    ghostSound.Play();
 
                     //GetComponent<SpriteRenderer>().color = Color.green;
 
