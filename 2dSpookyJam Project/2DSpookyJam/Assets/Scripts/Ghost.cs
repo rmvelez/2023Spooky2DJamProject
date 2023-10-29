@@ -18,7 +18,7 @@ public class Ghost : MonoBehaviour
     [Tooltip("theoretically set by referencing GameManager.playerController")]
     [SerializeField] private GameObject player;
     [SerializeField] private Lamp lamp;
-    private Transform lastSeenPlayerPos;
+    private Vector3 lastSeenPlayerPos;
 
     [SerializeField] private float innerRange = 4;
     [SerializeField] private float outerRange = 7;
@@ -45,6 +45,10 @@ public class Ghost : MonoBehaviour
     //private const int AGGRO_UP_DIRECTION = 5;
     //private const int AGGRO_DOWN_DIRECTION = 6;
     
+    private Vector3 patrolCentre;
+    private bool onEdgeOfCircle;
+
+    //= lampLit ? lastSeenPlayerPos.position : lamp.transform.position;
 
     private enum States
     {
@@ -90,12 +94,21 @@ public class Ghost : MonoBehaviour
         Vector2 moveTo = Vector2.MoveTowards(transform.position, target, currentSpeed);
         Vector2 direction = moveTo - (Vector2) transform.position;
 
-        #region animation var setting
+        if (onEdgeOfCircle)
+        {
+            if(!CheckIfPointIsInLight(moveTo, out moveTo))
+            {
+                onEdgeOfCircle = false;
+            }
+        }
 
         if (moveTo.magnitude >= .01)
         {
             this.transform.position = moveTo;
 
+
+
+            #region animation var setting
             if( MathF.Abs( direction.x) > MathF.Abs(direction.y)) //if we're moving horizontally more than vertically
             {
                 animator.SetInteger("movement", SIDE_DIRECTION);
@@ -135,35 +148,35 @@ public class Ghost : MonoBehaviour
             if (ghostState == GhostState.wary) ghostState = GhostState.idle; //could theoretically do this by checking if we've reached our destination?
         }
     }
-    
+
 
     //void FixedUpdate()
     //{
-        /*
-        rigidBody.position += Vector2.MoveTowards(rigidBody.position, target, currentSpeed);
+    /*
+    rigidBody.position += Vector2.MoveTowards(rigidBody.position, target, currentSpeed);
 
 
 
-        if (lampLit) return;
-        switch (state)
-        {
-            case 0: //idle
-            case (int)States.Idle:
-                rigidBody.position += Vector2.MoveTowards(rigidBody.position, target, slowSpeed);
-                break;
-            case 1: //curious
-            case (int)States.Curious:
-                rigidBody.position += Vector2.MoveTowards(rigidBody.position, target, slowSpeed);
-                break;
-            case 2: // hostile?
-            case (int)States.Hostile:
-                rigidBody.position += Vector2.MoveTowards(rigidBody.position, target, fastSpeed);
-                break;
-            case 3:  // wary?
-            case (int)States.Wary:
-                rigidBody.position += Vector2.MoveTowards(rigidBody.position, target, slowSpeed);
-                break;
-        }*/
+    if (lampLit) return;
+    switch (state)
+    {
+        case 0: //idle
+        case (int)States.Idle:
+            rigidBody.position += Vector2.MoveTowards(rigidBody.position, target, slowSpeed);
+            break;
+        case 1: //curious
+        case (int)States.Curious:
+            rigidBody.position += Vector2.MoveTowards(rigidBody.position, target, slowSpeed);
+            break;
+        case 2: // hostile?
+        case (int)States.Hostile:
+            rigidBody.position += Vector2.MoveTowards(rigidBody.position, target, fastSpeed);
+            break;
+        case 3:  // wary?
+        case (int)States.Wary:
+            rigidBody.position += Vector2.MoveTowards(rigidBody.position, target, slowSpeed);
+            break;
+    }*/
 
     //}
 
@@ -201,8 +214,9 @@ public class Ghost : MonoBehaviour
                     //Debug.Log("this should only happen once when player exits outer range");
                     ghostState = GhostState.idle;
                     currentSpeed = slowSpeed;
-                    lastSeenPlayerPos = player.transform;
-                    target = lastSeenPlayerPos.position + (transform.position - lastSeenPlayerPos.position).normalized * innerRange;
+                    lastSeenPlayerPos = player.transform.position;
+                    patrolCentre = lampLit ? player.transform.position : lamp.transform.position;
+                    target = lastSeenPlayerPos + (transform.position - lastSeenPlayerPos).normalized * innerRange;
                 }
                 else if (distanceToPlayer <= innerRange) //player enters inner range
                 {
@@ -220,10 +234,11 @@ public class Ghost : MonoBehaviour
                 if (distanceToPlayer > outerRange) //player exits outer range 
                 {
                     ghostState = GhostState.wary; //hostile to wary upon exiting outer range
-                    lastSeenPlayerPos = player.transform;
+                    lastSeenPlayerPos = player.transform.position;
                     currentSpeed = slowSpeed;
 
-                    target = lastSeenPlayerPos.position;
+                    patrolCentre = lampLit? player.transform.position : lamp.transform.position;
+                    target = lastSeenPlayerPos;
 
                     //GetComponent<SpriteRenderer>().color = Color.white;
 
@@ -250,6 +265,13 @@ public class Ghost : MonoBehaviour
                     currentSpeed = slowSpeed;
                     Patrol();
                     break;
+                }
+                break;
+            case GhostState.fleeing:
+                if((Vector2) transform.position == (Vector2)target)
+                {
+                    patrolCentre = lampLit ? transform.position : lamp.transform.position;
+                    ghostState = GhostState.idle;
                 }
                 break;
         }
@@ -366,13 +388,19 @@ public class Ghost : MonoBehaviour
     //sets target to a new random position within range of the relevant point 
     private void Patrol()
     {
+        onEdgeOfCircle = true;
+
         //if (Vector2.Distance(rigidBody.position, target) >= 0.1f) return; // ALTERNATIVELY: if ((rigidBody.position - target).magnitude >= 0.1f)
         //if (Vector2.Distance(transform.position, target) >= 0.1f) return; // ALTERNATIVELY: if ((rigidBody.position - target).magnitude >= 0.1f)
         
         float bearing = UnityEngine.Random.Range(-Mathf.PI, Mathf.PI);
-        Vector3 patrolCentre = lampLit ? lastSeenPlayerPos.position : lamp.transform.position;
         //Vector2 patrolCentre = lampLit ? lastSeenPlayerPos.position : lamp.transform.position;
         target = new Vector2(patrolCentre.x, patrolCentre.y) + patrolRange * new Vector2(Mathf.Cos(bearing), Mathf.Sin(bearing));
+
+        CheckIfPointIsInLight(target, out target);
+        
+
+        
 
         // ----------------------------------------------------------------
         //                      COME BACK TO THIS:
@@ -393,6 +421,7 @@ public class Ghost : MonoBehaviour
     [Tooltip("checks if the point is within the range of the light. returns closest point not within light as vec2 out var, or a zero vector if it's not within light")]
     private bool CheckIfPointIsInLight(Vector2 point, out Vector2 closestPointOutsideLight)
     {
+
         //most likely issues are with local to global point translation, or just plain linear algebra
 
         Vector2 distToLight = point - (Vector2)lamp.lampLight.transform.position;
