@@ -280,7 +280,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 2775266923552281438}
   hitBoxCollider: {fileID: 199821008946692668}
   light: {fileID: 5506944497775594392}
-  lantern: {fileID: 0}
+  lantern: {fileID: 1322536180667234740}
   playerInput: {fileID: 8371392941504028850}
   playerSpeed: 5
   moveInput: {x: 0, y: 0}
