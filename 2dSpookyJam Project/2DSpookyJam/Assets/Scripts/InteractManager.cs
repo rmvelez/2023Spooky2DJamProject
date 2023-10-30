@@ -87,12 +87,12 @@ public class InteractManager : MonoBehaviour
             //retrieve the first one
             GameObject gameObj = trackedObjects[0];
 
+            //interact only with the first one
+            gameObj.GetComponent<IInteractable>().Interact();
 
             UntrackObject(gameObj);
 
 
-            //interact only with the first one
-            gameObj.GetComponent<IInteractable>().Interact();
 
         }
     }
