@@ -67,7 +67,7 @@ public class Ghost : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        animator.SetFloat("CameraMovement", 1);
+        //animator.SetFloat("CameraMovement", 1);
 
         gameManager = GameManager.Instance;
         //rigidBody = GetComponent<Rigidbody2D>();
