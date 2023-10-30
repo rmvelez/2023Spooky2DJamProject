@@ -1,0 +1,47 @@
+.pauseMenuButton {
+    background-image: url('project://database/Assets/Art/Sprites/Buttons/WhiteButton.png?fileID=21300000&guid=e6f803a23e4aa9b4fb74359a13d79247&type=3#WhiteButton');
+    background-color: rgba(188, 188, 188, 0);
+    -unity-slice-left: 80;
+    width: 629px;
+    height: 141px;
+    color: rgb(255, 255, 255);
+    -unity-background-scale-mode: stretch-to-fill;
+    -unity-slice-top: 19;
+    -unity-slice-right: 81;
+    -unity-slice-bottom: 20;
+    -unity-slice-scale: 1px;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    -unity-font: url('project://database/Assets/TextMesh%20Pro/Fonts/MetalMania-Regular.ttf?fileID=12800000&guid=cda89137266883e458e8f7d2c8b856ed&type=3#MetalMania-Regular');
+    -unity-font-definition: url('project://database/Assets/TextMesh%20Pro/Fonts/MetalMania-Regular-SDF.asset?fileID=11400000&guid=3e8fbcf4eec14ca41809ee1c1825877f&type=2#MetalMania-Regular SDF');
+    font-size: 48px;
+    padding-bottom: 16px;
+    margin-bottom: 28px;
+}
+
+.pauseMenuButton:hover {
+    background-image: url('project://database/Assets/Art/Sprites/Buttons/WhiteButton.png?fileID=21300000&guid=e6f803a23e4aa9b4fb74359a13d79247&type=3#WhiteButton');
+    background-color: rgba(127, 127, 127, 0);
+    -unity-slice-left: 80;
+    width: 629px;
+    height: 110px;
+    -unity-background-scale-mode: stretch-to-fill;
+    -unity-slice-top: 19;
+    -unity-slice-right: 81;
+    -unity-slice-bottom: 20;
+    -unity-slice-scale: 1px;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    -unity-font: url('project://database/Assets/TextMesh%20Pro/Fonts/MetalMania-Regular.ttf?fileID=12800000&guid=cda89137266883e458e8f7d2c8b856ed&type=3#MetalMania-Regular');
+    -unity-font-definition: url('project://database/Assets/TextMesh%20Pro/Fonts/MetalMania-Regular-SDF.asset?fileID=11400000&guid=3e8fbcf4eec14ca41809ee1c1825877f&type=2#MetalMania-Regular SDF');
+    font-size: 48px;
+    padding-bottom: 16px;
+    margin-bottom: 28px;
+    -unity-background-image-tint-color: rgb(237, 255, 246);
+    -unity-text-align: middle-center;
+    color: rgb(255, 255, 255);
+}

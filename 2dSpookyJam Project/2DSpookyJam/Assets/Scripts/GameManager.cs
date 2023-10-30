@@ -108,7 +108,7 @@ public class GameManager : MonoBehaviour
     {
         paused = false;
         Time.timeScale = 1f;
-        onGameResume.Invoke();
+        onGamePause.Invoke();
     }
 
     public void SwitchToScene(string sceneName)
