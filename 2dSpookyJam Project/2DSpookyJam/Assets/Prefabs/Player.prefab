@@ -48,9 +48,9 @@ MonoBehaviour:
   m_ComponentVersion: 1
   m_LightType: 3
   m_BlendStyleIndex: 0
-  m_FalloffIntensity: 0.5
+  m_FalloffIntensity: 0.6
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
+  m_Intensity: 1.5
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 00000000
@@ -72,7 +72,7 @@ MonoBehaviour:
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
-  m_PointLightOuterRadius: 2.7965496
+  m_PointLightOuterRadius: 8
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
@@ -96,14 +96,47 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   light: {fileID: 5506944497775594392}
+  intensityCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2.5646508
+      outSlope: 2.5646508
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.07172995
+    - serializedVersion: 3
+      time: 0.5
+      value: 0.5
+      inSlope: 0.6298168
+      outSlope: 0.6298168
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.08016884
+      outWeight: 0.14978898
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2.294685
+      outSlope: 2.294685
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.08016884
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   intensityMax: 1
   intensityMin: 0
-  outerMax: 5
+  outerMax: 8
   outerMin: 1.75
   lanternOilLevelCurrent: 32.074684
   lanternOilLevelMax: 100
   lanternOilDecreasePerSecond: 4
-  lanternRefillAmount: 30
+  lanternRefillAmount: 50
 --- !u!1 &4404824824134183980
 GameObject:
   m_ObjectHideFlags: 0
@@ -247,6 +280,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 2775266923552281438}
   hitBoxCollider: {fileID: 199821008946692668}
   light: {fileID: 5506944497775594392}
+  lantern: {fileID: 1322536180667234740}
   playerInput: {fileID: 8371392941504028850}
   playerSpeed: 5
   moveInput: {x: 0, y: 0}
@@ -342,11 +376,35 @@ MonoBehaviour:
     m_ActionId: ced9d0a7-7675-4d72-9e3c-781f640c539e
     m_ActionName: Moving/RefillLantern[/Keyboard/r]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5379192006280101408}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: PauseActionPerformed
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: ec47e5b6-a9ed-4216-b8e0-3a0a9dcac4ab
     m_ActionName: Moving/Pause[/Keyboard/escape,/Keyboard/p]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5379192006280101408}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: PauseActionPerformed
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: a54a3283-de03-45d8-93fa-d0b760242dbd
     m_ActionName: PauseMenu/Pause[/Keyboard/escape,/Keyboard/p]
   m_NeverAutoSwitchControlSchemes: 0

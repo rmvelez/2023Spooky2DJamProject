@@ -123,6 +123,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &29469280 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5379192006280101408, guid: 9a4dd4a2e62b8ec4a9d49e0a148a359c, type: 3}
+  m_PrefabInstance: {fileID: 849104590}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89c1eb6abaee5a04ab3bfdb349e1f547, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &386104361
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -169,6 +180,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 930884745922700281, guid: 2b47551750272db43af793e4f6a4b2be, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3139148079544501145, guid: 2b47551750272db43af793e4f6a4b2be, type: 3}
+      propertyPath: target.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7909167485572745303, guid: 2b47551750272db43af793e4f6a4b2be, type: 3}
@@ -286,7 +301,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -615,7 +630,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6285497184056888174, guid: 9a4dd4a2e62b8ec4a9d49e0a148a359c, type: 3}
       propertyPath: m_Name
-      value: Player (1)
+      value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -651,7 +666,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a998cbb9934b3f4dbe9355252e110f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numLitLamps: 0
   paused: 0
   onGamePause:
     m_PersistentCalls:
@@ -659,6 +673,8 @@ MonoBehaviour:
   onGameResume:
     m_PersistentCalls:
       m_Calls: []
+  numLamps: 0
+  numLitLamps: 0
   OilLevel: 100
   lampLightCost: 0
   OilIncrement: 30
@@ -666,7 +682,8 @@ MonoBehaviour:
   oilStartingLevel: 100
   OilLossOverTime: 0
   refillCost: 15
-  playerController: {fileID: 0}
+  playerController: {fileID: 29469280}
+  lantern: {fileID: 1140516315}
 --- !u!4 &1073043230
 Transform:
   m_ObjectHideFlags: 0
@@ -682,6 +699,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1140516315 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1322536180667234740, guid: 9a4dd4a2e62b8ec4a9d49e0a148a359c, type: 3}
+  m_PrefabInstance: {fileID: 849104590}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 961df513baf9ea247b79e898fff56a13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
