@@ -80,6 +80,8 @@ public class Ghost : MonoBehaviour
         target = lamp.gameObject.transform.position;
 
         ghostSound = this.gameObject.GetComponent<AudioSource>();
+
+        patrolCentre = lamp.lampLight.transform.position;
     }
 
     // Update is called once per frame
@@ -94,19 +96,13 @@ public class Ghost : MonoBehaviour
 
         animator.SetBool("isAggro", ghostState == GhostState.hostile);
 
+        float step = currentSpeed * Time.deltaTime * 100;
 
-        Vector2 moveTo = Vector2.MoveTowards(transform.position, target, currentSpeed);
+        Vector2 moveTo = Vector2.MoveTowards(transform.position, target, step);
         Vector2 direction = moveTo - (Vector2) transform.position;
 
-        if (onEdgeOfCircle)
-        {
-            if(!CheckIfPointIsInLight(moveTo, out moveTo))
-            {
-                onEdgeOfCircle = false;
-            }
-        }
 
-        /*
+        
         if (lampLit)//the ghost only runs from the light if the lamp is lit
         {
             if (CheckIfPointIsInLight(moveTo, out Vector2 closestPointOutsideLight)) //if we're about to move into the circle
@@ -127,7 +123,7 @@ public class Ghost : MonoBehaviour
                 } 
             }
 
-        }*/
+        }
 
 
 
@@ -216,7 +212,7 @@ public class Ghost : MonoBehaviour
         switch (ghostState)
         {
             case GhostState.idle: //if we're in idle state
-                if (distanceToPlayer <= outerRange) //player goes from being idle to entering outer circle
+                if (distanceToPlayer <= outerRange && !CheckIfPointIsInLight(player.transform.position, out _)) //player goes from being idle to entering outer circle
                 {
                     ghostState = GhostState.curious;
                     target = player.transform.position;
@@ -247,7 +243,7 @@ public class Ghost : MonoBehaviour
                     patrolCentre = lampLit ? player.transform.position : lamp.transform.position;
                     target = lastSeenPlayerPos + (transform.position - lastSeenPlayerPos).normalized * innerRange;
                 }
-                else if (distanceToPlayer <= innerRange) //player enters inner range
+                else if (distanceToPlayer <= innerRange && !CheckIfPointIsInLight(player.transform.position, out _)) //player enters inner range
                 {
                     ghostState = GhostState.hostile; //curious to hostile upon entering inner range
                     target = player.transform.position;
@@ -277,7 +273,7 @@ public class Ghost : MonoBehaviour
                 target = player.transform.position;
                 break;
             case GhostState.wary: //in wary state (state 3)
-                if (distanceToPlayer <= outerRange) //entering outer range
+                if (distanceToPlayer <= outerRange && !CheckIfPointIsInLight(player.transform.position, out _)) //entering outer range
                 {
                     ghostState = GhostState.hostile; //wary to hostile upon entering outer range 
 
@@ -427,7 +423,12 @@ public class Ghost : MonoBehaviour
         //Vector2 patrolCentre = lampLit ? lastSeenPlayerPos.position : lamp.transform.position;
         target = new Vector2(patrolCentre.x, patrolCentre.y) + patrolRange * new Vector2(Mathf.Cos(bearing), Mathf.Sin(bearing));
 
-        CheckIfPointIsInLight(target, out target);
+
+        if (lampLit)
+        {
+
+            CheckIfPointIsInLight(target, out target);
+        }
         
 
         
