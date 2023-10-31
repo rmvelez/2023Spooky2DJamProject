@@ -4939,7 +4939,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: e65e5e45347d2424e8807f20149781f2, type: 3}
+  m_audioClip: {fileID: 8300000, guid: a11b7d41fdeba8547aa84955c2740a3e, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.75
   m_Pitch: 1
@@ -7268,6 +7268,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   gameTime: 0
+  backGroundMusic: {fileID: 1296274793}
   numLamps: 0
   numLitLamps: 0
   OilLevel: 100

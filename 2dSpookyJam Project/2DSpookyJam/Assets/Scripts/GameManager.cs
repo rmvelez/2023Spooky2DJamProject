@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     public UnityEvent onGameResume;
 
     public float gameTime;
+    [SerializeField] AudioSource backGroundMusic;
 
     [Header("lamps")]
     public int numLamps;
@@ -34,6 +35,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int oilStartingLevel;
     [SerializeField] private float OilLossOverTime;
     [SerializeField] private float refillCost;
+
+
 
     public PlayerController playerController;
     public Lantern lantern;
@@ -75,7 +78,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         gameTime = Time.timeSinceLevelLoad;
-        if(gameTime >= (60 * 5))
+        if(gameTime >= (60 * 10))
         {
             SwitchToScene(LOSESCENE, ScoreKeeper.LossReason.Timeout);
         } 
@@ -108,6 +111,7 @@ public class GameManager : MonoBehaviour
 
         paused = true;
         Time.timeScale = 0f;
+        backGroundMusic.Pause();
         onGamePause.Invoke();
     }
 
@@ -115,6 +119,7 @@ public class GameManager : MonoBehaviour
     {
         paused = false;
         Time.timeScale = 1f;
+        backGroundMusic.UnPause();
         onGamePause.Invoke();
     }
 
