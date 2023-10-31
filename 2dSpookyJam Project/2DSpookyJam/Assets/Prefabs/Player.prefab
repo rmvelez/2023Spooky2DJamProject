@@ -109,22 +109,22 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.07172995
     - serializedVersion: 3
-      time: 0.5
-      value: 0.4988041
-      inSlope: 0.6298168
-      outSlope: 0.6298168
+      time: 0.5537975
+      value: 0.5719173
+      inSlope: 0.23231973
+      outSlope: 0.23231973
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.08016884
-      outWeight: 0.14978898
+      outWeight: 0.11205066
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 2.294685
-      outSlope: 2.294685
+      inSlope: -0.29037055
+      outSlope: -0.29037055
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.08016884
+      inWeight: 0.18203318
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -282,7 +282,7 @@ MonoBehaviour:
   light: {fileID: 5506944497775594392}
   lantern: {fileID: 1322536180667234740}
   playerInput: {fileID: 8371392941504028850}
-  playerSpeed: 5
+  playerSpeed: 6
   moveInput: {x: 0, y: 0}
   playerDirection: 0
   playerAnimator: {fileID: 7302706808608059347}

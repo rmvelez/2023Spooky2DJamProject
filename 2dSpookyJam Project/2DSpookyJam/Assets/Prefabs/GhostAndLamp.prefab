@@ -395,8 +395,8 @@ MonoBehaviour:
   lamp: {fileID: 7244867549910600660}
   innerRange: 5
   outerRange: 9
-  fastSpeed: 0.025
-  slowSpeed: 0.0125
+  fastSpeed: 0.02
+  slowSpeed: 0.01
   patrolRange: 5
   animator: {fileID: 3410409635289493062}
   spriteRenderer: {fileID: 2042963321171769120}
@@ -444,7 +444,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: eb8775056cb44de42986ebb73d7fdb1d, type: 3}
-  m_Color: {r: 0.41037738, g: 1, b: 0.7260194, a: 0.7372549}
+  m_Color: {r: 0.4117647, g: 1, b: 0.7254902, a: 0.7372549}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -488,11 +488,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ComponentVersion: 1
-  m_LightType: 1
+  m_LightType: 3
   m_BlendStyleIndex: 0
-  m_FalloffIntensity: 0.5
-  m_Color: {r: 1, g: 1, b: 1, a: 0.1254902}
-  m_Intensity: 0.5
+  m_FalloffIntensity: 0.288
+  m_Color: {r: 0.4117647, g: 1, b: 0.7254902, a: 0.1254902}
+  m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 00000000
@@ -509,12 +509,12 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: -0.040849984, y: -0.042100012, z: 0}
-    m_Extent: {x: 1.3584499, y: 1.7017, z: 0}
+    m_Center: {x: -0.037100017, y: -0.035400033, z: 0}
+    m_Extent: {x: 1.3632, y: 1.6967, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
-  m_PointLightInnerRadius: 0
-  m_PointLightOuterRadius: 2
+  m_PointLightInnerRadius: 2.36
+  m_PointLightOuterRadius: 3.6
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
@@ -529,15 +529,11 @@ MonoBehaviour:
   - {x: -0.24225575, y: -1.1819786, z: 0}
   - {x: 0.17800607, y: -1.2391148, z: 0}
   - {x: 0.6728842, y: -1.2137026, z: 0}
-  - {x: 0.81679577, y: -0.85942835, z: 0}
-  - {x: 0.6051996, y: -1.0704856, z: 0}
-  - {x: 0.34409627, y: -1.0493088, z: 0}
-  - {x: 0.25669903, y: -0.76695323, z: 0}
-  - {x: 0.3483306, y: -0.49191022, z: 0}
-  - {x: 0.16676372, y: -0.12616259, z: 0}
-  - {x: 0.40284517, y: -0.22734001, z: 0}
-  - {x: 0.6524018, y: -0.20085223, z: 0}
-  - {x: 0.6951349, y: 0.10991817, z: 0}
+  - {x: 0.9778575, y: -0.9668076, z: 0}
+  - {x: 1.0688813, y: -0.5929673, z: 0}
+  - {x: 0.5504893, y: -0.56288713, z: 0}
+  - {x: 1.0013663, y: -0.3082281, z: 0}
+  - {x: 1.0306834, y: 0.17702512, z: 0}
   - {x: 0.41955608, y: 0.2823196, z: 0}
   - {x: 0.06227832, y: 0.43023524, z: 0}
   - {x: 0.2736439, y: 0.7590226, z: 0}
