@@ -3347,11 +3347,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4075111617372379805, guid: 3d64b9f23b96e0444a6372281ff53fcf, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -43
+      value: -50.9
       objectReference: {fileID: 0}
     - target: {fileID: 4075111617372379805, guid: 3d64b9f23b96e0444a6372281ff53fcf, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 55.4
+      value: 22.1
       objectReference: {fileID: 0}
     - target: {fileID: 4075111617372379805, guid: 3d64b9f23b96e0444a6372281ff53fcf, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3906,11 +3906,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4075111617372379805, guid: 3d64b9f23b96e0444a6372281ff53fcf, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -78
+      value: -52.1
       objectReference: {fileID: 0}
     - target: {fileID: 4075111617372379805, guid: 3d64b9f23b96e0444a6372281ff53fcf, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 46.2
+      value: 52.5
       objectReference: {fileID: 0}
     - target: {fileID: 4075111617372379805, guid: 3d64b9f23b96e0444a6372281ff53fcf, type: 3}
       propertyPath: m_LocalPosition.z
@@ -7271,7 +7271,7 @@ MonoBehaviour:
   numLamps: 0
   numLitLamps: 0
   OilLevel: 100
-  lampLightCost: 0
+  lampLightCost: 10
   OilIncrement: 30
   oilMax: 100
   oilStartingLevel: 100

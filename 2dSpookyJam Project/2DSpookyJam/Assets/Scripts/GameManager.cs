@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -83,7 +84,13 @@ public class GameManager : MonoBehaviour
     public void LightLamp()
     {
         numLitLamps++;
-        OilLevel -= lampLightCost;
+        lantern.lanternOilLevelCurrent += lampLightCost;
+
+        //MathF.Max(lantern.lanternOilLevelCurrent, 0);
+        //MathF.Min(lantern.lanternOilLevelCurrent, lantern.lanternOilLevelMax);
+
+        lantern.lanternOilLevelCurrent =Mathf.Min(lantern.lanternOilLevelCurrent+  lampLightCost, lantern.lanternOilLevelMax);
+        
         if(numLitLamps == numLamps)
         {
             SwitchToScene(WINSCENE);
