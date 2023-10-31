@@ -106,6 +106,31 @@ public class Ghost : MonoBehaviour
             }
         }
 
+        /*
+        if (lampLit)//the ghost only runs from the light if the lamp is lit
+        {
+            if (CheckIfPointIsInLight(moveTo, out Vector2 closestPointOutsideLight)) //if we're about to move into the circle
+            {
+                if(ghostState == GhostState.hostile || ghostState == GhostState.curious) //if we're chasing the player
+                {
+                    if (CheckIfPointIsInLight(target, out _))
+                    { //if we're going toa point in the light... 
+                        //the point is impossible to reach, get out of the light and find a new target, the closest point to us that's outside of the light
+                        ghostState = GhostState.fleeing;
+                        patrolCentre = closestPointOutsideLight;
+                        target = closestPointOutsideLight;
+                    }
+                    else
+                    {//if the target isn't in the light, then just go around the light to get to them                 
+                        moveTo = closestPointOutsideLight;
+                    }
+                } 
+            }
+
+        }*/
+
+
+
         if (moveTo.magnitude >= .01)
         {
             this.transform.position = moveTo;
