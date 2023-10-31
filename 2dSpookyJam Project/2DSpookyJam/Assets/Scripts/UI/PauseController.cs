@@ -25,6 +25,7 @@ public class PauseController : MonoBehaviour
         mainMenuButton = root.Q<Button>("MainMenuButton");
 
         gameManager.onGamePause.AddListener(pauseMenuPause);
+        gameManager.onGameResume.AddListener(pauseMenuPause);
 
 
         resumeButton.clicked += resumeFromPause;
