@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Collider2D hitBoxCollider;
-    [SerializeField] private Light2D light; //spotlight?
+    [SerializeField] private Light2D spotLight; //spotlight?
 
     [SerializeField] private Lantern lantern;
 
@@ -25,6 +25,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerInput playerInput;
     [SerializeField] private float playerSpeed;
     [SerializeField] private Vector2 moveInput;
+    [SerializeField] private Vector2 prevInput;
+
     //public bool touchingWall = false;
     enum PlayerDirection { Left, Right, Up, Down };
     [SerializeField] private PlayerDirection playerDirection;
@@ -161,15 +163,35 @@ public class PlayerController : MonoBehaviour
         if (context.started)
         {
             moveInput.y = context.ReadValue<float>();
-            moveInput.x = 0;
+            prevInput.y = context.ReadValue<float>();
+            moveInput.x = 0; //move input gets overridden, prev input does not
         }
 
         if (context.canceled)
         {
+            moveInput.x = prevInput.x; // set horizontal to how we were moving before this
+            prevInput.y = 0; //remove vertical inputs on both
             moveInput.y = 0;
         }
     }
 
+
+    public void MoverHorizActionPerformed(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            moveInput.x = context.ReadValue<float>();
+            prevInput.x = context.ReadValue<float>();
+            moveInput.y = 0;
+        }
+
+        if (context.canceled)
+        {
+            moveInput.y = prevInput.y;
+            moveInput.x = 0;
+            prevInput.x = 0;
+        }
+    }
 
     public void PauseActionPerformed(InputAction.CallbackContext context)
     {
@@ -184,20 +206,6 @@ public class PlayerController : MonoBehaviour
                 gameManager.PauseGame();
             }
 
-        }
-    }
-
-    public void MoverHorizActionPerformed(InputAction.CallbackContext context)
-    {
-        if (context.started)
-        {
-            moveInput.x = context.ReadValue<float>();
-            moveInput.y = 0;
-        }
-
-        if (context.canceled)
-        {
-            moveInput.x = 0;
         }
     }
     #endregion input actions

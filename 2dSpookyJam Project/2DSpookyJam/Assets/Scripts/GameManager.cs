@@ -120,7 +120,7 @@ public class GameManager : MonoBehaviour
         paused = false;
         Time.timeScale = 1f;
         backGroundMusic.UnPause();
-        onGamePause.Invoke();
+        onGameResume.Invoke();
     }
 
     public void SwitchToScene(string sceneName)

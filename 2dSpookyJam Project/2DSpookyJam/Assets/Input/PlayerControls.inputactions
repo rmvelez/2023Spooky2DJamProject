@@ -197,6 +197,17 @@
                 },
                 {
                     "name": "",
+                    "id": "6a8c5337-283b-4446-abcb-259e92e8f0d0",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RefillLantern",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "dc51c37a-d043-4b6f-a390-507b2a90b718",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
