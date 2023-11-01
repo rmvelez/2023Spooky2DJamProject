@@ -3057,7 +3057,7 @@ MonoBehaviour:
     Use the R or Q Key to
     refill your Lantern
 
-    Press P or Escape Key to Pause the Game'
+    Press the P Key to Pause the Game'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: eafea52b20c7d7444aeec7e8df1e033c, type: 2}
   m_sharedMaterial: {fileID: -8591331477396910553, guid: eafea52b20c7d7444aeec7e8df1e033c, type: 2}
