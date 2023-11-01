@@ -298,6 +298,7 @@ public class Ghost : MonoBehaviour
             case GhostState.wary: //in wary state (state 3)
                 if (distanceToPlayer <= outerRange && !(playerIsInLight && lampLit)) //entering outer range
                 {
+                    ghostSound.Play();
                     ghostState = GhostState.hostile; //wary to hostile upon entering outer range 
 
                     currentSpeed = fastSpeed;   
@@ -468,7 +469,12 @@ public class Ghost : MonoBehaviour
     public void SetLampLit()
     {
         lampLit = true;
-        Debug.Log("ghost received lamp lit signal");
+
+        if (ghostSound.isPlaying)
+        {
+            ghostSound.Stop();
+        }
+
         // target = lamp.transform.position; //do we want to set this? I thought when the lamp gets lit the ghost would go into idle and start patrolling randomly
         //target = lamp.position;
     }
