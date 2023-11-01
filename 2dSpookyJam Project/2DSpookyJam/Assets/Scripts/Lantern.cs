@@ -7,7 +7,10 @@ using UnityEngine.Rendering.Universal;
 
 public class Lantern : MonoBehaviour
 {
-    [SerializeField] private Light2D light;       
+    [SerializeField] private Light2D light;
+
+    [SerializeField] private AnimationCurve intensityCurve;
+
     [SerializeField] private float intensityMax;
     [SerializeField] private float intensityMin = 0;
 
@@ -34,9 +37,14 @@ public class Lantern : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        light.intensity = (lanternOilLevelCurrent/ lanternOilLevelMax) * intensityMax;
-        light.pointLightOuterRadius= ((lanternOilLevelCurrent / lanternOilLevelMax) * outerRange ) + outerMin;
+        //light.intensity = (lanternOilLevelCurrent/ lanternOilLevelMax) * intensityMax;
+        light.intensity  = intensityCurve.Evaluate(lanternOilLevelCurrent / lanternOilLevelMax) * intensityMax;
+
+        //light.pointLightOuterRadius= ((lanternOilLevelCurrent / lanternOilLevelMax) * outerRange ) + outerMin;
+        light.pointLightOuterRadius = (intensityCurve.Evaluate(lanternOilLevelCurrent / lanternOilLevelMax)  *outerRange) +outerMin;
+
         lanternOilLevelCurrent -= lanternOilDecreasePerSecond * Time.deltaTime;
+
             //Mathf.Max( lanternOilLevelCurrent-  lanternOilDecreasePerSecond * Time.deltaTime ,  0); 
         if(lanternOilLevelCurrent <= 0)
         {

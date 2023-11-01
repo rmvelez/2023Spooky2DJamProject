@@ -69,7 +69,7 @@ public class InteractManager : MonoBehaviour
     }
 
 
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerExit2D(Collider2D other)
     {
         //Debug.Log("untrackign object");
         // If the object exiting the trigger is an interactable object
@@ -87,12 +87,12 @@ public class InteractManager : MonoBehaviour
             //retrieve the first one
             GameObject gameObj = trackedObjects[0];
 
+            //interact only with the first one
 
             UntrackObject(gameObj);
-
-
-            //interact only with the first one
             gameObj.GetComponent<IInteractable>().Interact();
+
+
 
         }
     }
