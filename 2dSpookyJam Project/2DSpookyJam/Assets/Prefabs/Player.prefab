@@ -282,7 +282,7 @@ MonoBehaviour:
   light: {fileID: 5506944497775594392}
   lantern: {fileID: 1322536180667234740}
   playerInput: {fileID: 8371392941504028850}
-  playerSpeed: 6
+  playerSpeed: 7
   moveInput: {x: 0, y: 0}
   playerDirection: 0
   playerAnimator: {fileID: 7302706808608059347}
