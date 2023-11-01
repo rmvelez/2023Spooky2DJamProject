@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,6 +19,7 @@ public class GameManager : MonoBehaviour
     public UnityEvent onGameResume;
 
     public float gameTime;
+    [SerializeField] AudioSource backGroundMusic;
 
     [Header("lamps")]
     public int numLamps;
@@ -33,6 +35,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int oilStartingLevel;
     [SerializeField] private float OilLossOverTime;
     [SerializeField] private float refillCost;
+
+
 
     public PlayerController playerController;
     public Lantern lantern;
@@ -74,7 +78,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         gameTime = Time.timeSinceLevelLoad;
-        if(gameTime >= (60 * 5))
+        if(gameTime >= (60 * 10))
         {
             SwitchToScene(LOSESCENE, ScoreKeeper.LossReason.Timeout);
         } 
@@ -83,7 +87,13 @@ public class GameManager : MonoBehaviour
     public void LightLamp()
     {
         numLitLamps++;
-        OilLevel -= lampLightCost;
+        lantern.lanternOilLevelCurrent += lampLightCost;
+
+        //MathF.Max(lantern.lanternOilLevelCurrent, 0);
+        //MathF.Min(lantern.lanternOilLevelCurrent, lantern.lanternOilLevelMax);
+
+        lantern.lanternOilLevelCurrent =Mathf.Min(lantern.lanternOilLevelCurrent+  lampLightCost, lantern.lanternOilLevelMax);
+        
         if(numLitLamps == numLamps)
         {
             SwitchToScene(WINSCENE);
@@ -101,6 +111,7 @@ public class GameManager : MonoBehaviour
 
         paused = true;
         Time.timeScale = 0f;
+        backGroundMusic.Pause();
         onGamePause.Invoke();
     }
 
@@ -108,6 +119,7 @@ public class GameManager : MonoBehaviour
     {
         paused = false;
         Time.timeScale = 1f;
+        backGroundMusic.UnPause();
         onGamePause.Invoke();
     }
 

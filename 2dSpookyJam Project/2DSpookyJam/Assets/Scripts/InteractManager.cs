@@ -62,10 +62,11 @@ public class InteractManager : MonoBehaviour
             //then track it
             TrackObject(other.gameObject);
 
-        } else if (other.CompareTag("Ghost"))
-        {
-            gameManager.SwitchToScene(GameManager.LOSESCENE, ScoreKeeper.LossReason.Ghost);
-        }
+        } 
+        //else if (other.CompareTag("Ghost"))
+        //{
+        //    gameManager.SwitchToScene(GameManager.LOSESCENE, ScoreKeeper.LossReason.Ghost);
+        //}
     }
 
 

@@ -228,5 +228,16 @@ public class PlayerController : MonoBehaviour
     }
     #endregion action maps
 
+    #region collisions
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Ghost"))
+        {
+            gameManager.SwitchToScene(GameManager.LOSESCENE, ScoreKeeper.LossReason.Ghost);
+
+        }
+    }
+
+    #endregion collisions
 }
