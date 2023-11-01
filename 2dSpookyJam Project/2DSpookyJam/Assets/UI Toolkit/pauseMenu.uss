@@ -23,10 +23,8 @@
 
 .pauseMenuButton:hover {
     background-image: url('project://database/Assets/Art/Sprites/Buttons/WhiteButton.png?fileID=21300000&guid=e6f803a23e4aa9b4fb74359a13d79247&type=3#WhiteButton');
-    background-color: rgba(127, 127, 127, 0);
+    background-color: rgba(203, 255, 201, 0);
     -unity-slice-left: 80;
-    width: 629px;
-    height: 110px;
     -unity-background-scale-mode: stretch-to-fill;
     -unity-slice-top: 19;
     -unity-slice-right: 81;
@@ -41,7 +39,7 @@
     font-size: 48px;
     padding-bottom: 16px;
     margin-bottom: 28px;
-    -unity-background-image-tint-color: rgb(237, 255, 246);
+    -unity-background-image-tint-color: rgb(203, 255, 201);
     -unity-text-align: middle-center;
     color: rgb(255, 255, 255);
 }
