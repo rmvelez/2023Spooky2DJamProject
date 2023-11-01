@@ -95,7 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 961df513baf9ea247b79e898fff56a13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  light: {fileID: 5506944497775594392}
+  lampLight: {fileID: 5506944497775594392}
   intensityCurve:
     serializedVersion: 2
     m_Curve:
@@ -130,7 +130,6 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   intensityMax: 1
-  intensityMin: 0
   outerMax: 8
   outerMin: 1.75
   lanternOilLevelCurrent: 32.074684
@@ -279,11 +278,12 @@ MonoBehaviour:
   rigidBody: {fileID: 1946095497449126102}
   spriteRenderer: {fileID: 2775266923552281438}
   hitBoxCollider: {fileID: 199821008946692668}
-  light: {fileID: 5506944497775594392}
+  spotLight: {fileID: 0}
   lantern: {fileID: 1322536180667234740}
   playerInput: {fileID: 8371392941504028850}
   playerSpeed: 7
   moveInput: {x: 0, y: 0}
+  prevInput: {x: 0, y: 0}
   playerDirection: 0
   playerAnimator: {fileID: 7302706808608059347}
 --- !u!114 &8371392941504028850

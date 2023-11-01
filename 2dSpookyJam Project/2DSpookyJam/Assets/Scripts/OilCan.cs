@@ -21,7 +21,6 @@ public class OilCan : MonoBehaviour , IInteractable
 
     public void Interact()
     {
-        Debug.Log("called");
         float newOilLevel = gameManager.OilLevel + oilIncreaseLevel;
         float oilMax = gameManager.oilMax;
         gameManager.OilLevel = newOilLevel <= oilMax ? newOilLevel : oilMax;

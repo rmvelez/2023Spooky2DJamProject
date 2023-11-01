@@ -46,7 +46,6 @@ public class Ghost : MonoBehaviour
     //private const int AGGRO_DOWN_DIRECTION = 6;
     
     private Vector3 patrolCentre;
-    private bool onEdgeOfCircle;
 
     private AudioSource ghostSound;
 
@@ -310,7 +309,6 @@ public class Ghost : MonoBehaviour
                 }
                 if(Vector2.Distance(transform.position, target) < .1)
                 {
-                    Debug.Log("ping");
                     ghostState = GhostState.idle;
                     currentSpeed = slowSpeed;
                     Patrol();
@@ -439,7 +437,6 @@ public class Ghost : MonoBehaviour
     //sets target to a new random position within range of the relevant point 
     private void Patrol()
     {
-        onEdgeOfCircle = true;
 
         //if (Vector2.Distance(rigidBody.position, target) >= 0.1f) return; // ALTERNATIVELY: if ((rigidBody.position - target).magnitude >= 0.1f)
         //if (Vector2.Distance(transform.position, target) >= 0.1f) return; // ALTERNATIVELY: if ((rigidBody.position - target).magnitude >= 0.1f)
