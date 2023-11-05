@@ -24,12 +24,29 @@ public class InteractManager : MonoBehaviour
 
     [SerializeField] private Collider2D[] interactableColliders;
 
+    IEnumerator objectFinderCoroutine;
+    bool lookingForObjects = true;
+
+
     // Start is called before the first frame update
     void Start()
     {
         gameManager = GameManager.Instance;
 
+        objectFinderCoroutine = LookForObjectsCoroutine();
+        StartCoroutine(objectFinderCoroutine);
     }
+
+    private IEnumerator LookForObjectsCoroutine()
+    {
+        WaitForSeconds tenPerSecond = new WaitForSeconds(0.1f);
+        while (lookingForObjects)
+        {
+            LookForObjects();
+            yield return tenPerSecond;
+        }
+    }
+
 
     private void Update()
     {
@@ -118,16 +135,17 @@ public class InteractManager : MonoBehaviour
         //make sure we still have objects
         if (trackedObjects.Count > 0)
         {
-            //retrieve the first one
-            GameObject gameObj = trackedObjects[0];
 
-            //interact only with the first one
+            if (trackedObjects[0] != null)
+            {
+                //retrieve the first one
+                GameObject gameObj = trackedObjects[0];
 
-            UntrackObject(gameObj);
-            gameObj.GetComponent<IInteractable>().Interact();
+                //interact only with the first one
 
-
-
+                UntrackObject(gameObj);
+                gameObj.GetComponent<IInteractable>().Interact();
+            }
         }
     }
 
