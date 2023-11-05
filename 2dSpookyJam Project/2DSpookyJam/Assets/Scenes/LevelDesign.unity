@@ -8528,7 +8528,7 @@ MonoBehaviour:
   numLamps: 0
   numLitLamps: 0
   OilLevel: 100
-  lampLightCost: 10
+  lampLightCost: 20
   OilIncrement: 30
   oilMax: 100
   oilStartingLevel: 100

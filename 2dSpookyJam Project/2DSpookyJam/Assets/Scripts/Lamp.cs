@@ -52,13 +52,16 @@ public class Lamp : MonoBehaviour, IInteractable
 
     public void Light()
     {
-        isLit = true;
-        lampLight.intensity = intensity;
+        if (!isLit)
+        {
+            isLit = true;
+            lampLight.intensity = intensity;
 
-        animator.SetBool("isLit", true);
+            animator.SetBool("isLit", true);
 
-        ghost.SetLampLit();
-        gameManager.LightLamp();
-        lampSound.Play();
+            ghost.SetLampLit();
+            gameManager.LightLamp();
+            lampSound.Play();
+        }        
     }
 }
