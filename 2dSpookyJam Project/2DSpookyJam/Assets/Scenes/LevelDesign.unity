@@ -1800,6 +1800,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4986347587348805137, guid: 2b47551750272db43af793e4f6a4b2be, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5863539906250791863, guid: 2b47551750272db43af793e4f6a4b2be, type: 3}
       propertyPath: m_LocalBounds.m_Center.x
       value: -0.04825002
@@ -4597,6 +4601,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4082219650228719095, guid: 9a4dd4a2e62b8ec4a9d49e0a148a359c, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4404824824134183980, guid: 9a4dd4a2e62b8ec4a9d49e0a148a359c, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5506944497775594392, guid: 9a4dd4a2e62b8ec4a9d49e0a148a359c, type: 3}
       propertyPath: m_FalloffIntensity
       value: 0.335
@@ -4608,6 +4620,10 @@ PrefabInstance:
     - target: {fileID: 6285497184056888174, guid: 9a4dd4a2e62b8ec4a9d49e0a148a359c, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 6285497184056888174, guid: 9a4dd4a2e62b8ec4a9d49e0a148a359c, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
