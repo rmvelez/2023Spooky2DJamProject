@@ -21,10 +21,35 @@ public class InteractManager : MonoBehaviour
 
     private GameManager gameManager;
 
+    private Collider2D[] sphere;
+
     // Start is called before the first frame update
     void Start()
     {
         gameManager = GameManager.Instance;
+
+    }
+
+    private void Update()
+    {
+        LookForObjects();
+    }
+
+    private void LookForObjects()
+    {
+        sphere = Physics2D.OverlapCircleAll(transform.position, 1.75f, 3);
+
+        foreach(Collider2D other in sphere)
+        {
+            if (other.CompareTag("Interactable"))
+            {
+                Debug.Log("trigger enter");
+                //then track it
+                TrackObject(other.gameObject);
+            }
+
+        }
+
     }
 
     public void InteractActionPerformed(InputAction.CallbackContext context)
@@ -98,9 +123,4 @@ public class InteractManager : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
