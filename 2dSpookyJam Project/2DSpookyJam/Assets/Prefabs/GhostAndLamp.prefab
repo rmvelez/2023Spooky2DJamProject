@@ -96,7 +96,6 @@ GameObject:
   - component: {fileID: 7244867549910600660}
   - component: {fileID: 3564598398552096559}
   - component: {fileID: 1656814518508420796}
-  - component: {fileID: 157628733936298968}
   m_Layer: 0
   m_Name: Lamp
   m_TagString: Interactable
@@ -341,41 +340,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!70 &157628733936298968
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4986347587348805137}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -1.28}
-  m_Size: {x: 0.5, y: 1}
-  m_Direction: 1
 --- !u!1 &6470181893697632344
 GameObject:
   m_ObjectHideFlags: 0
@@ -390,7 +354,7 @@ GameObject:
   - component: {fileID: 3410409635289493062}
   - component: {fileID: 5863539906250791863}
   - component: {fileID: 1757726467948133274}
-  - component: {fileID: 5406135897322251395}
+  - component: {fileID: 8427144192057986707}
   m_Layer: 0
   m_Name: Ghost
   m_TagString: Ghost
@@ -674,8 +638,8 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!58 &5406135897322251395
-CircleCollider2D:
+--- !u!61 &8427144192057986707
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -703,12 +667,22 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.41}
+  m_Offset: {x: -0.1, y: -0.78153676}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.92, y: 2.56}
+    newSize: {x: 1.92, y: 2.56}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
-  m_Radius: 0.9
+  m_Size: {x: 0.9, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &7909167485572745303
 GameObject:
   m_ObjectHideFlags: 0

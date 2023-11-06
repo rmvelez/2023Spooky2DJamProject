@@ -9,12 +9,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Rigidbody2D rigidBody;
 
     [SerializeField] private SpriteRenderer spriteRenderer;
-    [SerializeField] private Collider2D hitBoxCollider;
     [SerializeField] private Light2D spotLight; //spotlight?
 
     [SerializeField] private Lantern lantern;
-
-
 
     [Header("movement")]
 
@@ -51,14 +48,13 @@ public class PlayerController : MonoBehaviour
             Debug.LogError("player controller added a gameObject that doesn't have a PlayerInput on it -- which is definitely a bug");
         }
         movementAnimationDirection = IDLE_DOWN_DIRECTION;
-        rigidBody.interpolation = RigidbodyInterpolation2D.Extrapolate;
+        rigidBody.interpolation = RigidbodyInterpolation2D.Interpolate;
     }
 
     // Start is called before the first frame update
     void Start()
     {
         gameManager = GameManager.Instance;
-
 
         gameManager.onGamePause.AddListener(SwitchActionMapUI);
         gameManager.onGameResume.AddListener(SwitchActionMapPlayer);
@@ -232,16 +228,4 @@ public class PlayerController : MonoBehaviour
     }
     #endregion action maps
 
-    #region collisions
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Ghost"))
-        {
-            gameManager.SwitchToScene(GameManager.LOSESCENE, ScoreKeeper.LossReason.Ghost);
-
-        }
-    }
-
-    #endregion collisions
 }

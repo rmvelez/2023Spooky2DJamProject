@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -21,10 +22,52 @@ public class InteractManager : MonoBehaviour
 
     private GameManager gameManager;
 
+    [SerializeField] private Collider2D[] interactableColliders;
+
+    IEnumerator objectFinderCoroutine;
+    bool lookingForObjects = true;
+
+
     // Start is called before the first frame update
     void Start()
     {
         gameManager = GameManager.Instance;
+
+        //objectFinderCoroutine = LookForObjectsCoroutine();
+        //StartCoroutine(objectFinderCoroutine);
+    }
+
+    private IEnumerator LookForObjectsCoroutine()
+    {
+        WaitForSeconds tenPerSecond = new WaitForSeconds(0.1f);
+        while (lookingForObjects)
+        {
+            LookForObjects();
+            yield return tenPerSecond;
+        }
+    }
+
+
+    private void Update()
+    {
+        //LookForObjects();
+    }
+
+    private void LookForObjects()
+    {
+        trackedObjects.Clear();
+        interactableColliders = Physics2D.OverlapCircleAll(transform.position, 1.75f, 5);
+
+        foreach(Collider2D other in interactableColliders)
+        {
+            if (other.CompareTag("Interactable"))
+            {
+                //then track it
+                TrackObject(other.gameObject);
+            }
+        }
+
+
     }
 
     public void InteractActionPerformed(InputAction.CallbackContext context)
@@ -38,10 +81,14 @@ public class InteractManager : MonoBehaviour
 
     private void TrackObject(GameObject objectToTrack)
     {
-        
-        trackedObjects.Add(objectToTrack);
+        if (!trackedObjects.Contains(objectToTrack))
+        {
+            trackedObjects.Add(objectToTrack);
+        }
         
     }
+
+   
 
     //public so we can call it from another object after we "destroy" this one
     public void UntrackObject(GameObject trackedObject)
@@ -53,6 +100,9 @@ public class InteractManager : MonoBehaviour
         }
     }
 
+    #region old collision code
+
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         //if an interactable enters our trigger area
@@ -62,13 +112,12 @@ public class InteractManager : MonoBehaviour
             //then track it
             TrackObject(other.gameObject);
 
-        } 
+        }
         //else if (other.CompareTag("Ghost"))
         //{
         //    gameManager.SwitchToScene(GameManager.LOSESCENE, ScoreKeeper.LossReason.Ghost);
         //}
     }
-
 
     private void OnTriggerExit2D(Collider2D other)
     {
@@ -79,28 +128,25 @@ public class InteractManager : MonoBehaviour
             UntrackObject(other.gameObject);
         }
     }
+    #endregion old collision code
 
     public void CallInteract()
     {
         //make sure we still have objects
         if (trackedObjects.Count > 0)
         {
-            //retrieve the first one
-            GameObject gameObj = trackedObjects[0];
 
-            //interact only with the first one
+            if (trackedObjects[0] != null)
+            {
+                //retrieve the first one
+                GameObject gameObj = trackedObjects[0];
 
-            UntrackObject(gameObj);
-            gameObj.GetComponent<IInteractable>().Interact();
+                //interact only with the first one
 
-
-
+                UntrackObject(gameObj);
+                gameObj.GetComponent<IInteractable>().Interact();
+            }
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

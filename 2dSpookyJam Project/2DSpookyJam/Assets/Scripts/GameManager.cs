@@ -87,7 +87,7 @@ public class GameManager : MonoBehaviour
     public void LightLamp()
     {
         numLitLamps++;
-        lantern.lanternOilLevelCurrent += lampLightCost;
+        //lantern.lanternOilLevelCurrent += lampLightCost;
 
         //MathF.Max(lantern.lanternOilLevelCurrent, 0);
         //MathF.Min(lantern.lanternOilLevelCurrent, lantern.lanternOilLevelMax);
@@ -103,7 +103,10 @@ public class GameManager : MonoBehaviour
 
     public void RefillLantern()
     {
-        OilLevel = Mathf.Max(OilLevel- refillCost, 0);
+        if(OilLevel > 0)
+        {
+            OilLevel = Mathf.Max(OilLevel- refillCost, 0);
+        }
     }
 
     public void PauseGame()
