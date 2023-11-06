@@ -9,12 +9,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Rigidbody2D rigidBody;
 
     [SerializeField] private SpriteRenderer spriteRenderer;
-    [SerializeField] private Collider2D hitBoxCollider;
     [SerializeField] private Light2D spotLight; //spotlight?
 
     [SerializeField] private Lantern lantern;
-
-
 
     [Header("movement")]
 
@@ -58,7 +55,6 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         gameManager = GameManager.Instance;
-
 
         gameManager.onGamePause.AddListener(SwitchActionMapUI);
         gameManager.onGameResume.AddListener(SwitchActionMapPlayer);
@@ -232,16 +228,4 @@ public class PlayerController : MonoBehaviour
     }
     #endregion action maps
 
-    #region collisions
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Ghost"))
-        {
-            gameManager.SwitchToScene(GameManager.LOSESCENE, ScoreKeeper.LossReason.Ghost);
-
-        }
-    }
-
-    #endregion collisions
 }
