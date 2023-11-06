@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 
 public class InteractManager : MonoBehaviour
 {
-    //[SerializeField] private Collider2D InteractCollider;
+    [SerializeField] private Collider2D InteractCollider;
 
 
     List<GameObject> trackedObjects = new List<GameObject>();
@@ -33,8 +33,8 @@ public class InteractManager : MonoBehaviour
     {
         gameManager = GameManager.Instance;
 
-        objectFinderCoroutine = LookForObjectsCoroutine();
-        StartCoroutine(objectFinderCoroutine);
+        //objectFinderCoroutine = LookForObjectsCoroutine();
+        //StartCoroutine(objectFinderCoroutine);
     }
 
     private IEnumerator LookForObjectsCoroutine()
@@ -50,7 +50,7 @@ public class InteractManager : MonoBehaviour
 
     private void Update()
     {
-        LookForObjects();
+        //LookForObjects();
     }
 
     private void LookForObjects()
@@ -100,35 +100,35 @@ public class InteractManager : MonoBehaviour
         }
     }
 
-#region old collision code
+    #region old collision code
 
 
-    //private void OnTriggerEnter2D(Collider2D other)
-    //{
-    //    //if an interactable enters our trigger area
-    //    if (other.CompareTag("Interactable"))
-    //    {
-    //        //Debug.Log("trigger enter");
-    //        //then track it
-    //        TrackObject(other.gameObject);
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        //if an interactable enters our trigger area
+        if (other.CompareTag("Interactable"))
+        {
+            //Debug.Log("trigger enter");
+            //then track it
+            TrackObject(other.gameObject);
 
-    //    } 
-    //    //else if (other.CompareTag("Ghost"))
-    //    //{
-    //    //    gameManager.SwitchToScene(GameManager.LOSESCENE, ScoreKeeper.LossReason.Ghost);
-    //    //}
-    //}
+        }
+        //else if (other.CompareTag("Ghost"))
+        //{
+        //    gameManager.SwitchToScene(GameManager.LOSESCENE, ScoreKeeper.LossReason.Ghost);
+        //}
+    }
 
-    //private void OnTriggerExit2D(Collider2D other)
-    //{
-    //    //Debug.Log("untrackign object");
-    //    // If the object exiting the trigger is an interactable object
-    //    if (other.CompareTag("Interactable"))
-    //    {
-    //        UntrackObject(other.gameObject);
-    //    }
-    //}
-#endregion old collision code
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        //Debug.Log("untrackign object");
+        // If the object exiting the trigger is an interactable object
+        if (other.CompareTag("Interactable"))
+        {
+            UntrackObject(other.gameObject);
+        }
+    }
+    #endregion old collision code
 
     public void CallInteract()
     {
