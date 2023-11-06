@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 6991448008890336203}
   - component: {fileID: 155841080134327918}
   - component: {fileID: 3163185671874502967}
-  - component: {fileID: 3822617617267302425}
   m_Layer: 0
   m_Name: HitboxManger
   m_TagString: Untagged
@@ -46,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52bb9db762ba5204abdcf63ec8537d94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rigidBody: {fileID: 3822617617267302425}
+  rigidBody: {fileID: 0}
   hitBoxCollider: {fileID: 3163185671874502967}
 --- !u!61 &3163185671874502967
 BoxCollider2D:
@@ -77,7 +76,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.12255329, y: -0.7151699}
@@ -93,33 +92,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.073629, y: 1.1505394}
   m_EdgeRadius: 0
---- !u!50 &3822617617267302425
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2223899949892352619}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 0.0001
-  m_LinearDrag: 0
-  m_AngularDrag: 0
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!1 &4082219650228719095
 GameObject:
   m_ObjectHideFlags: 0
