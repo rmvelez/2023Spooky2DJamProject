@@ -9,9 +9,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Rigidbody2D rigidBody;
 
     [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private Collider2D hitBoxCollider;
     [SerializeField] private Light2D spotLight; //spotlight?
 
     [SerializeField] private Lantern lantern;
+
+
 
     [Header("movement")]
 
@@ -48,13 +51,14 @@ public class PlayerController : MonoBehaviour
             Debug.LogError("player controller added a gameObject that doesn't have a PlayerInput on it -- which is definitely a bug");
         }
         movementAnimationDirection = IDLE_DOWN_DIRECTION;
-        rigidBody.interpolation = RigidbodyInterpolation2D.Interpolate;
+        rigidBody.interpolation = RigidbodyInterpolation2D.Extrapolate;
     }
 
     // Start is called before the first frame update
     void Start()
     {
         gameManager = GameManager.Instance;
+
 
         gameManager.onGamePause.AddListener(SwitchActionMapUI);
         gameManager.onGameResume.AddListener(SwitchActionMapPlayer);
@@ -89,7 +93,10 @@ public class PlayerController : MonoBehaviour
         {
             Vector3 targetPosition = new Vector3(this.transform.position.x + direction.y, this.transform.position.y - direction.x, 0);
 
-            if (direction.x < 0)//if we're moving left
+
+
+            //override if moving sideways
+            if (direction.x < 0)// override if we're moving left
             {
 
                 GetComponent<SpriteRenderer>().flipX = true;
@@ -97,7 +104,7 @@ public class PlayerController : MonoBehaviour
 
                 //flip sprite left
             }
-            else if (direction.x > 0) //if we're moving right
+            else if (direction.x > 0) // or if we're moving right
             {
                 GetComponent<SpriteRenderer>().flipX = false;
 
@@ -106,18 +113,20 @@ public class PlayerController : MonoBehaviour
                 movementAnimationDirection = WALK_SIDE_DIRECTION;
             }
 
-            if (direction.y > 0) //override if the player is moving up
+            if (direction.y > 0) //if the player is moving up
             {
+                GetComponent<SpriteRenderer>().flipX = false;
                 movementAnimationDirection = WALK_UP_DIRECTION;
             }
             else if (direction.y < 0) //if we're moving down
             {
+                GetComponent<SpriteRenderer>().flipX = false;
                 movementAnimationDirection = WALK_DOWN_DIRECTION;
             }
 
         } else { //not moving
         
-
+            //if we were in a moving anim direction, switch to that respective idle direction
             switch (movementAnimationDirection)
             {
                 case (IDLE_DOWN_DIRECTION):
@@ -228,4 +237,16 @@ public class PlayerController : MonoBehaviour
     }
     #endregion action maps
 
+    #region collisions
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Ghost"))
+        {
+            gameManager.SwitchToScene(GameManager.LOSESCENE, ScoreKeeper.LossReason.Ghost);
+
+        }
+    }
+
+    #endregion collisions
 }
