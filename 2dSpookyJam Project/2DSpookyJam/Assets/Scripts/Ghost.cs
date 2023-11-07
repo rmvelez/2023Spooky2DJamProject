@@ -9,10 +9,13 @@ public class Ghost : MonoBehaviour
 
     private enum GhostState { idle, curious, hostile, wary, fleeing} //consider refactoring idle to patrol
     [SerializeField] private GhostState ghostState;
-    
+
 
     //[SerializeField] private Rigidbody2D rigidBody;
 
+    [SerializeField] AudioSource loopSource;
+    [SerializeField] AudioClip hostileLoop;
+    [SerializeField] AudioClip curiousLoop;
 
     [SerializeField] private Vector2 target;
     [Tooltip("theoretically set by referencing GameManager.playerController")]
@@ -47,7 +50,7 @@ public class Ghost : MonoBehaviour
     
     private Vector3 patrolCentre;
 
-    private AudioSource ghostSound;
+    [SerializeField] private AudioSource stingerSound;
 
     //= lampLit ? lastSeenPlayerPos.position : lamp.transform.position;
 
@@ -78,7 +81,6 @@ public class Ghost : MonoBehaviour
 
         target = lamp.gameObject.transform.position;
 
-        ghostSound = this.gameObject.GetComponent<AudioSource>();
 
         patrolCentre = lamp.lampLight.transform.position;
     }
@@ -234,6 +236,7 @@ public class Ghost : MonoBehaviour
         switch (ghostState)
         {
             case GhostState.idle: //if we're in idle state
+
                 if (distanceToPlayer <= outerRange && !(playerIsInLight && lampLit)) //player goes from being idle to entering outer circle
                 {
                     ghostState = GhostState.curious;
@@ -244,7 +247,13 @@ public class Ghost : MonoBehaviour
                 }  else if (Vector2.Distance(transform.position, target) < .1) //if we've reached our destination
                 {
                     Patrol();
+                } else if (loopSource.isPlaying)
+                {
+                    loopSource.Stop();
                 }
+
+
+                /*
                 //else if (distanceToPlayer <= innerRange) //inside (entering) the inner circle
                 //{ //and we enter the inner circle
                 //    ghostState = GhostState.hostile;
@@ -254,6 +263,8 @@ public class Ghost : MonoBehaviour
                 //    break;
                 //}
                 // ^ commented out the above code as it is redundant - if distance > outer range it will certainly be > inner range!
+                */
+
                 break;
             case GhostState.curious: //if we're in curious state (state 1)
                 if (distanceToPlayer > outerRange) //player exits outer range 
@@ -270,13 +281,25 @@ public class Ghost : MonoBehaviour
                     ghostState = GhostState.hostile; //curious to hostile upon entering inner range
                     target = player.transform.position;
                     currentSpeed = fastSpeed;
-                    ghostSound.Play();
+                    stingerSound.Play();
+                    loopSource.Stop();
+                    Debug.Log("stinger started playing");
 
                     //GetComponent<SpriteRenderer>().color = Color.green;
 
                     break;
                 }
-                else target = player.transform.position;
+                else
+                {
+                    target = player.transform.position;
+
+                    if (!loopSource.isPlaying || loopSource.clip != curiousLoop) //if it's not playing, or it's not set to the correct loop
+                    {
+                        loopSource.clip = curiousLoop;
+                        loopSource.Play();
+                    } 
+                }   
+
                 break;
             case GhostState.hostile:
                 if (distanceToPlayer > outerRange) //player exits outer range 
@@ -292,12 +315,28 @@ public class Ghost : MonoBehaviour
 
                     break;
                 }
+
+                if (!stingerSound.isPlaying) //wait until stingerSound stops playing
+                {
+                    Debug.Log("stinger stopped playing");
+
+                    if (!loopSource.isPlaying || loopSource.clip != hostileLoop) //if it's not playing, or it's not set to the correct loop
+                    {
+                        loopSource.clip = hostileLoop;
+                        loopSource.Play();
+                    }
+                } else
+                {
+                    Debug.Log("stinger continued playing");
+
+                }
                 target = player.transform.position;
                 break;
             case GhostState.wary: //in wary state (state 3)
                 if (distanceToPlayer <= outerRange && !(playerIsInLight && lampLit)) //entering outer range
                 {
-                    ghostSound.Play();
+                    stingerSound.Play();
+                    loopSource.Stop();
                     ghostState = GhostState.hostile; //wary to hostile upon entering outer range 
 
                     currentSpeed = fastSpeed;   
@@ -314,6 +353,13 @@ public class Ghost : MonoBehaviour
                     Patrol();
                     break;
                 }
+
+                //if (!loopSource.isPlaying || loopSource.clip != curiousLoop) //if it's not playing, or it's not set to the correct loop
+                //{
+                //    loopSource.clip = curiousLoop;
+                //    loopSource.Play();
+                //}
+
                 break;
             case GhostState.fleeing:
                 if((Vector2) transform.position == (Vector2)target)
@@ -322,6 +368,12 @@ public class Ghost : MonoBehaviour
                     ghostState = GhostState.idle;
                     currentSpeed = slowSpeed;
                 }
+
+                if (loopSource.isPlaying)
+                {
+                    loopSource.Stop();
+                }
+
                 break;
         }
     }
@@ -450,26 +502,16 @@ public class Ghost : MonoBehaviour
         {
 
             CheckIfPointIsInLight(target, out target);
-        }
-        
-
-        
-
-        // ----------------------------------------------------------------
-        //                      COME BACK TO THIS:
-        //                      -----------------
-        //
-        //                      lastSeenPlayerPos
-        // ----------------------------------------------------------------
+        }       
     }
 
     public void SetLampLit()
     {
         lampLit = true;
 
-        if (ghostSound.isPlaying)
+        if (stingerSound.isPlaying)
         {
-            ghostSound.Stop();
+            stingerSound.Stop();
         }
 
         // target = lamp.transform.position; //do we want to set this? I thought when the lamp gets lit the ghost would go into idle and start patrolling randomly
