@@ -370,6 +370,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rigidBody: {fileID: 1946095497449126102}
   spriteRenderer: {fileID: 2775266923552281438}
+  hitBoxCollider: {fileID: 0}
   spotLight: {fileID: 0}
   lantern: {fileID: 1322536180667234740}
   playerInput: {fileID: 8371392941504028850}
@@ -420,35 +421,11 @@ MonoBehaviour:
     m_ActionId: 3e46d2de-ab3a-4baa-b609-70f41b7a232c
     m_ActionName: Moving/Interact[/Keyboard/e,/Keyboard/space]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5379192006280101408}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: MoverVertActionPerformed
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: 2bef0ff0-450f-4285-a4c9-e5b56f14cc51
     m_ActionName: Moving/New action
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5379192006280101408}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: MoverHorizActionPerformed
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: a090a652-aaad-450b-9d4f-d3ff25a09e4e
     m_ActionName: Moving/New action
   - m_PersistentCalls:
@@ -499,6 +476,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: a54a3283-de03-45d8-93fa-d0b760242dbd
     m_ActionName: PauseMenu/Pause[/Keyboard/escape,/Keyboard/p]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5379192006280101408}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: MoveActionPerformed
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: aef224ef-c902-4ff5-bc38-5e1f163cb35f
+    m_ActionName: Moving/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Moving
