@@ -271,6 +271,7 @@ public class Ghost : MonoBehaviour
                 {
                     //Debug.Log("this should only happen once when player exits outer range");
                     ghostState = GhostState.idle;
+                    loopSource.Stop();
                     currentSpeed = slowSpeed;
                     lastSeenPlayerPos = player.transform.position;
                     patrolCentre = lampLit ? player.transform.position : lamp.transform.position;
@@ -310,6 +311,7 @@ public class Ghost : MonoBehaviour
 
                     patrolCentre = lampLit? player.transform.position : lamp.transform.position;
                     target = lastSeenPlayerPos;
+                    loopSource.Stop();
 
                     //GetComponent<SpriteRenderer>().color = Color.white;
 

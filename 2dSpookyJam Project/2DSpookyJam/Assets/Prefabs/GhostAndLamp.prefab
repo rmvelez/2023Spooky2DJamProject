@@ -355,7 +355,7 @@ GameObject:
   - component: {fileID: 5863539906250791863}
   - component: {fileID: 1757726467948133274}
   - component: {fileID: 8427144192057986707}
-  - component: {fileID: 3456621712319867461}
+  - component: {fileID: 3145444387909017885}
   m_Layer: 0
   m_Name: Ghost
   m_TagString: Ghost
@@ -391,7 +391,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ghostState: 0
-  loopSource: {fileID: 3456621712319867461}
+  loopSource: {fileID: 3145444387909017885}
   hostileLoop: {fileID: 8300000, guid: 3d8757d2b8a26c346883c8c5465d9d14, type: 3}
   curiousLoop: {fileID: 8300000, guid: 386699e44d0e8b648a813bb8b61e7961, type: 3}
   target: {x: 0, y: 0}
@@ -688,6 +688,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.9, y: 1}
   m_EdgeRadius: 0
+--- !u!82 &3145444387909017885
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -698,10 +699,10 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 0
-  m_Volume: 0.369
+  m_PlayOnAwake: 1
+  m_Volume: 0.5
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
