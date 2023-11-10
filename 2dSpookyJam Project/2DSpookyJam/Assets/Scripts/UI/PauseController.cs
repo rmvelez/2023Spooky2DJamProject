@@ -7,14 +7,17 @@ public class PauseController : MonoBehaviour
 {
 
     [SerializeField] private UIDocument UIdoc;
+    [SerializeField] private GameObject OptionsMenu;
 
     private VisualElement root;
     private Button resumeButton;
     private Button mainMenuButton;
+    private Button optionsButton;
 
     private GameManager gameManager;
     private AudioSource pauseSound;
 
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +26,7 @@ public class PauseController : MonoBehaviour
         root = UIdoc.rootVisualElement;
         resumeButton = root.Q<Button>("ResumeButton");
         mainMenuButton = root.Q<Button>("MainMenuButton");
+        optionsButton = root.Q<Button>("OptionsButton");
 
         gameManager.onGamePause.AddListener(pauseMenuPause);
         gameManager.onGameResume.AddListener(pauseMenuPause);
@@ -30,6 +34,7 @@ public class PauseController : MonoBehaviour
 
         resumeButton.clicked += resumeFromPause;
         mainMenuButton.clicked += GoToMainMenu;
+        optionsButton.clicked += ShowOptionsMenu;
 
         root.visible = false;
 
@@ -57,13 +62,35 @@ public class PauseController : MonoBehaviour
     private void pauseMenuPause()
     {
         if (gameManager.paused)
-        {
+        {//show pause menu
             root.visible = true;
             root.SetEnabled(true);
         } else
-        {
+        { //hide pause menu
             root.visible = false;
             root.SetEnabled(false);
         }
+    }
+
+    private void ShowOptionsMenu()
+    {
+        pauseSound.Play();
+
+        OptionsMenu.SetActive(true);
+
+        //hide pause menu
+        root.visible = false;
+        root.SetEnabled(false);
+    }
+    
+    public void HideOptionsMenu()
+    {
+        //show pause menu
+        root.visible = true;
+        root.SetEnabled(true);
+
+        pauseSound.Play();
+
+        OptionsMenu.SetActive(false);
     }
 }
