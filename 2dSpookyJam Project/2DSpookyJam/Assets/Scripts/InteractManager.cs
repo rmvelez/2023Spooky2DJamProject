@@ -83,10 +83,22 @@ public class InteractManager : MonoBehaviour
     {
         if (!trackedObjects.Contains(objectToTrack))
         {
-            trackedObjects.Add(objectToTrack);
+            Lamp lamp = objectToTrack.GetComponent<Lamp>();
+            //could hypothetically do this as one line
+            if ( lamp != null)
+            {
+                if (!lamp.isLit)
+                {
+                    trackedObjects.Add(objectToTrack);
+                    gameManager.showInterractPrompt = true;
+                }
+            } else//it must not be a lamp, or we've somehow messed up on this check
+            {
+                trackedObjects.Add(objectToTrack);
+                gameManager.showInterractPrompt = true;
+            }
         }
 
-        gameManager.showInterractPrompt = true;
         
     }
 
@@ -99,8 +111,8 @@ public class InteractManager : MonoBehaviour
         if (trackedObjects.Contains(trackedObject))
         {
             trackedObjects.Remove(trackedObject);
+            gameManager.showInterractPrompt = trackedObjects.Count > 0;
         }
-        gameManager.showInterractPrompt = trackedObjects.Count > 0;
     }
 
     #region old collision code
