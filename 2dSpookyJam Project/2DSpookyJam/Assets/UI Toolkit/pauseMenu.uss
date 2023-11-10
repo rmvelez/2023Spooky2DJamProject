@@ -18,7 +18,7 @@
     -unity-font-definition: url('project://database/Assets/TextMesh%20Pro/Fonts/MetalMania-Regular-SDF.asset?fileID=11400000&guid=3e8fbcf4eec14ca41809ee1c1825877f&type=2#MetalMania-Regular SDF');
     font-size: 48px;
     padding-bottom: 16px;
-    margin-bottom: 18px;
+    margin-bottom: 14px;
 }
 
 .pauseMenuButton:hover {

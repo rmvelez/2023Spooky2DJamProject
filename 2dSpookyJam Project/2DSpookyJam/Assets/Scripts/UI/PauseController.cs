@@ -8,6 +8,7 @@ public class PauseController : MonoBehaviour
 
     [SerializeField] private UIDocument UIdoc;
     [SerializeField] private GameObject OptionsMenu;
+    [SerializeField] private GameObject HUD;
 
     private VisualElement root;
     private Button resumeButton;
@@ -74,6 +75,8 @@ public class PauseController : MonoBehaviour
 
     private void ShowOptionsMenu()
     {
+        HUD.SetActive(false);
+
         pauseSound.Play();
 
         OptionsMenu.SetActive(true);
@@ -85,6 +88,7 @@ public class PauseController : MonoBehaviour
     
     public void HideOptionsMenu()
     {
+        HUD.SetActive(true);
         //show pause menu
         root.visible = true;
         root.SetEnabled(true);

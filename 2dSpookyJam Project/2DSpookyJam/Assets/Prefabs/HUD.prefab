@@ -63,7 +63,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UIdoc: {fileID: 1727934183389160164}
-  OptionsMenu: {fileID: 0}
+  OptionsMenu: {fileID: 4480366687276222587}
+  HUD: {fileID: 7764613903074078363}
 --- !u!82 &550170801130248311
 AudioSource:
   m_ObjectHideFlags: 0
@@ -496,19 +497,19 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 859996979528043413}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8811565588292804518}
   - {fileID: 8662302805049164068}
-  m_Father: {fileID: 1264542174679756628}
+  m_Father: {fileID: 2011446126632426774}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 17.5, y: 187.5}
-  m_SizeDelta: {x: 25, y: 375}
+  m_SizeDelta: {x: 724.99994, y: 725}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8056841373432310213
 CanvasRenderer:
@@ -737,11 +738,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7433682170902589253}
-  - {fileID: 6419625376054887801}
-  - {fileID: 6073771119322864946}
-  - {fileID: 8170602753419264909}
   - {fileID: 7402479137657061194}
+  - {fileID: 2011446126632426774}
   m_Father: {fileID: 2937521981925927874}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1411,7 +1409,7 @@ RectTransform:
   - {fileID: 5306261926360684781}
   - {fileID: 2063437438020152440}
   - {fileID: 4674313969365689793}
-  m_Father: {fileID: 1264542174679756628}
+  m_Father: {fileID: 2011446126632426774}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1559,7 +1557,7 @@ RectTransform:
   m_Children:
   - {fileID: 7365051454101853428}
   - {fileID: 1912450681040229214}
-  m_Father: {fileID: 1264542174679756628}
+  m_Father: {fileID: 2011446126632426774}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1960,12 +1958,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6487365587080987683}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1264542174679756628}
+  m_Father: {fileID: 2011446126632426774}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2487,6 +2485,45 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &7764613903074078363
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2011446126632426774}
+  m_Layer: 5
+  m_Name: HUD
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2011446126632426774
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7764613903074078363}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7433682170902589253}
+  - {fileID: 6419625376054887801}
+  - {fileID: 6073771119322864946}
+  - {fileID: 8170602753419264909}
+  m_Father: {fileID: 1264542174679756628}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &8322276359917227424
 GameObject:
   m_ObjectHideFlags: 0
