@@ -54,14 +54,6 @@ public class Ghost : MonoBehaviour
 
     //= lampLit ? lastSeenPlayerPos.position : lamp.transform.position;
 
-    private enum States
-    {
-        Idle,
-        Curious,
-        Hostile,
-        Wary
-    }
-
     private int state;
     [SerializeField] private bool lampLit = false;
 
@@ -95,7 +87,8 @@ public class Ghost : MonoBehaviour
         //    //call patrol();
         //}
 
-        animator.SetBool("isAggro", ghostState == GhostState.hostile);
+        animator.SetBool("aggroSprite", ghostState == GhostState.hostile || ghostState ==GhostState.fleeing); //activate aggro sprites if the ghost is in either the aggro or fleeing states
+
 
         float step = currentSpeed * Time.deltaTime * 100;
 
