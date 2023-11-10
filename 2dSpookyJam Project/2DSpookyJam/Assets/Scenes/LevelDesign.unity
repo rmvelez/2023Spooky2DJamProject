@@ -445,11 +445,11 @@ Transform:
   m_GameObject: {fileID: 66052232}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 81.48936, y: -32.553192, z: 0}
+  m_LocalPosition: {x: -0.510643, y: 9.02, z: 0}
   m_LocalScale: {x: 1.0638298, y: 1.0638298, z: 1.0638298}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1944157258}
+  m_Father: {fileID: 355275182}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &73908829
 GameObject:
@@ -2097,6 +2097,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1896851713}
+  - {fileID: 66052234}
   m_Father: {fileID: 1944157258}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &365847468
@@ -8119,7 +8120,6 @@ Transform:
   - {fileID: 651826264}
   - {fileID: 1946062024}
   - {fileID: 1823076664}
-  - {fileID: 66052234}
   - {fileID: 227929393}
   - {fileID: 1235521342}
   m_Father: {fileID: 0}
@@ -8624,6 +8624,8 @@ MonoBehaviour:
   backGroundMusic: {fileID: 1296274793}
   numLamps: 0
   numLitLamps: 0
+  showInterractPrompt: 0
+  showRefillPrompt: 0
   OilLevel: 100
   lampLightCost: 20
   OilIncrement: 30
