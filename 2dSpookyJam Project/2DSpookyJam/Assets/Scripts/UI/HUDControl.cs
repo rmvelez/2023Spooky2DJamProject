@@ -18,6 +18,10 @@ public class HUDControl : MonoBehaviour
     [SerializeField] private CanvasRenderer lanternBar;
 
 
+    [SerializeField] private TMP_Text interactPrompt;
+    [SerializeField] private TMP_Text refillPrompt;
+
+
     // reference to the starting position of the oil meter
     public Vector3 ReserveBarStartPos;
     public Vector3 LanternBarStartPos;
@@ -91,5 +95,8 @@ public class HUDControl : MonoBehaviour
         UILitNumber.text = string.Concat(gameManager.numLitLamps.ToString(), UITotNumber);
         //UILitNumber.text.Append<string>(UITotNumber);
 
+        refillPrompt.enabled = gameManager.showRefillPrompt;
+        interactPrompt.enabled = gameManager.showInterractPrompt;
+        
     }
 }

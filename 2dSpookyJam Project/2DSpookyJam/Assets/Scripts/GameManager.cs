@@ -25,7 +25,8 @@ public class GameManager : MonoBehaviour
     public int numLamps;
     public int numLitLamps;
 
-
+    public bool showInterractPrompt;
+    public bool showRefillPrompt;
 
     [Header("Oil")]
     [SerializeField] public float OilLevel;

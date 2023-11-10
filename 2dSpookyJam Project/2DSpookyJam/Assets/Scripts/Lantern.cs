@@ -23,7 +23,9 @@ public class Lantern : MonoBehaviour
     [Tooltip("how much oil is added to the lantern when refilled")]
     [SerializeField] private float lanternRefillAmount;
 
+    [SerializeField] private int promptThreshold;
 
+    private GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +33,7 @@ public class Lantern : MonoBehaviour
         intensityMax = lampLight.intensity;
         lanternOilLevelCurrent = lanternOilLevelMax;
         outerRange = outerMax - outerMin;
+        gameManager = GameManager.Instance;
     }
 
     // Update is called once per frame
@@ -53,6 +56,8 @@ public class Lantern : MonoBehaviour
                 GameManager.Instance.SwitchToScene(GameManager.LOSESCENE, ScoreKeeper.LossReason.Lantern);
             }
         }
+
+        gameManager.showRefillPrompt = (lanternOilLevelCurrent < promptThreshold);
 
     }
 

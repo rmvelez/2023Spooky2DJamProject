@@ -568,6 +568,8 @@ MonoBehaviour:
   UILitNumber: {fileID: 8658220354314406345}
   reserveBar: {fileID: 524716404934667464}
   lanternBar: {fileID: 7762717721830697025}
+  interactPrompt: {fileID: 2731569658021428538}
+  refillPrompt: {fileID: 1221730407692358823}
   ReserveBarStartPos: {x: 0, y: 0, z: 0}
   LanternBarStartPos: {x: 0, y: 0, z: 0}
 --- !u!1 &3093564232287170083

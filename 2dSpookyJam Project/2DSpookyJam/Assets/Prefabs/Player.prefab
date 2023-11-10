@@ -228,6 +228,7 @@ MonoBehaviour:
   lanternOilLevelMax: 100
   lanternOilDecreasePerSecond: 4
   lanternRefillAmount: 50
+  promptThreshold: 30
 --- !u!1 &4404824824134183980
 GameObject:
   m_ObjectHideFlags: 0

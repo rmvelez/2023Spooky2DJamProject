@@ -85,6 +85,8 @@ public class InteractManager : MonoBehaviour
         {
             trackedObjects.Add(objectToTrack);
         }
+
+        gameManager.showInterractPrompt = true;
         
     }
 
@@ -98,6 +100,7 @@ public class InteractManager : MonoBehaviour
         {
             trackedObjects.Remove(trackedObject);
         }
+        gameManager.showInterractPrompt = trackedObjects.Count > 0;
     }
 
     #region old collision code
