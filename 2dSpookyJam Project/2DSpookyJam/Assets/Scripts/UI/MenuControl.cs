@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class MenuControl : MonoBehaviour
 {
     // a list of te avaliable states that the menu can be in
-    public enum GameState {MenuState,LearnState,CreditState}
+    public enum GameState {MenuState,LearnState,CreditState, Options}
 
     // reference to the current menu screen that the user is on
     public GameState currentGameState;
@@ -16,6 +16,7 @@ public class MenuControl : MonoBehaviour
     public GameObject menu;
     public GameObject learn;
     public GameObject credit;
+    public GameObject options;
 
     // Start is called before the first frame update
     void Start()
@@ -50,12 +51,19 @@ public class MenuControl : MonoBehaviour
         ShowScreen(credit);
     }
 
+    public void ShowOptions()
+    {
+        currentGameState = GameState.Options;
+        ShowScreen(options);
+    }
+
     // used to determine which screen to show based on the current game state
     private void ShowScreen(GameObject gameObjectToShow)
     {
         menu.SetActive(false);
         learn.SetActive(false);
         credit.SetActive(false);
+        options.SetActive(false);
 
         gameObjectToShow.SetActive(true);
     }
