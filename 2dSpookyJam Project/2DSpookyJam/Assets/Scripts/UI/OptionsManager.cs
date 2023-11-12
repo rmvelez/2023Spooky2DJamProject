@@ -25,7 +25,7 @@ public class OptionsManager : MonoBehaviour
     [SerializeField] Slider sfxSlider;
 
     public Toggle showToolTipsToggle;
-    public bool showToolTips = true;
+    public bool showToolTips;
 
 
 
@@ -99,8 +99,11 @@ public class OptionsManager : MonoBehaviour
 
     public void OnIGTTTogleChange(bool value)
     {
+        Debug.Log("toggle changed1 " + value + " " + showToolTips);
+
         showToolTips = value;
-        PlayerPrefs.SetInt("ShowToolTips", BoolToInt(value));
+        Debug.Log("toggle changed2 " + value + " " + showToolTips);
+        PlayerPrefs.SetInt("showToolTips", BoolToInt(value));
 
         //set in-class var
         //sset out of class var
@@ -112,7 +115,7 @@ public class OptionsManager : MonoBehaviour
         return b ? 1 : 0;
     }
 
-    private bool IntToBool( int i)
+    private bool IntToBool(int i)
     {
         if (i == 0)
         {
@@ -179,12 +182,12 @@ public class OptionsManager : MonoBehaviour
 
         musicSlider.value = PlayerPrefs.GetFloat("musicVolume");
         sfxSlider.value = PlayerPrefs.GetFloat("sfxVolume");
-        showToolTipsToggle.isOn = IntToBool(PlayerPrefs.GetInt("ShowToolTips"));
+        showToolTipsToggle.isOn = IntToBool(PlayerPrefs.GetInt("showToolTips"));
 
         masterVolume = PlayerPrefs.GetFloat("masterVolume");
         musicVolume = PlayerPrefs.GetFloat("musicVolume");
         sfxVolume = PlayerPrefs.GetFloat("sfxVolume");
-        showToolTips = IntToBool(PlayerPrefs.GetInt("ShowToolTips"));
+        showToolTips = IntToBool(PlayerPrefs.GetInt("showToolTips"));
 
         masterMixerGroup.audioMixer.SetFloat("Master Volume", Mathf.Log10(masterSlider.value) * 20);
         musicMixerGroup.audioMixer.SetFloat("Music Volume", Mathf.Log10(musicSlider.value) * 20);
@@ -198,7 +201,7 @@ public class OptionsManager : MonoBehaviour
         PlayerPrefs.SetFloat("masterVolume", masterVolume);
         PlayerPrefs.SetFloat("musicVolume", musicVolume);
         PlayerPrefs.SetFloat("sfxVolume", sfxVolume);
-        PlayerPrefs.SetInt("ShowToolTips", BoolToInt(showToolTips));
+        PlayerPrefs.SetInt("showToolTips", BoolToInt(showToolTips));
 
 
     }
