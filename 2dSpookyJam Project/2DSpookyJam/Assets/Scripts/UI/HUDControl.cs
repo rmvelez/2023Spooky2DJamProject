@@ -21,6 +21,7 @@ public class HUDControl : MonoBehaviour
     [SerializeField] private TMP_Text interactPrompt;
     [SerializeField] private TMP_Text refillPrompt;
 
+    private OptionsManager optionsManager;
 
     // reference to the starting position of the oil meter
     public Vector3 ReserveBarStartPos;
@@ -42,6 +43,7 @@ public class HUDControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        optionsManager = OptionsManager.Instance;
         // sets this variable to an instance of the game manager
         gameManager = GameManager.Instance;
 

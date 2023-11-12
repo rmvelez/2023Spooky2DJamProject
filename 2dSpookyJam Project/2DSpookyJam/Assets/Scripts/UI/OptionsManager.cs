@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
 
 public class OptionsManager : MonoBehaviour
 {
@@ -14,14 +15,22 @@ public class OptionsManager : MonoBehaviour
     public static OptionsManager _instance;
     public static OptionsManager Instance { get { return _instance; } }
 
+    [SerializeField] AudioMixerGroup masterMixerGroup;
     [SerializeField] AudioMixerGroup musicMixerGroup;
     [SerializeField] AudioMixerGroup sfxMixerGroup;
 
+    [SerializeField] Slider masterSlider;
     [SerializeField] Slider musicSlider;
     [SerializeField] Slider sfxSlider;
 
+    public Toggle showToolTipsToggle;
+    public bool showToolTips = true;
+
+
+
     private SceneManager sceneManager;
 
+    public float masterVolume;
     public float musicVolume;
     public float sfxVolume;
 
@@ -52,6 +61,13 @@ public class OptionsManager : MonoBehaviour
             Destroy(this.gameObject);
         }
 
+        if (!PlayerPrefs.HasKey("masterVolume"))
+        {
+            Debug.Log("uwu1");
+            PlayerPrefs.SetFloat("masterVolume", .75f);
+
+        }
+
         if (!PlayerPrefs.HasKey("musicVolume"))
         {
             Debug.Log("uwu1");
@@ -64,6 +80,8 @@ public class OptionsManager : MonoBehaviour
             Debug.Log("uwu2");
             PlayerPrefs.SetFloat("sfxVolume", .75f);
         }
+
+
         Load();
     }
 
@@ -71,6 +89,46 @@ public class OptionsManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void OnIGTTTogleChange(bool value)
+    {
+        showToolTips = value;
+        PlayerPrefs.SetInt("ShowToolTips", BoolToInt(value));
+    }
+
+    private int BoolToInt(bool b)
+    {
+        if (b)
+        {
+            return 1;
+        } else
+        {
+            return 0;
+        }
+
+    }
+
+    private bool IntToBool( int i)
+    {
+        if (i == 0)
+        {
+            return false;
+        }
+        else if (i==1)
+        {
+            return true;
+        } else
+        {
+            throw new System.Exception("int to bool was passed a value other than 0 or 1 - value: " + i);
+        }
+    }
+
+    public void OnMasterSliderValueChange(float value)
+    {
+        masterVolume = masterSlider.value;
+        masterMixerGroup.audioMixer.SetFloat("Master Volume", Mathf.Log10(masterSlider.value) * 20);
+        PlayerPrefs.SetFloat("masterVolume", masterVolume);
     }
 
     public void OnMusicSliderValueChange(float value)
@@ -88,9 +146,7 @@ public class OptionsManager : MonoBehaviour
         sfxMixerGroup.audioMixer.SetFloat("Sound Effects Volume", Mathf.Log10(value) * 20);
 
         PlayerPrefs.SetFloat("sfxVolume", sfxVolume);
-
-        //Save();
-    }
+            }
 
     public void OnDestroy()
     {
@@ -111,19 +167,23 @@ public class OptionsManager : MonoBehaviour
 
     public void Load()
     {
+        masterSlider.value = PlayerPrefs.GetFloat("masterVolume");
         musicSlider.value = PlayerPrefs.GetFloat("musicVolume");
         sfxSlider.value = PlayerPrefs.GetFloat("sfxVolume");
 
+        masterVolume = PlayerPrefs.GetFloat("masterVolume");
         musicVolume = PlayerPrefs.GetFloat("musicVolume");
         sfxVolume = PlayerPrefs.GetFloat("sfxVolume");
 
-        sfxMixerGroup.audioMixer.SetFloat("Sound Effects Volume", Mathf.Log10(sfxSlider.value) * 20);
+        masterMixerGroup.audioMixer.SetFloat("Master Volume", Mathf.Log10(masterSlider.value) * 20);
         musicMixerGroup.audioMixer.SetFloat("Music Volume", Mathf.Log10(musicSlider.value) * 20);
+        sfxMixerGroup.audioMixer.SetFloat("Sound Effects Volume", Mathf.Log10(sfxSlider.value) * 20);
 
     }
 
     private void Save()
     {
+        PlayerPrefs.SetFloat("masterVolume", masterVolume);
         PlayerPrefs.SetFloat("musicVolume", musicVolume);
         PlayerPrefs.SetFloat("sfxVolume", sfxVolume);
 
