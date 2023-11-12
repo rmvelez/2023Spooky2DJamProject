@@ -19,10 +19,12 @@ public class PlayerHitboxManager : MonoBehaviour
         playerController = gameManager.playerController;
     }
 
+    
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Ghost"))
         {
+            Debug.Log("activated from player hitbox");
             gameManager.SwitchToScene(GameManager.LOSESCENE, ScoreKeeper.LossReason.Ghost);
 
         }

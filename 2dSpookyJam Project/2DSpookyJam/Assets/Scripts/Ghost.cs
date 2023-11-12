@@ -10,6 +10,7 @@ public class Ghost : MonoBehaviour
     private enum GhostState { idle, curious, hostile, wary, fleeing} //consider refactoring idle to patrol
     [SerializeField] private GhostState ghostState;
 
+    [SerializeField] private BoxCollider2D boxCollider;
 
     //[SerializeField] private Rigidbody2D rigidBody;
 
@@ -190,6 +191,17 @@ public class Ghost : MonoBehaviour
         }
     }
 
+
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            Debug.Log("ghost gotcha");
+            //gameManager.SwitchToScene(GameManager.LOSESCENE, ScoreKeeper.LossReason.Ghost);
+
+        }
+    }
 
     //void FixedUpdate()
     //{

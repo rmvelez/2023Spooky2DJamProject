@@ -41,6 +41,7 @@ public class PlayerController : MonoBehaviour
     private const int IDLE_UP_DIRECTION = 5;
     private const int IDLE_DOWN_DIRECTION = 6;
 
+
     #region Unity Built in
     private void Awake()
     {
@@ -69,6 +70,7 @@ public class PlayerController : MonoBehaviour
 
 
         Move(moveInput);
+
 
     }
 
@@ -237,6 +239,7 @@ public class PlayerController : MonoBehaviour
 
     #region collisions
 
+    /*
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Ghost"))
@@ -245,6 +248,7 @@ public class PlayerController : MonoBehaviour
 
         }
     }
+    */
 
     #endregion collisions
 }
