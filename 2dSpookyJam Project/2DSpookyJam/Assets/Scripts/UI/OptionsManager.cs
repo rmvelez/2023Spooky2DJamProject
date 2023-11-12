@@ -73,17 +73,12 @@ public class OptionsManager : MonoBehaviour
         
     }
 
-    public void OnSliderValueChange(float value)
+    public void OnMusicSliderValueChange(float value)
     {
         musicVolume = musicSlider.value;
         Debug.Log("omusic " + PlayerPrefs.GetFloat("musicVolume") + "value: " + musicSlider.value);
-
         musicMixerGroup.audioMixer.SetFloat("Music Volume", Mathf.Log10(musicSlider.value) * 20 );
-
-
-        sfxVolume = sfxSlider.value;
-        sfxMixerGroup.audioMixer.SetFloat("Sound Effects Volume", Mathf.Log10(sfxSlider.value) * 20);
-        Save();
+        PlayerPrefs.SetFloat("musicVolume", musicVolume);
     }
 
 
@@ -94,7 +89,10 @@ public class OptionsManager : MonoBehaviour
 
         sfxMixerGroup.audioMixer.SetFloat("Sound Effects Volume", Mathf.Log10(value) * 20);
         Debug.Log("osfx " + PlayerPrefs.GetFloat("sfxVolume"));
-        Save();
+
+        PlayerPrefs.SetFloat("sfxVolume", sfxVolume);
+
+        //Save();
     }
 
     public void OnDestroy()
@@ -122,6 +120,9 @@ public class OptionsManager : MonoBehaviour
 
         musicVolume = PlayerPrefs.GetFloat("musicVolume");
         sfxVolume = PlayerPrefs.GetFloat("sfxVolume");
+
+        sfxMixerGroup.audioMixer.SetFloat("Sound Effects Volume", Mathf.Log10(sfxSlider.value) * 20);
+        musicMixerGroup.audioMixer.SetFloat("Music Volume", Mathf.Log10(musicSlider.value) * 20);
 
         Debug.Log("lmusic " + PlayerPrefs.GetFloat("musicVolume"));
         Debug.Log("lsfx " + PlayerPrefs.GetFloat("sfxVolume"));

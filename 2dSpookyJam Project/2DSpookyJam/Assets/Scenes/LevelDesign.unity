@@ -5289,7 +5289,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8504176765376640667, guid: 15d054c9bfe83664cade4925f480d27e, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnSliderValueChange
+      value: OnMusicSliderValueChange
       objectReference: {fileID: 0}
     - target: {fileID: 8504176765376640667, guid: 15d054c9bfe83664cade4925f480d27e, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
@@ -5301,7 +5301,7 @@ PrefabInstance:
       objectReference: {fileID: 758646388}
     - target: {fileID: 8923418407520754170, guid: 15d054c9bfe83664cade4925f480d27e, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnSliderValueChange
+      value: OnSfxSliderValueChange
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
