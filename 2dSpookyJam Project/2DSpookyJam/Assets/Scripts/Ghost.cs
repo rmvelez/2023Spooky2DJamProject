@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class Ghost : MonoBehaviour
@@ -58,6 +59,11 @@ public class Ghost : MonoBehaviour
     private int state;
     [SerializeField] private bool lampLit = false;
 
+    private float maxLoopVol;
+
+    [SerializeField] float loopVolInc;
+
+    IEnumerator increaseVolCoroutine;
 
     // Start is called before the first frame update
     void Start()
@@ -76,6 +82,11 @@ public class Ghost : MonoBehaviour
 
 
         patrolCentre = lamp.lampLight.transform.position;
+
+        maxLoopVol = loopSource.volume;
+
+        increaseVolCoroutine = IncreaseVolume();
+
     }
 
     // Update is called once per frame
@@ -254,6 +265,7 @@ public class Ghost : MonoBehaviour
                     Patrol();
                 } else if (loopSource.isPlaying)
                 {
+                    StopCoroutine(increaseVolCoroutine);
                     loopSource.Stop();
                 }
 
@@ -276,6 +288,7 @@ public class Ghost : MonoBehaviour
                 {
                     //Debug.Log("this should only happen once when player exits outer range");
                     ghostState = GhostState.idle;
+                    StopCoroutine(increaseVolCoroutine);
                     loopSource.Stop();
                     currentSpeed = slowSpeed;
                     lastSeenPlayerPos = player.transform.position;
@@ -288,7 +301,10 @@ public class Ghost : MonoBehaviour
                     target = player.transform.position;
                     currentSpeed = fastSpeed;
                     stingerSound.Play();
-                    loopSource.Stop();
+                    loopSource.clip = hostileLoop;
+                    loopSource.Play();
+                    StartVolumeCoroutine();
+
                     Debug.Log("stinger started playing");
 
                     //GetComponent<SpriteRenderer>().color = Color.green;
@@ -302,6 +318,8 @@ public class Ghost : MonoBehaviour
                     if (!loopSource.isPlaying || loopSource.clip != curiousLoop) //if it's not playing, or it's not set to the correct loop
                     {
                         loopSource.clip = curiousLoop;
+                        StopCoroutine(increaseVolCoroutine);
+                        loopSource.volume = maxLoopVol;
                         loopSource.Play();
                     } 
                 }   
@@ -317,32 +335,34 @@ public class Ghost : MonoBehaviour
                     patrolCentre = lampLit? player.transform.position : lamp.transform.position;
                     target = lastSeenPlayerPos;
                     loopSource.Stop();
+                    StopCoroutine(increaseVolCoroutine);
 
                     //GetComponent<SpriteRenderer>().color = Color.white;
 
                     break;
                 }
 
-                if (!stingerSound.isPlaying) //wait until stingerSound stops playing
-                {
-                    Debug.Log("stinger stopped playing");
+                //if (!stingerSound.isPlaying) //wait until stingerSound stops playing
+                //{
+                //    Debug.Log("stinger stopped playing");
 
-                    if (!loopSource.isPlaying || loopSource.clip != hostileLoop) //if it's not playing, or it's not set to the correct loop
-                    {
-                        loopSource.clip = hostileLoop;
-                        loopSource.Play();
-                    }
-                } else
-                {
-                    Debug.Log("stinger continued playing");
+                //    if (!loopSource.isPlaying || loopSource.clip != hostileLoop) //if it's not playing, or it's not set to the correct loop
+                //    {
+                //        loopSource.clip = hostileLoop;
+                //        loopSource.Play();
+                //    }
+                //} else
+                //{
+                //    Debug.Log("stinger continued playing");
 
-                }
+                //}
                 target = player.transform.position;
                 break;
             case GhostState.wary: //in wary state (state 3)
                 if (distanceToPlayer <= outerRange && !(playerIsInLight && lampLit)) //entering outer range
                 {
                     stingerSound.Play();
+                    StopCoroutine(increaseVolCoroutine);
                     loopSource.Stop();
                     ghostState = GhostState.hostile; //wary to hostile upon entering outer range 
 
@@ -378,11 +398,38 @@ public class Ghost : MonoBehaviour
 
                 if (loopSource.isPlaying)
                 {
+                    StopCoroutine(increaseVolCoroutine);
                     loopSource.Stop();
                 }
 
                 break;
         }
+    }
+
+    private void StartVolumeCoroutine()
+    {
+        loopSource.volume = 0;
+
+        if (increaseVolCoroutine != null)
+        {
+            StopCoroutine(increaseVolCoroutine);
+        }
+
+        StartCoroutine(increaseVolCoroutine);
+
+
+    }
+
+    private IEnumerator IncreaseVolume()
+    {
+        while(loopSource.volume < maxLoopVol && loopSource.isPlaying)
+        {
+            loopSource.volume = MathF.Min(loopSource.volume + loopVolInc, maxLoopVol);
+
+            yield return new WaitForSeconds(.1f);
+        }
+
+
     }
 
 

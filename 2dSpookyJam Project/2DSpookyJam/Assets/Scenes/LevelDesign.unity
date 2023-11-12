@@ -3441,6 +3441,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3139148079544501145, guid: 2b47551750272db43af793e4f6a4b2be, type: 3}
+      propertyPath: loopVolInc
+      value: 0.02
+      objectReference: {fileID: 0}
     - target: {fileID: 5863539906250791863, guid: 2b47551750272db43af793e4f6a4b2be, type: 3}
       propertyPath: m_LocalBounds.m_Center.x
       value: -0.0467
