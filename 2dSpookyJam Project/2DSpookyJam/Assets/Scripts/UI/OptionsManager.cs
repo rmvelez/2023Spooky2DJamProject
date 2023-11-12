@@ -6,6 +6,7 @@ using UnityEngine.Audio;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Unity.VisualScripting;
+using static UnityEngine.Rendering.DebugUI;
 
 public class OptionsManager : MonoBehaviour
 {
@@ -36,7 +37,6 @@ public class OptionsManager : MonoBehaviour
 
     private void OnEnable()
     {
-        Debug.Log("asfx " + PlayerPrefs.GetFloat("sfxVolume"));
         SceneManager.sceneLoaded += OnSceneLoaded;
 
     }
@@ -81,8 +81,14 @@ public class OptionsManager : MonoBehaviour
             PlayerPrefs.SetFloat("sfxVolume", .75f);
         }
 
+        if (!PlayerPrefs.HasKey("showToolTips"))
+        {
+            PlayerPrefs.SetInt("showToolTips", BoolToInt(true));
+        }
+
 
         Load();
+        gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -95,18 +101,15 @@ public class OptionsManager : MonoBehaviour
     {
         showToolTips = value;
         PlayerPrefs.SetInt("ShowToolTips", BoolToInt(value));
+
+        //set in-class var
+        //sset out of class var
+        //set playerprefs
     }
 
     private int BoolToInt(bool b)
     {
-        if (b)
-        {
-            return 1;
-        } else
-        {
-            return 0;
-        }
-
+        return b ? 1 : 0;
     }
 
     private bool IntToBool( int i)
@@ -129,6 +132,11 @@ public class OptionsManager : MonoBehaviour
         masterVolume = masterSlider.value;
         masterMixerGroup.audioMixer.SetFloat("Master Volume", Mathf.Log10(masterSlider.value) * 20);
         PlayerPrefs.SetFloat("masterVolume", masterVolume);
+
+
+        //set in-class var
+        //sset out of class var
+        //set playerprefs
     }
 
     public void OnMusicSliderValueChange(float value)
@@ -161,23 +169,27 @@ public class OptionsManager : MonoBehaviour
 
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Load();
+        //Load();
         //Save();
     }
 
     public void Load()
     {
         masterSlider.value = PlayerPrefs.GetFloat("masterVolume");
+
         musicSlider.value = PlayerPrefs.GetFloat("musicVolume");
         sfxSlider.value = PlayerPrefs.GetFloat("sfxVolume");
+        showToolTipsToggle.isOn = IntToBool(PlayerPrefs.GetInt("ShowToolTips"));
 
         masterVolume = PlayerPrefs.GetFloat("masterVolume");
         musicVolume = PlayerPrefs.GetFloat("musicVolume");
         sfxVolume = PlayerPrefs.GetFloat("sfxVolume");
+        showToolTips = IntToBool(PlayerPrefs.GetInt("ShowToolTips"));
 
         masterMixerGroup.audioMixer.SetFloat("Master Volume", Mathf.Log10(masterSlider.value) * 20);
         musicMixerGroup.audioMixer.SetFloat("Music Volume", Mathf.Log10(musicSlider.value) * 20);
         sfxMixerGroup.audioMixer.SetFloat("Sound Effects Volume", Mathf.Log10(sfxSlider.value) * 20);
+        //if we were storing tooltips elsewhere, then we'd set that here as well
 
     }
 
@@ -186,6 +198,8 @@ public class OptionsManager : MonoBehaviour
         PlayerPrefs.SetFloat("masterVolume", masterVolume);
         PlayerPrefs.SetFloat("musicVolume", musicVolume);
         PlayerPrefs.SetFloat("sfxVolume", sfxVolume);
+        PlayerPrefs.SetInt("ShowToolTips", BoolToInt(showToolTips));
+
 
     }
 }

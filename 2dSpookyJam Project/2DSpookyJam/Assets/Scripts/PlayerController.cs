@@ -51,7 +51,6 @@ public class PlayerController : MonoBehaviour
             Debug.LogError("player controller added a gameObject that doesn't have a PlayerInput on it -- which is definitely a bug");
         }
         movementAnimationDirection = IDLE_DOWN_DIRECTION;
-        rigidBody.interpolation = RigidbodyInterpolation2D.Extrapolate;
     }
 
     // Start is called before the first frame update

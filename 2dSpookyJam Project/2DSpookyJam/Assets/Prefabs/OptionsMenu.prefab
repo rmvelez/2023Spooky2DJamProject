@@ -186,41 +186,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!1 &903293998390979043
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2058260431057753486}
-  m_Layer: 5
-  m_Name: OptionsContainer
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &2058260431057753486
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 903293998390979043}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8351619753958974865}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1522684663311102172
 GameObject:
   m_ObjectHideFlags: 0
@@ -311,7 +276,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 8904845708394836304}
         m_TargetAssemblyTypeName: OptionsManager, Assembly-CSharp
         m_MethodName: OnSfxSliderValueChange
         m_Mode: 0
@@ -543,7 +508,6 @@ RectTransform:
   m_Children:
   - {fileID: 9089370325703485824}
   - {fileID: 1735954495513240451}
-  - {fileID: 2058260431057753486}
   - {fileID: 3947334911286766072}
   - {fileID: 349197294393980632}
   - {fileID: 4460472652579098903}
@@ -608,7 +572,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b10abc1477e42cb4680852ef714439fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  masterMixerGroup: {fileID: 0}
+  masterMixerGroup: {fileID: 24300002, guid: fbff2f82667fe574aad31242a7af2e3a, type: 2}
   musicMixerGroup: {fileID: -3279526071680344383, guid: fbff2f82667fe574aad31242a7af2e3a, type: 2}
   sfxMixerGroup: {fileID: -3049075285788313846, guid: fbff2f82667fe574aad31242a7af2e3a, type: 2}
   masterSlider: {fileID: 1229965555156497514}
@@ -1134,7 +1098,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 20}
-  m_SizeDelta: {x: 80, y: 30}
+  m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &6280681932530303692
 CanvasRenderer:
@@ -1663,9 +1627,9 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 8904845708394836304}
         m_TargetAssemblyTypeName: OptionsManager, Assembly-CSharp
-        m_MethodName: OnSfxSliderValueChange
+        m_MethodName: OnMusicSliderValueChange
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1765,9 +1729,9 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 8904845708394836304}
         m_TargetAssemblyTypeName: OptionsManager, Assembly-CSharp
-        m_MethodName: OnSfxSliderValueChange
+        m_MethodName: OnMasterSliderValueChange
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1952,17 +1916,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7515766176734782369}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1735954495513240451}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 80, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3176576652222593895
 CanvasRenderer:
