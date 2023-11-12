@@ -76,7 +76,6 @@ public class OptionsManager : MonoBehaviour
     public void OnMusicSliderValueChange(float value)
     {
         musicVolume = musicSlider.value;
-        Debug.Log("omusic " + PlayerPrefs.GetFloat("musicVolume") + "value: " + musicSlider.value);
         musicMixerGroup.audioMixer.SetFloat("Music Volume", Mathf.Log10(musicSlider.value) * 20 );
         PlayerPrefs.SetFloat("musicVolume", musicVolume);
     }
@@ -84,11 +83,9 @@ public class OptionsManager : MonoBehaviour
 
     public void OnSfxSliderValueChange(float value)
     {
-        Debug.Log("osfx " + PlayerPrefs.GetFloat("sfxVolume") + "value: " + value);
         sfxVolume = value;
 
         sfxMixerGroup.audioMixer.SetFloat("Sound Effects Volume", Mathf.Log10(value) * 20);
-        Debug.Log("osfx " + PlayerPrefs.GetFloat("sfxVolume"));
 
         PlayerPrefs.SetFloat("sfxVolume", sfxVolume);
 
@@ -108,7 +105,6 @@ public class OptionsManager : MonoBehaviour
 
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Debug.Log("on scene loaded call --  playerpref's sfxvol: " + PlayerPrefs.GetFloat("sfxVolume")  + " inscript sfxVol variable: "+ sfxVolume);
         Load();
         //Save();
     }
@@ -124,8 +120,6 @@ public class OptionsManager : MonoBehaviour
         sfxMixerGroup.audioMixer.SetFloat("Sound Effects Volume", Mathf.Log10(sfxSlider.value) * 20);
         musicMixerGroup.audioMixer.SetFloat("Music Volume", Mathf.Log10(musicSlider.value) * 20);
 
-        Debug.Log("lmusic " + PlayerPrefs.GetFloat("musicVolume"));
-        Debug.Log("lsfx " + PlayerPrefs.GetFloat("sfxVolume"));
     }
 
     private void Save()
@@ -133,7 +127,5 @@ public class OptionsManager : MonoBehaviour
         PlayerPrefs.SetFloat("musicVolume", musicVolume);
         PlayerPrefs.SetFloat("sfxVolume", sfxVolume);
 
-        Debug.Log("called from save function -  music val in playerprefs" + PlayerPrefs.GetFloat("musicVolume"));
-        Debug.Log("called from save function - sfx val in playerprefs " + PlayerPrefs.GetFloat("sfxVolume"));
     }
 }

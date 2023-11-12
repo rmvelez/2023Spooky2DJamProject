@@ -218,7 +218,6 @@ public class PlayerController : MonoBehaviour
     public void SwitchActionMapUI() { SwitchActionMap("PauseMenu"); }
     public void SwitchActionMap(string mapName)
     {
-        Debug.Log("switching action map to " + mapName);
         playerInput.currentActionMap.Disable();
         playerInput.SwitchCurrentActionMap(mapName);
 

@@ -754,7 +754,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1562096606}
         m_TargetAssemblyTypeName: OptionsManager, Assembly-CSharp
-        m_MethodName: OnSliderValueChange
+        m_MethodName: OnSfxSliderValueChange
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2954,7 +2954,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: -3279526071680344383, guid: fbff2f82667fe574aad31242a7af2e3a, type: 2}
   m_audioClip: {fileID: 8300000, guid: 9598ea564fd814f46941ae6b722335d4, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.75
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -5104,7 +5104,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1562096606}
         m_TargetAssemblyTypeName: OptionsManager, Assembly-CSharp
-        m_MethodName: OnSliderValueChange
+        m_MethodName: OnMusicSliderValueChange
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
