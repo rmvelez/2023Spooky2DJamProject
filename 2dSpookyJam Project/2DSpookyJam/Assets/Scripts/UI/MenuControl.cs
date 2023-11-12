@@ -18,11 +18,14 @@ public class MenuControl : MonoBehaviour
     public GameObject credit;
     public GameObject options;
 
+    private OptionsManager optionsManager;
+
     // Start is called before the first frame update
     void Start()
     {
         currentGameState = GameState.MenuState;
         ShowScreen(menu);
+        optionsManager = OptionsManager.Instance;
     }
 
     public void PlayGame()
@@ -56,6 +59,7 @@ public class MenuControl : MonoBehaviour
         currentGameState = GameState.Options;
         ShowScreen(options);
     }
+
 
     // used to determine which screen to show based on the current game state
     private void ShowScreen(GameObject gameObjectToShow)

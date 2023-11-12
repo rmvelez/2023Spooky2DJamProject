@@ -4260,6 +4260,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicMixerGroup: {fileID: -3279526071680344383, guid: fbff2f82667fe574aad31242a7af2e3a, type: 2}
   sfxMixerGroup: {fileID: -3049075285788313846, guid: fbff2f82667fe574aad31242a7af2e3a, type: 2}
+  musicSlider: {fileID: 1107663686}
+  sfxSlider: {fileID: 1107663685}
   musicVolume: 0
   sfxVolume: 0
 --- !u!4 &758646389
@@ -5173,6 +5175,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 73908832}
     m_Modifications:
+    - target: {fileID: 495048691972883583, guid: 15d054c9bfe83664cade4925f480d27e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 577002191056726651, guid: 15d054c9bfe83664cade4925f480d27e, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -5249,6 +5255,10 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4480366687276222587, guid: 15d054c9bfe83664cade4925f480d27e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6598837902019310270, guid: 15d054c9bfe83664cade4925f480d27e, type: 3}
       propertyPath: OptionsMenu
       value: 
@@ -5262,18 +5272,64 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8504176765376640667, guid: 15d054c9bfe83664cade4925f480d27e, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8504176765376640667, guid: 15d054c9bfe83664cade4925f480d27e, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8504176765376640667, guid: 15d054c9bfe83664cade4925f480d27e, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 758646388}
+    - target: {fileID: 8504176765376640667, guid: 15d054c9bfe83664cade4925f480d27e, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8504176765376640667, guid: 15d054c9bfe83664cade4925f480d27e, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnSliderValueChange
+      objectReference: {fileID: 0}
+    - target: {fileID: 8504176765376640667, guid: 15d054c9bfe83664cade4925f480d27e, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: OptionsManager, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 8923418407520754170, guid: 15d054c9bfe83664cade4925f480d27e, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 758646388}
+    - target: {fileID: 8923418407520754170, guid: 15d054c9bfe83664cade4925f480d27e, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnSliderValueChange
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15d054c9bfe83664cade4925f480d27e, type: 3}
+--- !u!114 &1107663685 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8923418407520754170, guid: 15d054c9bfe83664cade4925f480d27e, type: 3}
+  m_PrefabInstance: {fileID: 1107663684}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1107663686 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8504176765376640667, guid: 15d054c9bfe83664cade4925f480d27e, type: 3}
+  m_PrefabInstance: {fileID: 1107663684}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1153271249
 GameObject:
   m_ObjectHideFlags: 0

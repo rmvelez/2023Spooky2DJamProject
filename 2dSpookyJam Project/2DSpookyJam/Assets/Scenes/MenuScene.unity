@@ -754,7 +754,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1562096606}
         m_TargetAssemblyTypeName: OptionsManager, Assembly-CSharp
-        m_MethodName: OnSfxSliderValueChange
+        m_MethodName: OnSliderValueChange
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3897,6 +3897,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicMixerGroup: {fileID: -3279526071680344383, guid: fbff2f82667fe574aad31242a7af2e3a, type: 2}
   sfxMixerGroup: {fileID: -3049075285788313846, guid: fbff2f82667fe574aad31242a7af2e3a, type: 2}
+  musicSlider: {fileID: 2084835602}
+  sfxSlider: {fileID: 496764100}
   musicVolume: 0
   sfxVolume: 0
 --- !u!4 &1562096607
@@ -5102,7 +5104,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1562096606}
         m_TargetAssemblyTypeName: OptionsManager, Assembly-CSharp
-        m_MethodName: OnMusicSliderValueChange
+        m_MethodName: OnSliderValueChange
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
