@@ -266,8 +266,8 @@ public class Ghost : MonoBehaviour
                     Patrol();
                 } else if (loopSource.isPlaying)
                 {
-                    StopVolumeCoroutine();
-                    loopSource.Stop();
+                    StopPlayingSound();
+                    //loopSource.Stop();
                 }
 
 
@@ -289,8 +289,8 @@ public class Ghost : MonoBehaviour
                 {
                     //Debug.Log("this should only happen once when player exits outer range");
                     ghostState = GhostState.idle;
-                    StopVolumeCoroutine();
-                    loopSource.Stop();
+                    StopPlayingSound();
+                    //loopSource.Stop();
                     currentSpeed = slowSpeed;
                     lastSeenPlayerPos = player.transform.position;
                     patrolCentre = lampLit ? player.transform.position : lamp.transform.position;
@@ -302,9 +302,8 @@ public class Ghost : MonoBehaviour
                     target = player.transform.position;
                     currentSpeed = fastSpeed;
                     stingerSound.Play();
-                    loopSource.clip = hostileLoop;
-                    loopSource.Play();
-                    StartVolumeCoroutine();
+                    
+                    StartPlayingSound(hostileLoop);
 
                     Debug.Log("stinger started playing");
 
@@ -319,9 +318,9 @@ public class Ghost : MonoBehaviour
                     if (!loopSource.isPlaying || loopSource.clip != curiousLoop) //if it's not playing, or it's not set to the correct loop
                     {
                         loopSource.clip = curiousLoop;
-                        StopVolumeCoroutine();
-                        loopSource.volume = maxLoopVol;
-                        loopSource.Play();
+                        StartPlayingSound(curiousLoop);
+                        //loopSource.volume = maxLoopVol;
+                        //loopSource.Play();
                     } 
                 }   
 
@@ -335,8 +334,8 @@ public class Ghost : MonoBehaviour
 
                     patrolCentre = lampLit? player.transform.position : lamp.transform.position;
                     target = lastSeenPlayerPos;
-                    loopSource.Stop();
-                    StopVolumeCoroutine();
+                    //loopSource.Stop();
+                    StopPlayingSound();
 
                     //GetComponent<SpriteRenderer>().color = Color.white;
 
@@ -363,8 +362,8 @@ public class Ghost : MonoBehaviour
                 if (distanceToPlayer <= outerRange && !(playerIsInLight && lampLit)) //entering outer range
                 {
                     stingerSound.Play();
-                    StartVolumeCoroutine();
-                    loopSource.clip = hostileLoop;
+                    StartPlayingSound(hostileLoop);
+                    //loopSource.clip = hostileLoop;
                     loopSource.Play();
                     ghostState = GhostState.hostile; //wary to hostile upon entering outer range 
 
@@ -400,26 +399,32 @@ public class Ghost : MonoBehaviour
 
                 if (loopSource.isPlaying)
                 {
-                    StopVolumeCoroutine();
-                    loopSource.Stop();
+                    StopPlayingSound();
+                    //loopSource.Stop();
                 }
 
                 break;
         }
     }
 
-    private void StartVolumeCoroutine()
+    private void StartPlayingSound(AudioClip clip)
     {
-        if(!isCoroutineRunning)
-        {
-            loopSource.volume = 0;
-            increaseVolCoroutine = IncreaseVolume();
-            StartCoroutine(increaseVolCoroutine);
+        loopSource.clip = clip;
+        loopSource.Play();
+        if (isCoroutineRunning)
+        {//if it's already running
+            StopPlayingSound(); //then stop
         }
+        
+        loopSource.volume = 0;
+        increaseVolCoroutine = IncreaseVolume();
+        StartCoroutine(increaseVolCoroutine);
+        
     }
 
-    private void StopVolumeCoroutine()
+    private void StopPlayingSound()
     {
+        loopSource.Stop();
         if(increaseVolCoroutine != null)
         {
             loopSource.volume = maxLoopVol;
