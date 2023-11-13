@@ -23,6 +23,15 @@ public class OilCan : MonoBehaviour , IInteractable
     {
         float newOilLevel = gameManager.OilLevel + oilIncreaseLevel;
         float oilMax = gameManager.oilMax;
+
+        if(newOilLevel > oilMax)
+        {
+
+            float overflow = newOilLevel - oilMax;
+            gameManager.playerController.lantern.FillFromOverflow(overflow);
+
+        }
+
         gameManager.OilLevel = ((newOilLevel <= oilMax) ? newOilLevel : oilMax);
         Destroy(gameObject);
     }

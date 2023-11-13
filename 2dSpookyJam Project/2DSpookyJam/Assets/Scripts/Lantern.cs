@@ -70,4 +70,13 @@ public class Lantern : MonoBehaviour
 
         }
     }
+
+    public void FillFromOverflow( float overflow)
+    {
+        float oilRatio =  (lanternRefillAmount / gameManager.refillCost) / 1.5f ;
+        //float oilRatio = gameManager.refillCost / lanternRefillAmount;
+        float oilIncrease = oilRatio * overflow;
+        //Debug.Log("overflow amount: " + overflow + " amount of oil added to lantern: " + oilIncrease);
+        lanternOilLevelCurrent = Mathf.Min(lanternOilLevelMax, lanternOilLevelCurrent + oilIncrease);
+    }
 }

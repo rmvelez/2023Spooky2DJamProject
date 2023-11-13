@@ -66,6 +66,9 @@ public class Ghost : MonoBehaviour
     IEnumerator increaseVolCoroutine;
 
 
+    private bool loopIsPaused = false;
+    private bool stingerIsPaused = false;
+
 
     // Start is called before the first frame update
     void Start()
@@ -311,7 +314,6 @@ public class Ghost : MonoBehaviour
                     
                     StartPlayingSound(hostileLoop);
 
-                    Debug.Log("stinger started playing");
 
                     //GetComponent<SpriteRenderer>().color = Color.green;
 
@@ -453,8 +455,6 @@ public class Ghost : MonoBehaviour
         isCoroutineRunning = false;
     }
 
-    private bool loopIsPaused = false;
-    private bool stingerIsPaused = false;
 
     private void PauseSounds()
     {

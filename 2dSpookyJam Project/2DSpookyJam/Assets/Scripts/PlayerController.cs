@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Collider2D hitBoxCollider;
     [SerializeField] private Light2D spotLight; //spotlight?
 
-    [SerializeField] private Lantern lantern;
+    public Lantern lantern;
 
 
 
