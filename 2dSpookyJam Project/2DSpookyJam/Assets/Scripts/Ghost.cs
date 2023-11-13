@@ -218,7 +218,6 @@ public class Ghost : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("ghost gotcha");
             //gameManager.SwitchToScene(GameManager.LOSESCENE, ScoreKeeper.LossReason.Ghost);
 
         }

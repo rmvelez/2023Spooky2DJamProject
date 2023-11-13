@@ -24,7 +24,6 @@ public class PlayerHitboxManager : MonoBehaviour
     {
         if (other.CompareTag("Ghost"))
         {
-            Debug.Log("activated from player hitbox");
             gameManager.SwitchToScene(GameManager.LOSESCENE, ScoreKeeper.LossReason.Ghost);
 
         }

@@ -25,6 +25,7 @@ public class MenuControl : MonoBehaviour
     {
         currentGameState = GameState.MenuState;
         ShowScreen(menu);
+        options.SetActive(true);
         optionsManager = OptionsManager.Instance;
     }
 
