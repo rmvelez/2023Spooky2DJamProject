@@ -5348,6 +5348,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 550170801130248311, guid: 15d054c9bfe83664cade4925f480d27e, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: -3049075285788313846, guid: fbff2f82667fe574aad31242a7af2e3a, type: 2}
     - target: {fileID: 577002191056726651, guid: 15d054c9bfe83664cade4925f480d27e, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
