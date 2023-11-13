@@ -427,6 +427,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ghostState: 0
+  boxCollider: {fileID: 0}
   loopSource: {fileID: 3145444387909017885}
   hostileLoop: {fileID: 8300000, guid: 3d8757d2b8a26c346883c8c5465d9d14, type: 3}
   curiousLoop: {fileID: 8300000, guid: 386699e44d0e8b648a813bb8b61e7961, type: 3}
@@ -443,6 +444,7 @@ MonoBehaviour:
   lightRange: 0.75
   stingerSound: {fileID: 1757726467948133274}
   lampLit: 0
+  loopVolInc: 0.02
 --- !u!212 &2042963321171769120
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -738,7 +740,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 0.5
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0

@@ -62,8 +62,9 @@ public class Ghost : MonoBehaviour
     private float maxLoopVol;
 
     [SerializeField] float loopVolInc;
-
+    private bool isCoroutineRunning;
     IEnumerator increaseVolCoroutine;
+
 
     // Start is called before the first frame update
     void Start()
@@ -86,7 +87,7 @@ public class Ghost : MonoBehaviour
         maxLoopVol = loopSource.volume;
 
         increaseVolCoroutine = IncreaseVolume();
-
+        isCoroutineRunning = false;
     }
 
     // Update is called once per frame
@@ -265,7 +266,7 @@ public class Ghost : MonoBehaviour
                     Patrol();
                 } else if (loopSource.isPlaying)
                 {
-                    StopCoroutine(increaseVolCoroutine);
+                    StopVolumeCoroutine();
                     loopSource.Stop();
                 }
 
@@ -288,7 +289,7 @@ public class Ghost : MonoBehaviour
                 {
                     //Debug.Log("this should only happen once when player exits outer range");
                     ghostState = GhostState.idle;
-                    StopCoroutine(increaseVolCoroutine);
+                    StopVolumeCoroutine();
                     loopSource.Stop();
                     currentSpeed = slowSpeed;
                     lastSeenPlayerPos = player.transform.position;
@@ -318,7 +319,7 @@ public class Ghost : MonoBehaviour
                     if (!loopSource.isPlaying || loopSource.clip != curiousLoop) //if it's not playing, or it's not set to the correct loop
                     {
                         loopSource.clip = curiousLoop;
-                        StopCoroutine(increaseVolCoroutine);
+                        StopVolumeCoroutine();
                         loopSource.volume = maxLoopVol;
                         loopSource.Play();
                     } 
@@ -335,7 +336,7 @@ public class Ghost : MonoBehaviour
                     patrolCentre = lampLit? player.transform.position : lamp.transform.position;
                     target = lastSeenPlayerPos;
                     loopSource.Stop();
-                    StopCoroutine(increaseVolCoroutine);
+                    StopVolumeCoroutine();
 
                     //GetComponent<SpriteRenderer>().color = Color.white;
 
@@ -362,8 +363,9 @@ public class Ghost : MonoBehaviour
                 if (distanceToPlayer <= outerRange && !(playerIsInLight && lampLit)) //entering outer range
                 {
                     stingerSound.Play();
-                    StopCoroutine(increaseVolCoroutine);
-                    loopSource.Stop();
+                    StartVolumeCoroutine();
+                    loopSource.clip = hostileLoop;
+                    loopSource.Play();
                     ghostState = GhostState.hostile; //wary to hostile upon entering outer range 
 
                     currentSpeed = fastSpeed;   
@@ -398,7 +400,7 @@ public class Ghost : MonoBehaviour
 
                 if (loopSource.isPlaying)
                 {
-                    StopCoroutine(increaseVolCoroutine);
+                    StopVolumeCoroutine();
                     loopSource.Stop();
                 }
 
@@ -408,28 +410,35 @@ public class Ghost : MonoBehaviour
 
     private void StartVolumeCoroutine()
     {
-        loopSource.volume = 0;
-
-        if (increaseVolCoroutine != null)
+        if(!isCoroutineRunning)
         {
-            StopCoroutine(increaseVolCoroutine);
+            loopSource.volume = 0;
+            increaseVolCoroutine = IncreaseVolume();
+            StartCoroutine(increaseVolCoroutine);
         }
+    }
 
-        StartCoroutine(increaseVolCoroutine);
+    private void StopVolumeCoroutine()
+    {
+        if(increaseVolCoroutine != null)
+        {
+            loopSource.volume = maxLoopVol;
+            StopCoroutine(increaseVolCoroutine);
+            isCoroutineRunning = false;
 
-
+        }
     }
 
     private IEnumerator IncreaseVolume()
     {
-        while(loopSource.volume < maxLoopVol && loopSource.isPlaying)
+        isCoroutineRunning = true;
+        while(loopSource.volume < maxLoopVol)
         {
             loopSource.volume = MathF.Min(loopSource.volume + loopVolInc, maxLoopVol);
 
             yield return new WaitForSeconds(.1f);
         }
-
-
+        isCoroutineRunning = false;
     }
 
 
