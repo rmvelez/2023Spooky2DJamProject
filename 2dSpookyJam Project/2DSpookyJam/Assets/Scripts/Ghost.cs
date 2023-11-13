@@ -66,6 +66,7 @@ public class Ghost : MonoBehaviour
     IEnumerator increaseVolCoroutine;
 
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -88,6 +89,10 @@ public class Ghost : MonoBehaviour
 
         increaseVolCoroutine = IncreaseVolume();
         isCoroutineRunning = false;
+
+        gameManager.onGamePause.AddListener(PauseSounds);
+        gameManager.onGameResume.AddListener(UnPauseSounds);
+        
     }
 
     // Update is called once per frame
@@ -101,6 +106,7 @@ public class Ghost : MonoBehaviour
         //}
 
         animator.SetBool("aggroSprite", ghostState == GhostState.hostile || ghostState ==GhostState.fleeing); //activate aggro sprites if the ghost is in either the aggro or fleeing states
+
 
 
         float step = currentSpeed * Time.deltaTime * 100;
@@ -364,7 +370,7 @@ public class Ghost : MonoBehaviour
                     stingerSound.Play();
                     StartPlayingSound(hostileLoop);
                     //loopSource.clip = hostileLoop;
-                    loopSource.Play();
+                    //loopSource.Play();
                     ghostState = GhostState.hostile; //wary to hostile upon entering outer range 
 
                     currentSpeed = fastSpeed;   
@@ -409,12 +415,12 @@ public class Ghost : MonoBehaviour
 
     private void StartPlayingSound(AudioClip clip)
     {
-        loopSource.clip = clip;
-        loopSource.Play();
         if (isCoroutineRunning)
         {//if it's already running
             StopPlayingSound(); //then stop
         }
+        loopSource.clip = clip;
+        loopSource.Play();
         
         loopSource.volume = 0;
         increaseVolCoroutine = IncreaseVolume();
@@ -432,6 +438,7 @@ public class Ghost : MonoBehaviour
             isCoroutineRunning = false;
 
         }
+        
     }
 
     private IEnumerator IncreaseVolume()
@@ -446,6 +453,39 @@ public class Ghost : MonoBehaviour
         isCoroutineRunning = false;
     }
 
+    private bool loopIsPaused = false;
+    private bool stingerIsPaused = false;
+
+    private void PauseSounds()
+    {
+        if(loopSource.isPlaying)
+        {
+            loopSource.Pause();
+            loopIsPaused = true;
+        }
+
+        if (stingerSound.isPlaying)
+        {
+            stingerSound.Pause();
+            stingerIsPaused = true;
+        }
+    }
+
+    private void UnPauseSounds()
+    {
+
+        if (loopIsPaused)
+        {
+            loopSource.UnPause();
+            loopIsPaused = false;
+        }
+
+        if (stingerIsPaused)
+        {
+            stingerIsPaused = false;
+            stingerSound.UnPause();
+        }
+    }
 
     /*
     void OnTriggerEnter2D(Collider2D collider)

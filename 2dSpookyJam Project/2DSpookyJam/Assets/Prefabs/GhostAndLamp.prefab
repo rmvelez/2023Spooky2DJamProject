@@ -444,7 +444,7 @@ MonoBehaviour:
   lightRange: 0.75
   stingerSound: {fileID: 1757726467948133274}
   lampLit: 0
-  loopVolInc: 0.02
+  loopVolInc: 0.035
 --- !u!212 &2042963321171769120
 SpriteRenderer:
   m_ObjectHideFlags: 0
