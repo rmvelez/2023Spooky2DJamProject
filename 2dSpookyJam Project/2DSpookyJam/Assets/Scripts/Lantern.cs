@@ -65,9 +65,11 @@ public class Lantern : MonoBehaviour
     {
         if (context.started)
         {
-            lanternOilLevelCurrent = Mathf.Min(lanternOilLevelMax, lanternOilLevelCurrent + lanternRefillAmount);
-            GameManager.Instance.RefillLantern();
-
+            if(GameManager.Instance.OilLevel >= 0)
+            {
+                lanternOilLevelCurrent = Mathf.Min(lanternOilLevelMax, lanternOilLevelCurrent + lanternRefillAmount);
+                GameManager.Instance.RefillLantern();
+            }
         }
     }
 
