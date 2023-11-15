@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,6 +6,45 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
+public struct AudioStruct
+{
+    public AudioSource source;
+    [Tooltip("the time stored in the AudioStruct before the game paused")]
+    public float prevTime;
+    public bool isPaused;
+    public AudioClip clip;
+    //volume?
+
+    public AudioStruct(AudioSource source, AudioClip clip)
+    {
+        this.source = source;
+        prevTime = this.source.time;
+        isPaused = false;
+        this.clip = clip;
+    }
+
+    public void SetClip(AudioClip clip)
+    {
+        this.clip = clip;
+    }
+
+    public void Pause(out AudioSource outSource)
+    {
+        source.Pause();
+        prevTime = this.source.time;
+        isPaused =true;
+        outSource = source;
+    }
+
+    public void Resume(out AudioSource outSource)
+    {
+        source.time = prevTime;
+        source.UnPause();
+        isPaused = false;
+        outSource = source;
+    }
+
+}
 public class GameManager : MonoBehaviour
 {
 
@@ -20,6 +60,7 @@ public class GameManager : MonoBehaviour
 
     public float gameTime;
     [SerializeField] AudioSource backGroundMusic;
+    private AudioStruct musicStruct;
 
     [Header("lamps")]
     public int numLamps;
@@ -73,6 +114,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         OilLevel = oilStartingLevel;
+        musicStruct = new AudioStruct(backGroundMusic, backGroundMusic.clip);
     }
 
     // Update is called once per frame
@@ -115,7 +157,8 @@ public class GameManager : MonoBehaviour
 
         paused = true;
         Time.timeScale = 0f;
-        backGroundMusic.Pause();
+        //backGroundMusic.Pause();
+        musicStruct.Pause(out backGroundMusic);
         onGamePause.Invoke();
     }
 
@@ -123,7 +166,8 @@ public class GameManager : MonoBehaviour
     {
         paused = false;
         Time.timeScale = 1f;
-        backGroundMusic.UnPause();
+        //backGroundMusic.UnPause();
+        musicStruct.Resume(out backGroundMusic);
         onGameResume.Invoke();
     }
 
