@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Interactable
   - Ghost
+  - VertBuilding
   layers:
   - Default
   - TransparentFX

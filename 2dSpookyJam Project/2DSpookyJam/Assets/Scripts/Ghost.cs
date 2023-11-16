@@ -212,6 +212,15 @@ public class Ghost : MonoBehaviour
         }
     }
 
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.CompareTag("VertBuilding"))
+        {
+            spriteRenderer.sortingOrder = -1;
+        }
+
+    }
+
 
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -220,6 +229,18 @@ public class Ghost : MonoBehaviour
         {
             //gameManager.SwitchToScene(GameManager.LOSESCENE, ScoreKeeper.LossReason.Ghost);
 
+        }
+        // else if (other.CompareTag("VertBuilding"))
+        //{
+        //    spriteRenderer.sortingOrder = -1;
+        //}
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("VertBuilding"))
+        {
+            spriteRenderer.sortingOrder = 0;
         }
     }
 
