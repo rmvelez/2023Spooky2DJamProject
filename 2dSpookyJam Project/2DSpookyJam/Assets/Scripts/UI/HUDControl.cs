@@ -98,7 +98,7 @@ public class HUDControl : MonoBehaviour
         //UILitNumber.text.Append<string>(UITotNumber);
 
         refillPrompt.enabled = ( gameManager.showRefillPrompt && optionsManager.showToolTips);
-        interactPrompt.enabled = (gameManager.showInterractPrompt && optionsManager.showToolTips);
+        interactPrompt.enabled = (gameManager.showInteractPrompt && optionsManager.showToolTips);
         
     }
 }
