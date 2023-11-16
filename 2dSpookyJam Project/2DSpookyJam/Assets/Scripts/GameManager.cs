@@ -13,35 +13,36 @@ public class AudioPauser
     [Tooltip("the time stored in the AudioStruct before the game paused")]
     public float prevTime;
     public bool isPaused;
-    public AudioClip clip;
     //volume?
 
-    public AudioPauser(AudioSource source, AudioClip clip)
+    public AudioPauser(AudioSource source)
     {
         this.source = source;
         prevTime = this.source.time;
         isPaused = false;
-        this.clip = clip;
     }
 
-    public void SetClip(AudioClip clip)
-    {
-        this.clip = clip;
-    }
 
     public void Pause(out AudioSource outSource)
     {
-        source.Pause();
-        prevTime = source.time;
-        isPaused =true;
+        if (source.isPlaying)
+        {
+            source.Pause();
+            prevTime = source.time;
+            isPaused =true;
+
+        }
         outSource = source;
     }
 
     public void Resume(out AudioSource outSource)
     {
-        source.time = prevTime;
-        source.UnPause();
-        isPaused = false;
+        if (isPaused){
+            source.time = prevTime;
+            source.UnPause();
+            isPaused = false;
+        }
+
         outSource = source;
     }
 
@@ -115,7 +116,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         OilLevel = oilStartingLevel;
-        musicPauser = new AudioPauser(backGroundMusic, backGroundMusic.clip);
+        musicPauser = new AudioPauser(backGroundMusic);
     }
 
     // Update is called once per frame

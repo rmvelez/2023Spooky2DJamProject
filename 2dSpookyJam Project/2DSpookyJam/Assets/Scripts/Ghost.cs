@@ -19,6 +19,8 @@ public class Ghost : MonoBehaviour
     [SerializeField] AudioClip hostileLoop;
     [SerializeField] AudioClip curiousLoop;
 
+    private AudioPauser loopPauser;
+
     [SerializeField] private Vector2 target;
     [Tooltip("theoretically set by referencing GameManager.playerController")]
     [SerializeField] private GameObject player;
@@ -53,6 +55,7 @@ public class Ghost : MonoBehaviour
     private Vector3 patrolCentre;
 
     [SerializeField] private AudioSource stingerSound;
+    private AudioPauser stingerPauser;
 
     //= lampLit ? lastSeenPlayerPos.position : lamp.transform.position;
 
@@ -64,10 +67,6 @@ public class Ghost : MonoBehaviour
     [SerializeField] float loopVolInc;
     private bool isCoroutineRunning;
     IEnumerator increaseVolCoroutine;
-
-
-    private bool loopIsPaused = false;
-    private bool stingerIsPaused = false;
 
 
     // Start is called before the first frame update
@@ -95,6 +94,9 @@ public class Ghost : MonoBehaviour
 
         gameManager.onGamePause.AddListener(PauseSounds);
         gameManager.onGameResume.AddListener(UnPauseSounds);
+
+        loopPauser = new AudioPauser(loopSource);
+        stingerPauser = new AudioPauser(stingerSound);
         
     }
 
@@ -457,33 +459,15 @@ public class Ghost : MonoBehaviour
 
     private void PauseSounds()
     {
-        if(loopSource.isPlaying)
-        {
-            loopSource.Pause();
-            loopIsPaused = true;
-        }
+        loopPauser.Pause(out loopSource);
+        stingerPauser.Pause(out stingerSound);
 
-        if (stingerSound.isPlaying)
-        {
-            stingerSound.Pause();
-            stingerIsPaused = true;
-        }
     }
 
     private void UnPauseSounds()
     {
-
-        if (loopIsPaused)
-        {
-            loopSource.UnPause();
-            loopIsPaused = false;
-        }
-
-        if (stingerIsPaused)
-        {
-            stingerIsPaused = false;
-            stingerSound.UnPause();
-        }
+        loopPauser.Resume(out loopSource);
+        stingerPauser.Resume(out stingerSound);
     }
 
     /*
