@@ -498,7 +498,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scaleamount: 0
   ghostState: 0
-  boxCollider: {fileID: 0}
+  boxCollider: {fileID: 8427144192057986707}
   loopSource: {fileID: 3145444387909017885}
   hostileLoop: {fileID: 8300000, guid: 3d8757d2b8a26c346883c8c5465d9d14, type: 3}
   curiousLoop: {fileID: 8300000, guid: 386699e44d0e8b648a813bb8b61e7961, type: 3}

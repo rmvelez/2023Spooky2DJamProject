@@ -310,6 +310,11 @@ public class Ghost : MonoBehaviour
                             {//in which case we want to change our target to be on the edge of the circle 
                                 target = closestPointToTarget;
                                 moveTo = closestPoint;//move around the circle
+                                Vector2 shiftBy = boxCollider.ClosestPoint(lampCollider.transform.position);
+                                while (CheckIfPointIsInLight(lampCollider, shiftBy, out Vector2 newVector)){
+                                    shiftBy += (newVector - (Vector2) lampCollider.transform.position).normalized;
+                                }
+                                transform.position = (Vector3) shiftBy;
                             }
                         }
                         else
@@ -321,6 +326,12 @@ public class Ghost : MonoBehaviour
                     else //if we're patrolling to a point that's  known to not be in the circle
                     { //then the point must be on the other side, so simply move around the circle 
                         moveTo = closestPoint;
+                        Vector2 shiftBy = boxCollider.ClosestPoint(lampCollider.transform.position);
+                        while (CheckIfPointIsInLight(lampCollider, shiftBy, out Vector2 newVector))
+                        {
+                            shiftBy += (newVector.normalized - (Vector2)lampCollider.transform.position);
+                        }
+                        transform.position += (Vector3)shiftBy;
                     }
                 }
 
@@ -728,7 +739,7 @@ public class Ghost : MonoBehaviour
         { //sqr magnitude is faster than magnitude because it avoids root operations, just make sure to square everything
             //Debug.Log("point is within light");
 
-            closestPointOutsideLight = (distToLight.normalized * ((collider.radius * scaleamount)) ) + (Vector2) collider.transform.position;
+            closestPointOutsideLight = (distToLight.normalized * ((collider.radius * 1.5f)) ) + (Vector2) collider.transform.position;
 
             return true;
         }
