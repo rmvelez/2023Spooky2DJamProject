@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using UnityEditor.Tilemaps;
 using UnityEngine;
@@ -180,7 +181,7 @@ public class Ghost : MonoBehaviour
             
 
             //old version of the above code
-            /*
+            
             if (CheckIfPointIsInLight(lampCollider, moveTo, out Vector2 MoveToCPOL)) //if we're about to move into the circle
             {
                 if (ghostState == GhostState.hostile || ghostState == GhostState.curious) //if we're chasing the player
@@ -218,7 +219,7 @@ public class Ghost : MonoBehaviour
                     }
                 }
             }
-            */
+            
 
         }
 
@@ -280,6 +281,7 @@ public class Ghost : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other)
     {
+        
         if (other.CompareTag("VertBuilding"))
         {
             spriteRenderer.sortingOrder = -1;
@@ -291,7 +293,7 @@ public class Ghost : MonoBehaviour
 
             if (CheckIfPointIsInLight(lampCollider, transform.position, out Vector2 closestPoint))//if we're in the circle
             {
-                if(ghostState != GhostState.fleeing) //if we're already fleeing
+                if (ghostState != GhostState.fleeing) //if we're  not already fleeing
                 {
                     if ((ghostState != GhostState.idle) || newPointMightBeInRangeOfLight)
                     {
@@ -310,11 +312,17 @@ public class Ghost : MonoBehaviour
                             {//in which case we want to change our target to be on the edge of the circle 
                                 target = closestPointToTarget;
                                 moveTo = closestPoint;//move around the circle
-                                Vector2 shiftBy = boxCollider.ClosestPoint(lampCollider.transform.position);
-                                while (CheckIfPointIsInLight(lampCollider, shiftBy, out Vector2 newVector)){
+                                Vector2 boxCorner = boxCollider.ClosestPoint(lampCollider.transform.position);
+                                if (CheckIfPointIsInLight(lampCollider, boxCorner, out Vector2 pointOutsideLight))
+                                {
+                                    transform.position += (Vector3)(pointOutsideLight - boxCorner);
+                                }
+                                /*
+                                while (CheckIfPointIsInLight(lampCollider, boxCorner, out Vector2 newVector)){
+                                    Vector2 shiftBy = 
                                     shiftBy += (newVector - (Vector2) lampCollider.transform.position).normalized;
                                 }
-                                transform.position = (Vector3) shiftBy;
+                                transform.position = (Vector3) shiftBy;*/
                             }
                         }
                         else
@@ -351,6 +359,46 @@ public class Ghost : MonoBehaviour
                 //    moveTo = closestPoint; //then just move around the circle
                 //}
             }
+
+            /*
+            if (CheckIfPointIsInLight(lampCollider, moveTo, out Vector2 MoveToCPOL)) //if we're about to move into the circle
+            {
+                if (ghostState == GhostState.hostile || ghostState == GhostState.curious) //if we're chasing the player
+                {
+                    if (CheckIfPointIsInLight(lampCollider, target, out Vector2 targetCPOL)) //if our 'final' target is a point in light
+                    { //if we're going toa point in the light... 
+                        //the point is impossible to reach, get out of the light and find a new target, the closest point to us that's outside of the light
+                        ghostState = GhostState.fleeing;
+                        patrolCentre = targetCPOL;
+                        target = targetCPOL;
+                        if (CheckIfPointIsInLight(lampCollider, transform.position, out Vector2 posCPOL)) //if we're in the light 
+                        {
+                            target = posCPOL;
+                            //if we're currently in the light, walk to the edge, rather than teleporting straight there
+                        }
+                        else
+                        {
+                            //otherwise, go to the closest point of the target
+                            target = targetCPOL;
+                        }
+
+                    }
+                    else
+                    {//if the target isn't in the light, then just go around the light to get to them
+                        if (CheckIfPointIsInLight(lampCollider, transform.position, out Vector2 posCPOL))
+                        {
+                            target = posCPOL;
+                            //if we're currently in the light, walk to the edge, rather than teleporting straight there
+                        }
+                        else
+                        {
+
+                            moveTo = MoveToCPOL;
+                        }
+                    }
+                }
+            }
+            */
 
         }
 
