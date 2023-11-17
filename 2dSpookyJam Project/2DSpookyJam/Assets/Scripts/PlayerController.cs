@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
 
     public Lantern lantern;
 
-
+    public bool isInLight;
 
     [Header("movement")]
 
@@ -249,6 +249,22 @@ public class PlayerController : MonoBehaviour
         }
     }
     */
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Lamp"))
+        {
+            isInLight = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Lamp"))
+        {
+            isInLight = false;
+        }
+    }
 
     #endregion collisions
 }

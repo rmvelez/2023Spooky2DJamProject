@@ -12,6 +12,8 @@ public class Lamp : MonoBehaviour, IInteractable
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Animator animator;
 
+    [SerializeField] private Collider2D collider;
+
     private GameManager gameManager;
 
     private float intensity;
@@ -37,6 +39,8 @@ public class Lamp : MonoBehaviour, IInteractable
 
         lampSound = this.gameObject.GetComponent<AudioSource>();
 
+        collider.gameObject.SetActive(false);
+
     }
 
     // Update is called once per frame
@@ -59,9 +63,9 @@ public class Lamp : MonoBehaviour, IInteractable
 
             animator.SetBool("isLit", true);
 
-            ghost.SetLampLit();
             gameManager.LightLamp();
             lampSound.Play();
+            collider.gameObject.SetActive(true);
         }        
     }
 }

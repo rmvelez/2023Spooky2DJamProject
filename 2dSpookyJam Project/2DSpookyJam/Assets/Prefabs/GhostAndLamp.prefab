@@ -118,6 +118,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 117245632270410175}
+  - {fileID: 8262964985993453706}
   m_Father: {fileID: 930884745922700281}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3798134128612792408
@@ -210,6 +211,7 @@ MonoBehaviour:
   ghost: {fileID: 3139148079544501145}
   spriteRenderer: {fileID: 0}
   animator: {fileID: 6782918028596449747}
+  collider: {fileID: 1208314228629543263}
 --- !u!70 &3564598398552096559
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -376,6 +378,73 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: -0.27}
   m_Size: {x: 1.06, y: 0.7}
   m_Direction: 1
+--- !u!1 &5777465950325193141
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8262964985993453706}
+  - component: {fileID: 1208314228629543263}
+  m_Layer: 0
+  m_Name: LampCollider
+  m_TagString: Lamp
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8262964985993453706
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5777465950325193141}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.68, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4547941313151324472}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &1208314228629543263
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5777465950325193141}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 3.53
 --- !u!1 &6470181893697632344
 GameObject:
   m_ObjectHideFlags: 0
@@ -427,6 +496,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 381bde8c4116f804895b07ede471d43f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scaleamount: 0
   ghostState: 0
   boxCollider: {fileID: 0}
   loopSource: {fileID: 3145444387909017885}
@@ -444,7 +514,6 @@ MonoBehaviour:
   spriteRenderer: {fileID: 2042963321171769120}
   lightRange: 0.75
   stingerSound: {fileID: 1757726467948133274}
-  lampLit: 0
   loopVolInc: 0.035
 --- !u!212 &2042963321171769120
 SpriteRenderer:
@@ -714,7 +783,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.1, y: -0.78153676}
+  m_Offset: {x: 0, y: -0.75}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -725,7 +794,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.9, y: 1}
+  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
 --- !u!82 &3145444387909017885
 AudioSource:
