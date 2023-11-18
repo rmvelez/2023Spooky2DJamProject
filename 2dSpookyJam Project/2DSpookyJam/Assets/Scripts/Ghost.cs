@@ -117,111 +117,23 @@ public class Ghost : MonoBehaviour
 
         animator.SetBool("aggroSprite", ghostState == GhostState.hostile || ghostState == GhostState.fleeing); //activate aggro sprites if the ghost is in either the aggro or fleeing states
 
+        if (lampCollider != null)//the ghost only runs from the light if the lamp is lit
+        {
+            Debug.Log("ghost is inlight");
+        }
 
-        float step = currentSpeed * Time.deltaTime * 100;
+            float step = currentSpeed * Time.deltaTime * 100;
 
         moveTo = Vector2.MoveTowards(transform.position, target, step);
         Vector2 direction = moveTo - (Vector2) transform.position;
 
         if(ghostState != GhostState.idle)
         {
-            //newPointMightBeInRangeOfLight = false;
+            newPointMightBeInRangeOfLight = false;
         }
 
         //move this to ontriggerstay{ comparetag("light")}
-        if (lampCollider != null )//the ghost only runs from the light if the lamp is lit
-        {
-
-            
-            if (CheckIfPointIsInLight(lampCollider, transform.position, out Vector2 closestPoint))//if we're in the circle
-            {
-                //this check is just to avoid calling CheckIfPointIsInLight() repeatedly when we're patrolling to a point on the other side of the circle 
-                if (ghostState != GhostState.idle || newPointMightBeInRangeOfLight)
-                {
-                    newPointMightBeInRangeOfLight = false;
-                    if (CheckIfPointIsInLight(lampCollider, target, out Vector2 closestPointToTarget))
-                    {
-                        if (ghostState != GhostState.idle) //if we're chasing the player
-                        {//get out of the circle
-                         //note - since we should only be chasing the player if they're not in the light, then this should only happen when the player activates the
-                         //light while we're in the circle 
-                            ghostState = GhostState.fleeing;
-                            target = closestPoint;
-                            patrolCentre = closestPoint; //patrol around where we exit the circle
-                        }
-                        else //if we're not chasing the player, we must be patrolling to a point that is inside the circle 
-                        {//in which case we want to change our target to be on the edge of the circle 
-                            target = closestPointToTarget;
-                            moveTo = closestPoint;//move around the circle
-                        }
-                    } else
-                    {
-                        Debug.LogWarning("CheckIfPointInLight was called unnecessarily");
-                    }
-
-                } else //if we're patrolling to a point that's  known to not be in the circle
-                { //then the point must be on the other side, so simply move around the circle 
-                    moveTo = closestPoint;
-                }         
-                   
-
-                //if ((ghostState == GhostState.hostile || ghostState == GhostState.curious) //if we're chasing the player
-                //    && CheckIfPointIsInLight(lampCollider, player.transform.position, out Vector2 _)) //AND the player is in the circle  
-                //{//since we should only be chasing the player if they're not in the light, then this should only happen when the player activates the
-                // //light while we're in the circle 
-                    
-                //    if (CheckIfPointIsInLight(lampCollider, player.transform.position, out Vector2 _))//if the player is in the circle
-                //    { 
-                //    }
-                //} else //if the point we're chasing (either patrol point or player position) is on the other side of the circle 
-                //{
-                //    moveTo = closestPoint; //then just move around the circle
-                //}
-            }
-            
-
-            //old version of the above code
-            
-            if (CheckIfPointIsInLight(lampCollider, moveTo, out Vector2 MoveToCPOL)) //if we're about to move into the circle
-            {
-                if (ghostState == GhostState.hostile || ghostState == GhostState.curious) //if we're chasing the player
-                {
-                    if (CheckIfPointIsInLight(lampCollider, target, out Vector2 targetCPOL)) //if our 'final' target is a point in light
-                    { //if we're going toa point in the light... 
-                        //the point is impossible to reach, get out of the light and find a new target, the closest point to us that's outside of the light
-                        ghostState = GhostState.fleeing;
-                        patrolCentre = targetCPOL;
-                        target = targetCPOL;
-                        if (CheckIfPointIsInLight(lampCollider, transform.position, out Vector2 posCPOL)) //if we're in the light 
-                        {
-                            target = posCPOL;
-                            //if we're currently in the light, walk to the edge, rather than teleporting straight there
-                        }
-                        else
-                        {
-                            //otherwise, go to the closest point of the target
-                            target = targetCPOL;
-                        }
-
-                    }
-                    else
-                    {//if the target isn't in the light, then just go around the light to get to them
-                        if (CheckIfPointIsInLight(lampCollider, transform.position, out Vector2 posCPOL))
-                        {
-                            target = posCPOL;
-                            //if we're currently in the light, walk to the edge, rather than teleporting straight there
-                        }
-                        else
-                        {
-
-                            moveTo = MoveToCPOL;
-                        }
-                    }
-                }
-            }
-            
-
-        }
+        
 
         if (moveTo.magnitude >= .001)// if we're moving 
         {
@@ -277,27 +189,19 @@ public class Ghost : MonoBehaviour
                 //if we implement a wait coroutine, start it here.
             }
         }
-    }
 
-    private void OnTriggerStay2D(Collider2D other)
-    {
-        
-        if (other.CompareTag("VertBuilding"))
+        if (lampCollider != null)//the ghost only runs from the light if the lamp is lit
         {
-            spriteRenderer.sortingOrder = -1;
-        } else if (other.CompareTag("Lamp"))
-        {
-            lampCollider = (CircleCollider2D) other;
-
-            newPointMightBeInRangeOfLight = true;
-
             if (CheckIfPointIsInLight(lampCollider, transform.position, out Vector2 closestPoint))//if we're in the circle
             {
                 if (ghostState != GhostState.fleeing) //if we're  not already fleeing
                 {
-                    if ((ghostState != GhostState.idle) || newPointMightBeInRangeOfLight)
+                    if ((ghostState == GhostState.idle) && newPointMightBeInRangeOfLight)
                     {
                         newPointMightBeInRangeOfLight = false;
+
+
+
                         if (CheckIfPointIsInLight(lampCollider, target, out Vector2 closestPointToTarget))
                         {
                             if (ghostState != GhostState.idle) //if we're chasing the player
@@ -311,11 +215,13 @@ public class Ghost : MonoBehaviour
                             else //if we're not chasing the player, we must be patrolling to a point that is inside the circle 
                             {//in which case we want to change our target to be on the edge of the circle 
                                 target = closestPointToTarget;
-                                moveTo = closestPoint;//move around the circle
                                 Vector2 boxCorner = boxCollider.ClosestPoint(lampCollider.transform.position);
+
+                                //after we adjust target, move ourselves around the circle
                                 if (CheckIfPointIsInLight(lampCollider, boxCorner, out Vector2 pointOutsideLight))
                                 {
-                                    transform.position += (Vector3)(pointOutsideLight - boxCorner);
+                                    Vector3 shiftBy = (Vector3)(pointOutsideLight - boxCorner);
+                                    moveTo += (Vector2) shiftBy;
                                 }
                                 /*
                                 while (CheckIfPointIsInLight(lampCollider, boxCorner, out Vector2 newVector)){
@@ -359,6 +265,112 @@ public class Ghost : MonoBehaviour
                 //    moveTo = closestPoint; //then just move around the circle
                 //}
             }
+
+
+            //if (CheckIfPointIsInLight(lampCollider, transform.position, out Vector2 closestPoint))//if we're in the circle
+            //{
+            //    //this check is just to avoid calling CheckIfPointIsInLight() repeatedly when we're patrolling to a point on the other side of the circle 
+            //    if (ghostState != GhostState.idle || newPointMightBeInRangeOfLight)
+            //    {
+            //        newPointMightBeInRangeOfLight = false;
+            //        if (CheckIfPointIsInLight(lampCollider, target, out Vector2 closestPointToTarget))
+            //        {
+            //            if (ghostState != GhostState.idle) //if we're chasing the player
+            //            {//get out of the circle
+            //             //note - since we should only be chasing the player if they're not in the light, then this should only happen when the player activates the
+            //             //light while we're in the circle 
+            //                ghostState = GhostState.fleeing;
+            //                target = closestPoint;
+            //                patrolCentre = closestPoint; //patrol around where we exit the circle
+            //            }
+            //            else //if we're not chasing the player, we must be patrolling to a point that is inside the circle 
+            //            {//in which case we want to change our target to be on the edge of the circle 
+            //                target = closestPointToTarget;
+            //                moveTo = closestPoint;//move around the circle
+            //            }
+            //        } else
+            //        {
+            //            Debug.LogWarning("CheckIfPointInLight was called unnecessarily");
+            //        }
+
+            //    } else //if we're patrolling to a point that's  known to not be in the circle
+            //    { //then the point must be on the other side, so simply move around the circle 
+            //        moveTo = closestPoint;
+            //    }         
+
+
+            //    //if ((ghostState == GhostState.hostile || ghostState == GhostState.curious) //if we're chasing the player
+            //    //    && CheckIfPointIsInLight(lampCollider, player.transform.position, out Vector2 _)) //AND the player is in the circle  
+            //    //{//since we should only be chasing the player if they're not in the light, then this should only happen when the player activates the
+            //    // //light while we're in the circle 
+
+            //    //    if (CheckIfPointIsInLight(lampCollider, player.transform.position, out Vector2 _))//if the player is in the circle
+            //    //    { 
+            //    //    }
+            //    //} else //if the point we're chasing (either patrol point or player position) is on the other side of the circle 
+            //    //{
+            //    //    moveTo = closestPoint; //then just move around the circle
+            //    //}
+            //}
+
+
+            //old version of the above code
+
+            //if (CheckIfPointIsInLight(lampCollider, moveTo, out Vector2 MoveToCPOL)) //if we're about to move into the circle
+            //{
+            //    if (ghostState == GhostState.hostile || ghostState == GhostState.curious) //if we're chasing the player
+            //    {
+            //        if (CheckIfPointIsInLight(lampCollider, target, out Vector2 targetCPOL)) //if our 'final' target is a point in light
+            //        { //if we're going toa point in the light... 
+            //            //the point is impossible to reach, get out of the light and find a new target, the closest point to us that's outside of the light
+            //            ghostState = GhostState.fleeing;
+            //            patrolCentre = targetCPOL;
+            //            target = targetCPOL;
+            //            if (CheckIfPointIsInLight(lampCollider, transform.position, out Vector2 posCPOL)) //if we're in the light 
+            //            {
+            //                target = posCPOL;
+            //                //if we're currently in the light, walk to the edge, rather than teleporting straight there
+            //            }
+            //            else
+            //            {
+            //                //otherwise, go to the closest point of the target
+            //                target = targetCPOL;
+            //            }
+
+            //        }
+            //        else
+            //        {//if the target isn't in the light, then just go around the light to get to them
+            //            if (CheckIfPointIsInLight(lampCollider, transform.position, out Vector2 posCPOL))
+            //            {
+            //                target = posCPOL;
+            //                //if we're currently in the light, walk to the edge, rather than teleporting straight there
+            //            }
+            //            else
+            //            {
+
+            //                moveTo = MoveToCPOL;
+            //            }
+            //        }
+            //    }
+            //}
+
+
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        
+        if (other.CompareTag("VertBuilding"))
+        {
+            spriteRenderer.sortingOrder = -1;
+        } else if (other.CompareTag("Lamp"))
+        {
+            lampCollider = (CircleCollider2D) other;
+
+            newPointMightBeInRangeOfLight = true;
+
+            
 
             /*
             if (CheckIfPointIsInLight(lampCollider, moveTo, out Vector2 MoveToCPOL)) //if we're about to move into the circle
