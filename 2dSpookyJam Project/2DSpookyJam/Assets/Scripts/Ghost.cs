@@ -44,8 +44,8 @@ public class Ghost : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private SpriteRenderer spriteRenderer;
 
-    [Tooltip("how far from the light's outer range the ghost can enter - as a percent of the range")]
-    [SerializeField] private float lightRange;
+    [Tooltip("the minimum amount a target destination can be placed outside of the lamp collider to ensure the ghost's transform can still reach it")]
+    private const float GRACE_RANGE = 1.53f; // calculated as the magnitude from the center of the ghosts transform to the furthest corner on the box collider, rounded up slightly
 
     private const int SIDE_DIRECTION = 1;
     private const int UP_DIRECTION = 2;
@@ -120,115 +120,25 @@ public class Ghost : MonoBehaviour
 
         float step = currentSpeed * Time.deltaTime * 100;
 
+
+
         moveTo = Vector2.MoveTowards(transform.position, target, step);
 
 
         //consider doing this as a separate method
-        if (lampCollider != null)//the ghost only runs from the light if the lamp is lit
+
+        if (lampCollider != null)
         {
-            //check if we're not already fleeing - as if it's doing that then we just want it to keep moving to it's target rather than changing it's behavior as it does so 
-            if (ghostState != GhostState.fleeing)
-            {
-                if (lampCollider.OverlapPoint(boxCollider.bounds.center)) //this will be true if the center of the box is within the collider, i.e. the ghost is starting inside the collider rather than entering the side
-                {   // this happens when the player lights the lamp with the ghost inside
-                    // if the ghost is (fully) inside the light, then we need to get out
-                    CheckIfPointIsInLight(lampCollider, boxCollider.bounds.center, out Vector2 closestPointToGhost);
-
-                    //the following lines tell the ghost to start moving to a point directly out of the lamp range, plus a little extra
-                    Vector2 exitDirection = closestPointToGhost - (Vector2)boxCollider.bounds.center;  //we could also calculate this direction as lampCollider's transform.position - closestPoint. they should be equal
-                    exitDirection.Normalize();//if the ghost goes to a point just on the edge of the lamp collider, then their collider will probably still be overlapping
-                    Debug.Log("exitDirection: " + exitDirection * .51f);
-                    target = closestPointToGhost + (exitDirection * .51f); //so move it just a bit further out
-
-                    patrolCentre = target;//have the ghost patrol around this new point just outside the circle
-
-                    ghostState = GhostState.fleeing;
-
-                }
-                else //if we're touching the lamp collider, but not fully inside it, then we're on the edge. 
-                {
-                    if (ghostState != GhostState.fleeing) //don't do anything differently if we're already leaving - just keep going to our target destination
-                    {
-                        //if we are fleeing though, then we must be either trying to pursue a point either within the collider or on the other side of it
-                        //checkPlayerPos should theoretically be checking if the player is in the light already (playerIsInLight bool), so this should only
-                        //happen if we've chosen to patrol to a point that happens to be inside the light, or on the very edge - such that reaching the point
-                        //would require passing through the light 
-
-                        //first step is to make sure we're not trying to reach a patrol point that's already inside the light 
-                        //this variable will keep track of when we've already moved a point outside the light, so we're not calling CheckIfPointIsInLight() unnecessarily
-                        if (newPointMightBeInRangeOfLight)
-                        {
-                            newPointMightBeInRangeOfLight = false;
-                            Debug.Log("newPointMightBeInRangeOfLight");
-
-                            if (CheckIfPointIsInLight(lampCollider, target, out Vector2 closestPointToTarget))
-                            {
-                                //the following lines tell the ghost to start moving directly out of the lamp range, plus a little extra
-                                Vector2 targetDirection = closestPointToTarget - (Vector2)target; //we could also calculate this direction as lampCollider's transform.position - closestPoint. they should be equal
-                                targetDirection.Normalize();//if the ghost goes to a point just on the edge of the lamp collider, then their collider will probably still be overlapping
-                                Debug.Log("targetDirection: " + targetDirection * .1f);
-                                target = closestPointToTarget + (targetDirection * .1f); //so move it just a bit further out
-                            }
-                            else
-                            {
-                                Debug.Log("CheckIfPointIsInLight called unnecessarily");
-                            }
-                        }
-                        else //now that we've confirmed the target is outside of the light, we want to just have the ghost circle around the light 
-                        {
-
-                            Vector2 boxCorner = boxCollider.ClosestPoint(lampCollider.transform.position); //if the collider is not null, then at least one corner must be inside of it. this retrieves that corner
-
-                            if (CheckIfPointIsInLight(lampCollider, boxCorner, out Vector2 cornerOutsideLight)) //retrieve the closest point to that corner that is outside the light
-                            {
-                                //the out variable will be where the corner will be after we get out of the light, and will therefore be useful for calculating the direction to get out of the light
-
-                                Vector3 shiftBy = (Vector3)(cornerOutsideLight - boxCorner);
-                                moveTo += (Vector2)shiftBy;//instead of moving directly towards the point, adjust our direction such that we'll stay outside of the circle 
-
-                            }
-                            else
-                            {
-                                Debug.LogWarning("something's wrong I can feel it");
-                                //somehow lampcollider is null but not a single point in our boxcollider is inside the lamp collider
-                            }
-                        }
-                    }
-                }
-            }
-
-
-
-
-            //if (ghostState == GhostState.hostile || ghostState == GhostState.curious) //if we're chasing the player
-            //{
-            //}
-            //else //if we're not chasing the player, then we must be patrolling to a point that happens to be outside of the light (or is inside the light)
-            //{
-            //    if (true)//check if the patrol point might be in the light already
-            //    {
-            //        if (CheckIfPointIsInLight(lampCollider, target, out Vector2 closestPointToTarget)) //make sure that our target isn't inside the light
-            //        { // if it is, then move it out
-            //            target = closestPointToTarget;
-            //        }
-
-
-
-            //        //after we adjust target, move ourselves around the circle
-
-            //    }
-            //}
+            ExitCircle();
         }
+
 
         Vector2 direction = moveTo - (Vector2) transform.position;
 
         if(ghostState != GhostState.idle)
         {
             newPointMightBeInRangeOfLight = false;
-        }
-
-        //move this to ontriggerstay{ comparetag("light")}
-        
+        }        
 
         if (moveTo.magnitude >= .001)// if we're moving 
         {
@@ -287,59 +197,94 @@ public class Ghost : MonoBehaviour
 
     }
 
+    private void ExitCircle()
+{
+        //check that the ghost is not already fleeing - as if it's doing that then we just want it to keep moving to it's target rather than changing it's behavior as it does so 
+        if (ghostState != GhostState.fleeing)
+        {
+            Vector2 boxCorner = boxCollider.ClosestPoint(lampCollider.transform.position); //this is the corner closest to the center of the circle
+            Vector2 cornerToTransform = (Vector2)transform.position - boxCorner; // whenever we set a destination, we want to shift it by this much - otherwise it may not be reachable by the ghost 
+
+            if (lampCollider.OverlapPoint(boxCollider.bounds.center)) //this will be true if the center of the box is within the collider, i.e. the ghost is starting inside the collider rather than entering the side
+            {   // this happens when the player lights the lamp with the ghost inside
+                // if the ghost is (fully) inside the light, then we need to get out
+                CheckIfPointIsInLight(lampCollider, boxCollider.bounds.center, out Vector2 closestPointToGhost);
+
+                //the following lines tell the ghost to start moving to a point directly out of the lamp range, plus a little extra
+                Vector2 exitDirection = closestPointToGhost - (Vector2) lampCollider.transform.position;
+                exitDirection = (exitDirection + (exitDirection.normalized * GRACE_RANGE));
+                
+                //exitDirection = (exitDirection + cornerToTransform) * 1.1f;
+                //Debug.Log("exitDirection: " + exitDirection);
+                target = (Vector2) lampCollider.transform.position + (exitDirection); 
+
+                patrolCentre = target;//have the ghost patrol around this new point just outside the circle
+
+                ghostState = GhostState.fleeing;
+
+            }
+            else //if the ghost is touching the lamp collider, but not fully inside it, then the ghost is on the edge. 
+            {
+                //if the ghost is fleeing though, then the ghost must be either trying to pursue a point either within the collider or on the other side of it
+                //checkPlayerPos should theoretically be checking if the player is in the light already (playerIsInLight bool), so this should only
+                //happen if the ghost has chosen to patrol to a point that happens to be inside the light, or on the very edge - such that reaching the point
+                //would require passing through the light 
+
+                //first step is to make sure the ghost is not trying to reach a patrol point that's already inside the light 
+                //this variable will keep track of when the ghost has already moved a point outside the light, so that CheckIfPointIsInLight() isn't being called unnecessarily
+                if (newPointMightBeInRangeOfLight)
+                {
+                    newPointMightBeInRangeOfLight = false;
+                    Debug.Log("newPointMightBeInRangeOfLight");
+
+
+                    if (CheckIfPointIsInLight(lampCollider, target, out Vector2 closestPointToTarget))
+                    {
+                        //the following lines tell the ghost to start moving directly out of the lamp range, plus a little extra
+                        Vector2 targetDirection = closestPointToTarget - (Vector2) lampCollider.transform.position;
+
+                        targetDirection = (targetDirection + (targetDirection.normalized * GRACE_RANGE));
+                        //if the ghost goes to a point just on the edge of the lamp collider, then their collider will probably still be overlapping, so move it just a bit further out
+                        //Debug.Log("targetDirection: " + targetDirection);
+                        target = (Vector2)lampCollider.transform.position + (targetDirection);
+                    }
+                    else
+                    {
+                        Debug.Log("CheckIfPointIsInLight called unnecessarily");
+                    }
+                }
+                else //now that we've confirmed the target is outside of the light, we want to just have the ghost circle around the light 
+                {
+
+                    if (CheckIfPointIsInLight(lampCollider, boxCorner, out Vector2 cornerOutsideLight)) //retrieve the closest point to that corner that is outside the light
+                    {
+
+                        Debug.Log("corner to transform" + cornerToTransform);
+                        //the out variable will be where the corner will be after the ghost gets out of the light, and will therefore be useful for calculating the direction to get out of the light
+
+                        Vector3 shiftBy = (Vector3)(cornerOutsideLight - boxCorner);
+                        moveTo += (Vector2)shiftBy;//instead of moving directly towards the point, adjust the ghosts direction such that it'll will stay outside of the circle 
+
+                    }
+                    else
+                    {
+                        Debug.LogWarning("something's wrong I can feel it");
+                        //somehow lampcollider is null but not a single point in our boxcollider is inside the lamp collider
+                    }
+                }
+            }
+        }
+    }
+
     private void OnTriggerStay2D(Collider2D other)
-    {
-        
+    {        
         if (other.CompareTag("VertBuilding"))
         {
             spriteRenderer.sortingOrder = -1;
         } else if (other.CompareTag("Lamp"))
         {
-            lampCollider = (CircleCollider2D) other;
-                        
-
-            /*
-            if (CheckIfPointIsInLight(lampCollider, moveTo, out Vector2 MoveToCPOL)) //if we're about to move into the circle
-            {
-                if (ghostState == GhostState.hostile || ghostState == GhostState.curious) //if we're chasing the player
-                {
-                    if (CheckIfPointIsInLight(lampCollider, target, out Vector2 targetCPOL)) //if our 'final' target is a point in light
-                    { //if we're going toa point in the light... 
-                        //the point is impossible to reach, get out of the light and find a new target, the closest point to us that's outside of the light
-                        ghostState = GhostState.fleeing;
-                        patrolCentre = targetCPOL;
-                        target = targetCPOL;
-                        if (CheckIfPointIsInLight(lampCollider, transform.position, out Vector2 posCPOL)) //if we're in the light 
-                        {
-                            target = posCPOL;
-                            //if we're currently in the light, walk to the edge, rather than teleporting straight there
-                        }
-                        else
-                        {
-                            //otherwise, go to the closest point of the target
-                            target = targetCPOL;
-                        }
-
-                    }
-                    else
-                    {//if the target isn't in the light, then just go around the light to get to them
-                        if (CheckIfPointIsInLight(lampCollider, transform.position, out Vector2 posCPOL))
-                        {
-                            target = posCPOL;
-                            //if we're currently in the light, walk to the edge, rather than teleporting straight there
-                        }
-                        else
-                        {
-
-                            moveTo = MoveToCPOL;
-                        }
-                    }
-                }
-            }
-            */
-
+            lampCollider = (CircleCollider2D)other;
         }
-
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -370,7 +315,7 @@ public class Ghost : MonoBehaviour
         bool playerIsInLight = gameManager.playerController.isInLight;
         switch (ghostState)
         {
-            case GhostState.idle: //if we're in idle state
+            case GhostState.idle: //if the ghost is in idle state
 
                 if (distanceToPlayer <= outerRange && !(playerIsInLight)) //player goes from being idle to entering outer circle
                 {
@@ -379,7 +324,7 @@ public class Ghost : MonoBehaviour
                     currentSpeed = slowSpeed;
 
                     break;
-                }  else if (Vector2.Distance(transform.position, target) < .1) //if we've reached our destination
+                }  else if (Vector2.Distance(transform.position, target) < .1) //if the ghost has reached its destination
                 {
                     Patrol();
                 } else if (loopSource.isPlaying)
@@ -389,7 +334,7 @@ public class Ghost : MonoBehaviour
                 }
 
                 break;
-            case GhostState.curious: //if we're in curious state (state 1)
+            case GhostState.curious: //if the ghost is in curious state (state 1)
                 if (distanceToPlayer > outerRange) //player exits outer range 
                 {
                     //Debug.Log("this should only happen once when player exits outer range");
@@ -484,7 +429,7 @@ public class Ghost : MonoBehaviour
 
                 break;
             case GhostState.fleeing:
-                if((Vector2) transform.position ==target) //if we're running away and reach the outside of the circle
+                if((Vector2) transform.position ==target) //if the ghost is running away and reach the outside of the circle
                 {
                     //patrolCentre = lampLit ? transform.position : lamp.transform.position;
                     patrolCentre = transform.position;//probably redundant
@@ -573,113 +518,6 @@ public class Ghost : MonoBehaviour
         }
     }
 
-    /*
-    void OnTriggerEnter2D(Collider2D collider)
-    {
-        if(collider.gameObject.CompareTag("player")){
-            if(Vector2.Distance(player.transform.position, this.transform.position) <= innerRange) //player is in inner circle
-            {
-                switch (ghostState)
-                {
-
-                    case GhostState.idle:
-                        //state = 2;
-                        ghostState = GhostState.hostile;
-                        target = player.transform.position;
-                        //target = player.position;
-                        break;
-                    case GhostState.curious: //if curious
-                        ghostState = GhostState.hostile;
-                        target = player.transform.position;
-
-                        //set to state
-                        state = 2;
-                        //target = player.position;
-                        break;
-                    case GhostState.wary: //if wary
-                        ghostState = GhostState.hostile;
-                            //other version of this statement sets it to curious
-
-                        //set to hostile
-                        state = 2;
-                        //target = player.position;
-                        break;
-
-                            
-                    //case (GhostState.wary):
-                    //    ghostState = GhostState.curious;
-                    //    target = player.transform.position;
-                    //    break;
-                    //    case (ghostState.)
-
-                }
-            }
-        
-        }
-        //if (collider.gameObject.CompareTag("player outer circle"))
-        //if(collider.gameObject.transform.position )
-        if(true) //originally this was going to use vec2.distance() to probably check player pos, swapping to if(true) to avoid compile errors
-        {
-            switch (state)
-            {
-                case (int)States.Idle:
-                    state = (int)States.Curious;
-                    target = player.transform.position;
-                    break;
-                case (int)States.Wary:
-                    state = (int)States.Hostile;
-                    target = player.transform.position;
-                    break;
-            }
-        }
-        else if (collider.gameObject.CompareTag("player inner circle"))
-        {
-
-        //following lines were a merge conflict, following contains each copy of the code
-        
-        //start of original code (merge source B
-        
-        switch (state)
-            {
-                case 0:
-                    state = 2;
-                    //target = player.position;
-                    break;
-                case 1:
-                    ; state = 2;
-                    //target = player.position;
-                    break;
-                case 3:
-                    state = 2;
-                    //target = player.position;
-                    break;
-            }
-            
-            //meswif's code, brought from patrol branch (merge source C)
-            state = (int)States.Hostile;
-            target = player.transform.position;
-        }
-    }
-
-    void OnTriggerExit2D(Collider2D collider)
-    {
-        if (collider.gameObject.CompareTag("player outer circle"))
-        {
-            switch (state)
-            {
-                case (int)States.Curious:
-                    state = (int)States.Idle;
-                    target = lamp.transform.position;
-                    break;
-                case (int)States.Hostile:
-                    state = (int)States.Wary;
-                    target = player.transform.position;
-                    break;
-            }
-        }
-    }
-    */
-
     //sets target to a new random position within range of the relevant point 
     private void Patrol()
     {
@@ -714,27 +552,28 @@ public class Ghost : MonoBehaviour
      // old version of CheckIfPointIsInLight, before I realized Unity had its own ways of doing this, and thus I tried to do it manually
     [Tooltip("checks if the point is within the range of the light. returns closest point not within light as vec2 out var, or a zero vector if it's not within light")]
     private bool CheckIfPointIsInLight(CircleCollider2D collider , Vector2 point, out Vector2 closestPointOutsideLight)
-    {
-        
+    {       
 
         //most likely issues are with local to global point translation, or just plain linear algebra
 
         Vector2 distToLight = point - (Vector2)collider.transform.position;
-        //if the distance to the light is less than how far it should be from the lamp (outer radius times lightrange). everything is squared cause it's faster
-        //
-        if (distToLight.sqrMagnitude < MathF.Pow(lamp.lampLight.pointLightOuterRadius * lightRange, 2))
-        { //sqr magnitude is faster than magnitude because it avoids root operations, just make sure to square everything
+
+        float radius = collider.radius * 1.51f;
+        //we're multiplying the radius by 1.5 because the scale of the prefab root is 1.5, and an addition .01 just helps to ensure this point is absolutely outside of the circle (rather than exactly on the border)
+
+
+        if (distToLight.sqrMagnitude < MathF.Pow(radius, 2))
+        { //sqr magnitude is faster than magnitude because it avoids root operations, just make sure to square everything else 
             //Debug.Log("point is within light");
 
-            closestPointOutsideLight = (distToLight.normalized * (collider.radius * 1.51f) ) + (Vector2) collider.transform.position;
-            //we're multiplying the radius by 1.5 because the scale of the prefab root is 1.5, and an addition .1 just helps to ensure this point is absolutely outside of the circle 
+            closestPointOutsideLight = (distToLight.normalized * (radius) ) + (Vector2) collider.transform.position;
 
             return true;
         }
         else
         {
             //Debug.Log("point is NOT within light");
-
+            
             closestPointOutsideLight = point;
 
             return false;
