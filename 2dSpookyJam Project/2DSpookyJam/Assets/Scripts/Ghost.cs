@@ -123,17 +123,13 @@ public class Ghost : MonoBehaviour
 
 
         moveTo = Vector2.MoveTowards(transform.position, target, step);
-
-
-        //consider doing this as a separate method
+        Vector2 direction = moveTo - (Vector2) transform.position;
+        //direction sets the direction of the sprite, so we want to do that before any exit Circle stuff, as that tends to throw the ghost in a few weird directions
 
         if (lampCollider != null)
         {
             ExitCircle();
         }
-
-
-        Vector2 direction = moveTo - (Vector2) transform.position;
 
         if(ghostState != GhostState.idle)
         {
@@ -259,11 +255,15 @@ public class Ghost : MonoBehaviour
                     if (CheckIfPointIsInLight(lampCollider, boxCorner, out Vector2 cornerOutsideLight)) //retrieve the closest point to that corner that is outside the light
                     {
 
-                        Debug.Log("corner to transform" + cornerToTransform);
                         //the out variable will be where the corner will be after the ghost gets out of the light, and will therefore be useful for calculating the direction to get out of the light
 
-                        Vector3 shiftBy = (Vector3)(cornerOutsideLight - boxCorner);
-                        moveTo += (Vector2)shiftBy;//instead of moving directly towards the point, adjust the ghosts direction such that it'll will stay outside of the circle 
+                        Vector2 shiftBy = (cornerOutsideLight - boxCorner)  ;
+                        Vector2 newDir = shiftBy - (Vector2) transform.position;
+                        newDir = newDir.normalized + moveTo;
+                        float step = currentSpeed * Time.deltaTime * 100;
+                        moveTo = Vector2.MoveTowards(transform.position, newDir, step);
+
+                        //moveTo += shiftBy;//instead of moving directly towards the point, adjust the ghosts direction such that it'll will stay outside of the circle 
 
                     }
                     else
