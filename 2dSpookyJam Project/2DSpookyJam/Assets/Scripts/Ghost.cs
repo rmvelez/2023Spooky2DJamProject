@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.GameCenter;
@@ -194,7 +195,72 @@ public class Ghost : MonoBehaviour
     }
 
     private void ExitCircle()
-{
+    {
+        RaycastHit2D boxcast = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.extents, 0, moveTo, Vector2.Distance(boxCollider.bounds.center, target);
+
+        if(boxcast.collider != null && boxcast.collider.CompareTag("Lamp"))
+        {
+            if(lampCollider = (CircleCollider2D) boxcast.collider)
+            {
+                //check that the ghost is not already fleeing - as if it's doing that then we just want it to keep moving to it's target rather than changing it's behavior as it does so 
+                if (ghostState != GhostState.fleeing)
+                {
+                    if (lampCollider.OverlapPoint(boxCollider.bounds.center)) //this will be true if the center of the box is within the collider, i.e. the ghost is starting inside the collider rather than entering the side
+                    {   // this happens when the player lights the lamp with the ghost inside
+                        // if the ghost is (fully) inside the light, then we need to get out
+                        CheckIfPointIsInLight(lampCollider, boxCollider.bounds.center, out Vector2 closestPointToGhost);
+
+                        //the following lines tell the ghost to start moving to a point directly out of the lamp range, plus a little extra
+                        Vector2 exitDirection = closestPointToGhost - (Vector2)lampCollider.transform.position;
+                        exitDirection = (exitDirection + (exitDirection.normalized * GRACE_RANGE));
+
+                        //exitDirection = (exitDirection + cornerToTransform) * 1.1f;
+                        //Debug.Log("exitDirection: " + exitDirection);
+                        target = (Vector2)lampCollider.transform.position + (exitDirection);
+
+                        patrolCentre = target;//have the ghost patrol around this new point just outside the circle
+
+                        ghostState = GhostState.fleeing;
+                    } else // if the boxcast succeeded but the ghost isn't already inside the collider, then it will move into it sooner or later, so adjust course
+                    {
+                        Vector3 normal = boxcast.normal;
+                        //left is normal x up 
+                        
+                        Vector3 leftTangent = Vector3.Cross(normal, Vector3.up);
+                        Vector3 rightTangent = Vector3.Cross(Vector3.up, normal);
+
+                        float leftAngle = Vector3.Angle(leftTangent, moveTo);
+                        float rightAngle = Vector3.Angle(rightTangent, moveTo);
+
+                        Vector2 boxCastVector = boxcast.point - (Vector2)boxCollider.bounds.center;
+                        Vector2 boxCorner = boxCollider.ClosestPoint( (Vector2) lampCollider.transform.position - (boxCastVector)); 
+                        //^ this is the corner closest to the center of the circle when the 
+                        Vector2 cornerToTransform = (Vector2)transform.position - boxCorner; // whenever we set a destination, we want to shift it by this much - otherwise it may not be reachable by the ghost 
+
+
+                        //the tangent with the larger angle tells us which direction is closer to the edge - and therefore which direction we want to start moving to
+                        if (rightAngle >= leftAngle)//if we're moving right
+                        {
+
+                        } else// if we're moving left 
+                        {
+
+                        }
+
+                        //the tangent with the larger angle tells us which direction is closer to the edge
+                    }
+
+                }
+
+
+            } else
+            {
+                Debug.LogError("Cast from collider with lamp tag to circleCollider failed");
+            }
+        }
+
+
+
         //check that the ghost is not already fleeing - as if it's doing that then we just want it to keep moving to it's target rather than changing it's behavior as it does so 
         if (ghostState != GhostState.fleeing)
         {
