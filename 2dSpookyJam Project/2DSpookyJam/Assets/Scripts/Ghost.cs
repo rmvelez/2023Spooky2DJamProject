@@ -38,7 +38,7 @@ public class Ghost : MonoBehaviour
 
     [SerializeField] private float fastSpeed = 1;
     [SerializeField] private float slowSpeed = 0.5f;
-    private float currentSpeed ;
+    [SerializeField] private float currentSpeed ;
     
     [SerializeField] private float patrolRange = 3; // the maximum distance the target can be from the ghost (if lamp is lit) or the lamp (if not lit)
 
@@ -65,6 +65,8 @@ public class Ghost : MonoBehaviour
     //= lampLit ? lastSeenPlayerPos.position : lamp.transform.position;
 
     private float maxLoopVol;
+
+    [SerializeField] Rigidbody2D rigidbody; 
 
     [SerializeField] float loopVolInc;
     private bool isCoroutineRunning;
@@ -129,23 +131,28 @@ public class Ghost : MonoBehaviour
 
 
 
-        moveTo = Vector2.MoveTowards(transform.position, target, step);
+        //moveTo = Vector2.MoveTowards(transform.position, target, step);
+        moveTo = target - (Vector2) transform.position;
+
+
         Vector2 direction = moveTo - (Vector2) transform.position;
         //direction sets the direction of the sprite, so we want to do that before any exit Circle stuff, as that tends to throw the ghost in a few weird directions
 
-        
+
         ExitCircle();
-        if(ghostState != GhostState.idle)
+
+
+        if (ghostState != GhostState.idle)
         {
             newPointMightBeInRangeOfLight = false;
         }        
 
         if (moveTo.magnitude >= .001)// if we're moving 
         {
-            transform.position = moveTo; //set position to moveTo
+            rigidbody.velocity = moveTo.normalized * currentSpeed;
 
             #region animation var setting
-            if( MathF.Abs( direction.x) > MathF.Abs(direction.y)) //if we're moving horizontally more than vertically
+            if ( MathF.Abs( direction.x) > MathF.Abs(direction.y)) //if we're moving horizontally more than vertically
             {
                 animator.SetInteger("movement", SIDE_DIRECTION);
                 
@@ -369,7 +376,7 @@ public class Ghost : MonoBehaviour
                     currentSpeed = slowSpeed;
 
                     break;
-                }  else if (Vector2.Distance(transform.position, target) < .1) //if the ghost has reached its destination
+                }  else if (Vector2.Distance(transform.position, target) < 1) //if the ghost has reached its destination
                 {
                     Patrol();
                 } else if (loopSource.isPlaying)
@@ -480,7 +487,7 @@ public class Ghost : MonoBehaviour
 
                 break;
             case GhostState.fleeing:
-                if((Vector2) transform.position ==target) //if the ghost is running away and reach the outside of the circle
+                if(Vector2.Distance(transform.position, target) < .1) //if the ghost is running away and reach the outside of the circle
                 {
                     //patrolCentre = lampLit ? transform.position : lamp.transform.position;
                     patrolCentre = transform.position;//probably redundant
