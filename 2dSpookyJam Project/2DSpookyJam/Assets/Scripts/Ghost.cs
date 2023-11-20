@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
+using UnityEditor;
+using UnityEditor.Experimental.GraphView;
 using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.GameCenter;
@@ -126,10 +128,9 @@ public class Ghost : MonoBehaviour
         Vector2 direction = moveTo - (Vector2) transform.position;
         //direction sets the direction of the sprite, so we want to do that before any exit Circle stuff, as that tends to throw the ghost in a few weird directions
 
-        if (lampCollider != null)
-        {
-            ExitCircle();
-        }
+
+        ExitCircle();
+        
 
         if(ghostState != GhostState.idle)
         {
@@ -193,8 +194,72 @@ public class Ghost : MonoBehaviour
 
     }
 
+    private static Vector2 Rotate( Vector2 v, float delta)
+    {
+        return new Vector2(
+            v.x * Mathf.Cos(delta) - v.y * Mathf.Sin(delta),
+            v.x * Mathf.Sin(delta) + v.y * Mathf.Cos(delta)
+            );
+    }
+
+
     private void ExitCircle()
-{
+    {
+
+
+        RaycastHit2D boxcast = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.extents, 0,  moveTo, Vector3.Distance(transform.position, target));
+
+        Vector2 boxCorner = boxCollider.ClosestPoint(lampCollider.transform.position); //this is the corner closest to the center of the circle
+        Vector2 cornerToTransform = (Vector2)transform.position - boxCorner; // whenever we set a destination, we want to shift it by this much - otherwise it may not be reachable by the ghost 
+
+        //check if the there is a lamp collider anywhere between the ghost and the target. if not, do nothing and exit the method
+        if ((boxcast.collider != null) && boxcast.collider.CompareTag("Lamp"))
+        {
+            if ((lampCollider = (CircleCollider2D)boxcast.collider)) //if the ghost does find something, try to cast it to a circle Collider. this cast should work all the time - if not then throw an exception
+            {
+                if (ghostState != GhostState.fleeing) //if we're already fleeing, then we don't need to do anything differently. just continue to get out of the circle
+                {
+                    if (lampCollider.OverlapPoint(boxCollider.bounds.center)) // if the center of the box is within the collider, i.e. the ghost is starting inside the collider rather than entering the side
+                    {   // this happens when the player lights the lamp with the ghost inside
+
+                        CheckIfPointIsInLight(lampCollider, boxCollider.bounds.center, out Vector2 closestPointToGhost); //find the closest point outside of the light and store it in the out vector
+
+                        //the following lines tell the ghost to start moving to a point directly out of the lamp range, plus a little further to ensure the ghost is fully out
+                        Vector2 exitDirection = closestPointToGhost - (Vector2)lampCollider.transform.position;
+                        exitDirection = exitDirection + (exitDirection.normalized * GRACE_RANGE); //grace range is to account for the fact that the transform isn't quite the same spot as where the hitbox might be overlapping
+
+                        target = (Vector2)lampCollider.transform.position + (exitDirection);
+
+                        patrolCentre = target;//have the ghost patrol around this new point just outside the circle
+
+                        ghostState = GhostState.fleeing;
+
+                    }
+                    else//if the ghost has found a lamp collider, but isn't fully inside it, then the ghost is on the outside but about to move through it. 
+                    {
+                        Vector2 normal = boxcast.normal;
+
+                        float heading = Vector2.Angle(normal, moveTo);
+                    }
+                }
+
+
+
+            }
+            else
+            {
+                throw new InvalidCastException("found a collider tagged with lamp, but it wasn't a circle collider");
+            }
+
+        }
+
+       
+        
+
+            
+
+
+
         //check that the ghost is not already fleeing - as if it's doing that then we just want it to keep moving to it's target rather than changing it's behavior as it does so 
         if (ghostState != GhostState.fleeing)
         {
