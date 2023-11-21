@@ -45,6 +45,7 @@ public class Ghost : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private SpriteRenderer spriteRenderer;
 
+
     [Tooltip("the minimum amount a target destination can be placed outside of the lamp collider to ensure the ghost's transform can still reach it")]
     private const float GRACE_RANGE = 1.53f; // calculated as the magnitude from the center of the ghosts transform to the furthest corner on the box collider, rounded up slightly
 
@@ -82,6 +83,9 @@ public class Ghost : MonoBehaviour
 
     private Vector2 moveTo;
 
+    private bool goingAround = false;
+    private Vector2 goingAroundDest;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -97,7 +101,7 @@ public class Ghost : MonoBehaviour
 
         target = lamp.gameObject.transform.position;
 
-        rotationAngle = 0; //any time we change the target, reset rotationAngle to ensure we're checking the calculations
+        rotationAngle = 0; 
 
         patrolCentre = lamp.lampLight.transform.position;
 
@@ -137,7 +141,7 @@ public class Ghost : MonoBehaviour
 
         Vector2 direction = moveTo - (Vector2) transform.position;
         //direction sets the direction of the sprite, so we want to do that before any exit Circle stuff, as that tends to throw the ghost in a few weird directions
-
+        moveTo = Quaternion.Euler(0, 0, rotationAngle) * moveTo;
 
         ExitCircle();
 
@@ -145,11 +149,13 @@ public class Ghost : MonoBehaviour
         if (ghostState != GhostState.idle)
         {
             newPointMightBeInRangeOfLight = false;
-        }        
+        }
+
+        Debug.DrawLine(transform.position, transform.position + (Vector3)moveTo, Color.red, .1f);
 
         if (moveTo.magnitude >= .001)// if we're moving 
         {
-            rigidbody.velocity = moveTo.normalized * currentSpeed;
+            rigidbody.velocity = (moveTo.normalized * currentSpeed) ;
 
             #region animation var setting
             if ( MathF.Abs( direction.x) > MathF.Abs(direction.y)) //if we're moving horizontally more than vertically
@@ -207,121 +213,102 @@ public class Ghost : MonoBehaviour
 
     private void ExitCircle()
     {
-        RaycastHit2D raycast = Physics2D.Raycast(transform.position, moveTo, Vector2.Distance(boxCollider.bounds.center, target) );
+        RaycastHit2D RaycastToDestination = Physics2D.Raycast(transform.position, moveTo, Vector2.Distance(boxCollider.bounds.center, target) );
 
 
-        if(raycast.collider != null && raycast.collider.CompareTag("Lamp"))
+        if(RaycastToDestination.collider != null && RaycastToDestination.collider.CompareTag("Lamp"))
         {
-            if(lampCollider = (CircleCollider2D)raycast.collider)
+            if (lampCollider = (CircleCollider2D)RaycastToDestination.collider)
             {
+                Debug.Log("raycast succeeded");
                 //check that the ghost is not already fleeing - as if it's doing that then we just want it to keep moving to it's target rather than changing it's behavior as it does so 
                 if (ghostState != GhostState.fleeing)
                 {
+                    if (lampCollider.OverlapPoint(transform.position))
+                    //this will be true if the center of the box is within the collider, i.e. the ghost is starting inside the collider rather than entering the side
+                    {   // this happens when the player lights the lamp with the ghost inside
+                        // if the ghost is (fully) inside the light, then we need to get out
+                        CheckIfPointIsInLight(lampCollider, transform.position, out Vector2 closestPointToGhost);
 
-                    //first step is to make sure the ghost is not trying to reach a patrol point that's already inside the light 
-                    //this variable will keep track of when the ghost has already moved a point outside the light, so that CheckIfPointIsInLight() isn't being called unnecessarily
-                    if (newPointMightBeInRangeOfLight)
-                    {
-                        newPointMightBeInRangeOfLight = false;
-                        Debug.Log("newPointMightBeInRangeOfLight");
+                        
 
+                        //the following lines tell the ghost to start moving to a point directly out of the lamp range, plus a little extra
+                        Vector2 exitDirection = closestPointToGhost - (Vector2)lampCollider.transform.position;
+                        exitDirection = (exitDirection + (exitDirection.normalized));
 
-                        if (CheckIfPointIsInLight(lampCollider, target, out Vector2 closestPointToTarget))
-                        {
-                            //the following lines tell the ghost to start moving directly out of the lamp range, plus a little extra
-                            Vector2 targetDirection = closestPointToTarget - (Vector2)lampCollider.transform.position;
+                        //exitDirection = (exitDirection + cornerToTransform) * 1.1f;
+                        //Debug.Log("exitDirection: " + exitDirection);
+                        target = (Vector2)lampCollider.transform.position + (exitDirection);
 
-                            targetDirection = (targetDirection + (targetDirection.normalized * GRACE_RANGE));
-                            //if the ghost goes to a point just on the edge of the lamp collider, then their collider will probably still be overlapping, so move it just a bit further out
-                            //Debug.Log("targetDirection: " + targetDirection);
-                            target = (Vector2)lampCollider.transform.position + (targetDirection);
-                        }
-                        else
-                        {
-                            Debug.Log("CheckIfPointIsInLight called unnecessarily");
-                        }
+                        patrolCentre = target;//have the ghost patrol around this new point just outside the circle
+
+                        ghostState = GhostState.fleeing;
                     }
-                    else //now that we've confirmed the target is outside of the light, we want to just have the ghost circle around the light 
+                    else // if the boxcast succeeded but the ghost isn't already inside the collider, then it will move into it sooner or later, so adjust course
                     {
-                        if (lampCollider.OverlapPoint(transform.position)) 
-                            //this will be true if the center of the box is within the collider, i.e. the ghost is starting inside the collider rather than entering the side
-                        {   // this happens when the player lights the lamp with the ghost inside
-                            // if the ghost is (fully) inside the light, then we need to get out
-                            CheckIfPointIsInLight(lampCollider, transform.position, out Vector2 closestPointToGhost);
-
-                            //the following lines tell the ghost to start moving to a point directly out of the lamp range, plus a little extra
-                            Vector2 exitDirection = closestPointToGhost - (Vector2)lampCollider.transform.position;
-                            exitDirection = (exitDirection + (exitDirection.normalized));
-
-                            //exitDirection = (exitDirection + cornerToTransform) * 1.1f;
-                            //Debug.Log("exitDirection: " + exitDirection);
-                            target = (Vector2)lampCollider.transform.position + (exitDirection);
-
-                            patrolCentre = target;//have the ghost patrol around this new point just outside the circle
-
-                            ghostState = GhostState.fleeing;
-                        }
-                        else // if the boxcast succeeded but the ghost isn't already inside the collider, then it will move into it sooner or later, so adjust course
+                        //don't run these calculations repeatedly, only do so if we haven't already done so 
+                        if (!goingAround)
                         {
-                            //don't run these calculations repeatedly, only do so if we haven't already done so 
-                            if(rotationAngle == 0)
-                            {
-                                Vector3 normal = raycast.normal;
-                                //left is normal x up 
+                            Vector3 normal = RaycastToDestination.normal;
+                            //left is normal x up 
 
-                                Vector3 leftTangent = Vector3.Cross(normal, Vector3.up);
-                                Vector3 rightTangent = Vector3.Cross(Vector3.up, normal);
+                            Vector3 leftTangent = Vector3.Cross(normal, Vector3.up);
+                            Vector3 rightTangent = Vector3.Cross(Vector3.up, normal);
 
-                                float leftAngle = Vector3.Angle(leftTangent, moveTo);
-                                float rightAngle = Vector3.Angle(rightTangent, moveTo);
+                            float leftAngle = Vector3.Angle(leftTangent, moveTo);
+                            float rightAngle = Vector3.Angle(rightTangent, moveTo);
 
-                                //to calculate the tangent line we're drawing a massive right triangle in which the points are:
-                                //the position of the ghost, the position of the center of the circle (where the right angle is),
-                                //and the intersection of the tangent line and the normal line perpendicular to the vector from the ghost position to the center of the circle
+                            //to calculate the tangent line we're drawing a massive right triangle in which the points are:
+                            //the position of the ghost, the position of the center of the circle (where the right angle is),
+                            //and the intersection of the tangent line and the normal line perpendicular to the vector from the ghost position to the center of the circle
 
-                                //the angles of a triangle add up to 180 degrees, so if we find the angle of the point intersecting the tangent and the normal(referred to as
-                                //"upper point", and the angle between the vector from the ghost's current position to the tangent of the circle (which intersects with the normal line) 
-                                //then those two angles, plus the right angle in the center of the circle, will add up to 180 degrees
-                                //we can find the upper angle through various trigonomentric manipulation, seen below
-                                //the lower angle, can be found by breaking it down to the angle between the current movement direction vector and the vector from the ghost to the center
-                                //of the circle. this is easy to calculate (vector2.Angle()). so then the remainder of the angle can be found with our previous sum
-                                //
-                                //all in all, the final equation will be as follows:
-                                //180 = 90 (the right angle at the center of the circle) -  the value of the upper angle - the angle between the vector directly to the center and our
-                                // movement vector - the angle between our movement vector to the tangent line
-                                //
-                                //since we want to move around the circle, we want our new movement to be along the tangent line, so by solving for all of the other variables,
-                                //we can find the angle by which to rotate our current movement vector, such that we will move just barely outside the circle  
+                            //the angles of a triangle add up to 180 degrees, so if we find the angle of the point intersecting the tangent and the normal(referred to as
+                            //"upper point", and the angle between the vector from the ghost's current position to the tangent of the circle (which intersects with the normal line) 
+                            //then those two angles, plus the right angle in the center of the circle, will add up to 180 degrees
+                            //we can find the upper angle through various trigonomentric manipulation, seen below
+                            //the lower angle, can be found by breaking it down to the angle between the current movement direction vector and the vector from the ghost to the center
+                            //of the circle. this is easy to calculate (vector2.Angle()). so then the remainder of the angle can be found with our previous sum
+                            //
+                            //all in all, the final equation will be as follows:
+                            //180 = 90 (the right angle at the center of the circle) -  the value of the upper angle - the angle between the vector directly to the center and our
+                            // movement vector - the angle between our movement vector to the tangent line
+                            //
+                            //since we want to move around the circle, we want our new movement to be along the tangent line, so by solving for all of the other variables,
+                            //we can find the angle by which to rotate our current movement vector, such that we will move just barely outside the circle  
 
-                                //the angle from the raycast vector(our current movement direction) to the vector from the ghost to the center of the circle,
+                            //the angle from the raycast vector(our current movement direction) to the vector from the ghost to the center of the circle,
 
-                                //the angle between the vector to where we collided with the circle and the center of the circle. in degrees
-                                float angleToCenter = Mathf.Deg2Rad * (Vector2.Angle(lampCollider.bounds.center - transform.position, moveTo));
+                            //the angle between the vector to where we collided with the circle and the center of the circle. in degrees
+                            float angleToCenter = Mathf.Deg2Rad * (Vector2.Angle(lampCollider.bounds.center - transform.position, moveTo));
 
-                                //the distance from the ghost position to the center of the lamp collider - is the point forming the right angle 
-                                float distToLamp = Vector2.Distance(lampCollider.bounds.center, transform.position);
-                                float radius = lampCollider.radius * lampCollider.gameObject.transform.localScale.x;
+                            //the distance from the ghost position to the center of the lamp collider - is the point forming the right angle 
+                            float distToLamp = Vector2.Distance(lampCollider.bounds.center, transform.position);
+                            float radius = lampCollider.radius * lampCollider.gameObject.transform.localScale.x;
 
 
-                                float angleToTangentPoint = Mathf.Rad2Deg * Mathf.Acos(radius / distToLamp);
+                            float angleToTangentPoint = Mathf.Rad2Deg * Mathf.Acos(radius / distToLamp);
 
-                                float upperAngle = Mathf.Rad2Deg * (1 / Mathf.Sin(angleToTangentPoint)) * (1 / Mathf.Sin(angleToTangentPoint));
+                            float upperAngle = Mathf.Rad2Deg * (1 / Mathf.Sin(angleToTangentPoint)) * (1 / Mathf.Sin(angleToTangentPoint));
 
-                                rotationAngle = (90 - upperAngle - angleToCenter);
-                            }                            
-                            moveTo = Quaternion.Euler(0, 0, rotationAngle) * moveTo;
-
-                            //the tangent with the larger angle tells us which direction is closer to the edge
+                            rotationAngle = (90 - upperAngle - angleToCenter);
                         }
+
+                        goingAroundDest = Quaternion.Euler(0, 0, rotationAngle) * moveTo;
+
+                        //the tangent with the larger angle tells us which direction is closer to the edge
                     }
+
                 }
+                goingAround = true;
 
-            } else
+            }
+            else
             {
                 Debug.LogError("Cast from collider with lamp tag to circleCollider failed");
             }
         } else
         {
+            goingAround = false;
             rotationAngle = 0;
         }
     }
@@ -342,11 +329,6 @@ public class Ghost : MonoBehaviour
         if (other.CompareTag("VertBuilding"))
         {
             spriteRenderer.sortingOrder = 0;
-        }
-        else if (other.CompareTag("Lamp"))
-        {
-            lampCollider = null;
-
         }
     }
 
@@ -371,7 +353,6 @@ public class Ghost : MonoBehaviour
                 {
                     ghostState = GhostState.curious;
                     target = player.transform.position;
-                    rotationAngle = 0; //any time we change the target, reset rotationAngle to ensure we're checking the calculations
 
                     currentSpeed = slowSpeed;
 
@@ -397,13 +378,11 @@ public class Ghost : MonoBehaviour
                     lastSeenPlayerPos = player.transform.position;
                     patrolCentre = lastSeenPlayerPos;
                     target = lastSeenPlayerPos + (transform.position - lastSeenPlayerPos).normalized * innerRange;
-                    rotationAngle = 0; //any time we change the target, reset rotationAngle to ensure we're checking the calculations
                 }
                 else if (distanceToPlayer <= innerRange && !(playerIsInLight )) //player enters inner range
                 {
                     ghostState = GhostState.hostile; //curious to hostile upon entering inner range
                     target = player.transform.position;
-                    rotationAngle = 0; //any time we change the target, reset rotationAngle to ensure we're checking the calculations
                     currentSpeed = fastSpeed;
                     stingerSound.Play();
                     
@@ -417,7 +396,6 @@ public class Ghost : MonoBehaviour
                 else
                 {
                     target = player.transform.position;
-                    rotationAngle = 0; //any time we change the target, reset rotationAngle to ensure we're checking the calculations
 
                     if (!loopSource.isPlaying || loopSource.clip != curiousLoop) //if it's not playing, or it's not set to the correct loop
                     {
@@ -430,14 +408,19 @@ public class Ghost : MonoBehaviour
 
                 break;
             case GhostState.hostile:
-                if (distanceToPlayer > outerRange) //player exits outer range 
+                if (distanceToPlayer > outerRange || playerIsInLight ) //player exits outer range 
                 {
                     ghostState = GhostState.wary; //hostile to wary upon exiting outer range
                     lastSeenPlayerPos = player.transform.position;
+                    if (playerIsInLight)
+                    {
+                        CheckIfPointIsInLight( lampCollider, lastSeenPlayerPos, out Vector2 closestPointToPlayer );
+                        lastSeenPlayerPos = closestPointToPlayer;
+                    } 
+
                     currentSpeed = slowSpeed;
                     patrolCentre = lastSeenPlayerPos;
                     target = lastSeenPlayerPos;
-                    rotationAngle = 0; //any time we change the target, reset rotationAngle to ensure we're checking the calculations
                     //loopSource.Stop();
                     StopPlayingSound();
 
@@ -452,7 +435,6 @@ public class Ghost : MonoBehaviour
                 }
 
                 target = player.transform.position;
-                rotationAngle = 0; //any time we change the target, reset rotationAngle to ensure we're checking the calculations
                 break;
             case GhostState.wary: //in wary state (state 3)
                 if (distanceToPlayer <= outerRange && !(playerIsInLight)) //entering outer range
@@ -465,7 +447,6 @@ public class Ghost : MonoBehaviour
 
                     currentSpeed = fastSpeed;   
                     target = player.transform.position;
-                    rotationAngle = 0; //any time we change the target, reset rotationAngle to ensure we're checking the calculations
 
                     //GetComponent<SpriteRenderer>().color = Color.green;
 
@@ -586,7 +567,13 @@ public class Ghost : MonoBehaviour
         float bearing = UnityEngine.Random.Range(-Mathf.PI, Mathf.PI);
         //Vector2 patrolCentre = lampLit ? lastSeenPlayerPos.position : lamp.transform.position;
         target = new Vector2(patrolCentre.x, patrolCentre.y) + patrolRange * new Vector2(Mathf.Cos(bearing), Mathf.Sin(bearing));
-        rotationAngle = 0; //any time we change the target, reset rotationAngle to ensure we're checking the calculations
+
+        //if lampcollider isn't null then we want to make sure the new patrol point isn't inside the light
+        if(lampCollider != null)
+        {
+            CheckIfPointIsInLight(lampCollider, target, out target);
+        }
+
 
         newPointMightBeInRangeOfLight = true;
         
@@ -608,8 +595,8 @@ public class Ghost : MonoBehaviour
     }*/
 
     
-     // old version of CheckIfPointIsInLight, before I realized Unity had its own ways of doing this, and thus I tried to do it manually
-    [Tooltip("checks if the point is within the range of the light. returns closest point not within light as vec2 out var, or a zero vector if it's not within light")]
+     
+    [Tooltip("checks if the point is within the range of the light. returns closest point not within light as vec2 out var, or the initial vector if it's not within light")]
     private bool CheckIfPointIsInLight(CircleCollider2D collider , Vector2 point, out Vector2 closestPointOutsideLight)
     {       
 
