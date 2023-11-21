@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
+using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEditor.Tilemaps;
 using UnityEngine;
@@ -213,7 +214,7 @@ public class Ghost : MonoBehaviour
 
     private void ExitCircle()
     {
-        RaycastHit2D RaycastToDestination = Physics2D.Raycast(transform.position, moveTo, Vector2.Distance(boxCollider.bounds.center, target) );
+        RaycastHit2D RaycastToDestination = Physics2D.Raycast(transform.position, moveTo, Vector2.Distance(transform.position, target) );
 
 
         if(RaycastToDestination.collider != null && RaycastToDestination.collider.CompareTag("Lamp"))
@@ -246,6 +247,7 @@ public class Ghost : MonoBehaviour
                     }
                     else // if the boxcast succeeded but the ghost isn't already inside the collider, then it will move into it sooner or later, so adjust course
                     {
+
                         //don't run these calculations repeatedly, only do so if we haven't already done so 
                         if (!goingAround)
                         {
@@ -257,6 +259,17 @@ public class Ghost : MonoBehaviour
 
                             float leftAngle = Vector3.Angle(leftTangent, moveTo);
                             float rightAngle = Vector3.Angle(rightTangent, moveTo);
+
+                            goingAroundDest = moveTo;
+
+                            Vector2 shiftVect;
+                            Quaternion rotation;
+
+                            rotation = (rightAngle >= leftAngle) ? Quaternion.Euler(0f, 0f, 5f) : Quaternion.Euler(0f, 0f, -5f);
+
+                            RaycastHit2D aroundRaycast = Physics2D.Raycast(transform.position, goingAroundDest, Vector2.Distance(transform.position, target));
+                            while ()
+
 
                             //to calculate the tangent line we're drawing a massive right triangle in which the points are:
                             //the position of the ghost, the position of the center of the circle (where the right angle is),
