@@ -117,6 +117,7 @@ public class Ghost : MonoBehaviour
 
         Physics2D.queriesHitTriggers = true;
 
+        lampCollider = lamp.GetComponent<CircleCollider2D>();
 
     }
 
@@ -132,16 +133,11 @@ public class Ghost : MonoBehaviour
 
         animator.SetBool("aggroSprite", ghostState == GhostState.hostile || ghostState == GhostState.fleeing); //activate aggro sprites if the ghost is in either the aggro or fleeing states
 
-
-        float step = currentSpeed * Time.deltaTime * 100;
-
-
-
         //moveTo = Vector2.MoveTowards(transform.position, target, step);
         moveTo = target - (Vector2) transform.position;
 
 
-        Vector2 direction = moveTo - (Vector2) transform.position;
+        Vector2 direction = moveTo;
         //direction sets the direction of the sprite, so we want to do that before any exit Circle stuff, as that tends to throw the ghost in a few weird directions
         moveTo = Quaternion.Euler(0, 0, rotationAngle) * moveTo;
 
@@ -154,9 +150,6 @@ public class Ghost : MonoBehaviour
             newPointMightBeInRangeOfLight = false;
         }
 
-        Debug.DrawLine(transform.position, transform.position + (Vector3)moveTo, Color.red, .1f);
-        Debug.DrawLine(transform.position, transform.position + (Vector3)goingAroundDest, Color.green, .1f);
-
         if (moveTo.magnitude >= .001)// if we're moving 
         {
             rigidbody.velocity = (moveTo.normalized * currentSpeed);
@@ -168,7 +161,6 @@ public class Ghost : MonoBehaviour
 
             //    rigidbody.velocity = (moveTo.normalized * currentSpeed) ;
             //}
-            Debug.DrawLine(transform.position, transform.position + (Vector3) rigidbody.velocity * 5 , Color.blue, .1f);
 
 
             #region animation var setting
@@ -217,7 +209,7 @@ public class Ghost : MonoBehaviour
 
             if (ghostState == GhostState.wary)
             {
-                ghostState = GhostState.idle; //could theoretically do this by checking if we've reached our destination?
+                Debug.Log("should be transitioning to idle");
                 //if we implement a wait coroutine, start it here.
             }
         }
@@ -234,7 +226,6 @@ public class Ghost : MonoBehaviour
         {
             if (lampCollider = (CircleCollider2D)RaycastToDestination.collider)
             {
-                Debug.Log("raycast succeeded");
                 //check that the ghost is not already fleeing - as if it's doing that then we just want it to keep moving to it's target rather than changing it's behavior as it does so 
                 if (ghostState != GhostState.fleeing)
                 {
@@ -263,7 +254,7 @@ public class Ghost : MonoBehaviour
                         CheckIfPointIsInLight(lampCollider, target, out target);
 
                         //don't run these calculations repeatedly, only do so if we haven't already done so 
-                        if (true)
+                        if (!goingAround)
                         {
                             Vector3 normal = RaycastToDestination.normal;
                             //left is normal x up 
@@ -272,14 +263,6 @@ public class Ghost : MonoBehaviour
 
                             Vector3 leftTangent = Vector3.Cross(normal, Vector3.forward );
                             Vector3 rightTangent = Vector3.Cross(Vector3.forward, normal);
-
-                            Debug.DrawLine(RaycastToDestination.point, RaycastToDestination.point + (Vector2) (normal * 5) , Color.cyan, 5f);
-                            Debug.DrawLine(RaycastToDestination.point, RaycastToDestination.point +   (Vector2) rightTangent * 5, Color.blue, 5f);
-
-                            float leftToNorm = Vector3.Angle(leftTangent, normal);
-                            float rightToNorm = Vector3.Angle(rightTangent, normal);
-
-                            float normToMove = Vector3.Angle(normal, moveTo);
 
                             float leftAngle = Vector3.Angle(leftTangent, moveTo);
                             float rightAngle = Vector3.Angle(rightTangent, moveTo);
