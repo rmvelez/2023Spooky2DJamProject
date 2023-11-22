@@ -8,6 +8,7 @@ using Unity.VisualScripting;
 using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.GameCenter;
+using UnityEngine.UIElements;
 using static UnityEngine.InputSystem.Controls.AxisControl;
 
 public class Ghost : MonoBehaviour
@@ -146,6 +147,7 @@ public class Ghost : MonoBehaviour
 
         ExitCircle();
 
+        moveTo = goingAround ? goingAroundDest: moveTo;
 
         if (ghostState != GhostState.idle)
         {
@@ -153,10 +155,21 @@ public class Ghost : MonoBehaviour
         }
 
         Debug.DrawLine(transform.position, transform.position + (Vector3)moveTo, Color.red, .1f);
+        Debug.DrawLine(transform.position, transform.position + (Vector3)goingAroundDest, Color.green, .1f);
 
         if (moveTo.magnitude >= .001)// if we're moving 
         {
-            rigidbody.velocity = (moveTo.normalized * currentSpeed) ;
+            rigidbody.velocity = (moveTo.normalized * currentSpeed);
+            //if (goingAround)
+            //{
+            //    rigidbody.velocity = (goingAroundDest.normalized * currentSpeed);
+            //} else
+            //{
+
+            //    rigidbody.velocity = (moveTo.normalized * currentSpeed) ;
+            //}
+            Debug.DrawLine(transform.position, transform.position + (Vector3) rigidbody.velocity * 5 , Color.blue, .1f);
+
 
             #region animation var setting
             if ( MathF.Abs( direction.x) > MathF.Abs(direction.y)) //if we're moving horizontally more than vertically
@@ -247,15 +260,26 @@ public class Ghost : MonoBehaviour
                     }
                     else // if the boxcast succeeded but the ghost isn't already inside the collider, then it will move into it sooner or later, so adjust course
                     {
+                        CheckIfPointIsInLight(lampCollider, target, out target);
 
                         //don't run these calculations repeatedly, only do so if we haven't already done so 
-                        if (!goingAround)
+                        if (true)
                         {
                             Vector3 normal = RaycastToDestination.normal;
                             //left is normal x up 
 
-                            Vector3 leftTangent = Vector3.Cross(normal, Vector3.up);
-                            Vector3 rightTangent = Vector3.Cross(Vector3.up, normal);
+
+
+                            Vector3 leftTangent = Vector3.Cross(normal, Vector3.forward );
+                            Vector3 rightTangent = Vector3.Cross(Vector3.forward, normal);
+
+                            Debug.DrawLine(RaycastToDestination.point, RaycastToDestination.point + (Vector2) (normal * 5) , Color.cyan, 5f);
+                            Debug.DrawLine(RaycastToDestination.point, RaycastToDestination.point +   (Vector2) rightTangent * 5, Color.blue, 5f);
+
+                            float leftToNorm = Vector3.Angle(leftTangent, normal);
+                            float rightToNorm = Vector3.Angle(rightTangent, normal);
+
+                            float normToMove = Vector3.Angle(normal, moveTo);
 
                             float leftAngle = Vector3.Angle(leftTangent, moveTo);
                             float rightAngle = Vector3.Angle(rightTangent, moveTo);
@@ -267,8 +291,13 @@ public class Ghost : MonoBehaviour
 
                             rotation = (rightAngle >= leftAngle) ? Quaternion.Euler(0f, 0f, 5f) : Quaternion.Euler(0f, 0f, -5f);
 
-                            RaycastHit2D aroundRaycast = Physics2D.Raycast(transform.position, goingAroundDest, Vector2.Distance(transform.position, target));
-                            while ()
+                            RaycastHit2D aroundRaycast = Physics2D.Raycast(transform.position, goingAroundDest, Vector2.Distance(transform.position, goingAroundDest));
+                            while (aroundRaycast.collider != null && aroundRaycast.collider.CompareTag("Lamp"))
+                            {
+                                //rotate the vector until it's no longer hitting the collider 
+                                goingAroundDest = rotation * goingAroundDest;
+                                aroundRaycast = Physics2D.Raycast(transform.position, goingAroundDest, Vector2.Distance(transform.position, goingAroundDest));
+                            }
 
 
                             //to calculate the tangent line we're drawing a massive right triangle in which the points are:
@@ -292,27 +321,27 @@ public class Ghost : MonoBehaviour
                             //the angle from the raycast vector(our current movement direction) to the vector from the ghost to the center of the circle,
 
                             //the angle between the vector to where we collided with the circle and the center of the circle. in degrees
-                            float angleToCenter = Mathf.Deg2Rad * (Vector2.Angle(lampCollider.bounds.center - transform.position, moveTo));
+                            //float angleToCenter = Mathf.Deg2Rad * (Vector2.Angle(lampCollider.bounds.center - transform.position, moveTo));
 
-                            //the distance from the ghost position to the center of the lamp collider - is the point forming the right angle 
-                            float distToLamp = Vector2.Distance(lampCollider.bounds.center, transform.position);
-                            float radius = lampCollider.radius * lampCollider.gameObject.transform.localScale.x;
+                            ////the distance from the ghost position to the center of the lamp collider - is the point forming the right angle 
+                            //float distToLamp = Vector2.Distance(lampCollider.bounds.center, transform.position);
+                            //float radius = lampCollider.radius * lampCollider.gameObject.transform.localScale.x;
 
 
-                            float angleToTangentPoint = Mathf.Rad2Deg * Mathf.Acos(radius / distToLamp);
+                            //float angleToTangentPoint = Mathf.Rad2Deg * Mathf.Acos(radius / distToLamp);
 
-                            float upperAngle = Mathf.Rad2Deg * (1 / Mathf.Sin(angleToTangentPoint)) * (1 / Mathf.Sin(angleToTangentPoint));
+                            //float upperAngle = Mathf.Rad2Deg * (1 / Mathf.Sin(angleToTangentPoint)) * (1 / Mathf.Sin(angleToTangentPoint));
 
-                            rotationAngle = (90 - upperAngle - angleToCenter);
+                            //rotationAngle = (90 - upperAngle - angleToCenter);
+                            goingAround = true;
                         }
 
-                        goingAroundDest = Quaternion.Euler(0, 0, rotationAngle) * moveTo;
+                        //goingAroundDest = Quaternion.Euler(0, 0, rotationAngle) * moveTo;
 
                         //the tangent with the larger angle tells us which direction is closer to the edge
                     }
 
                 }
-                goingAround = true;
 
             }
             else
@@ -358,6 +387,14 @@ public class Ghost : MonoBehaviour
         //to change that always false to "read from the player.isIsInLight bool"
         //bool playerIsInLight = CheckIfPointIsInLight(player.transform.position, out _);
         bool playerIsInLight = gameManager.playerController.isInLight;
+        if(ghostState != GhostState.idle && ghostState != GhostState.idle) //if we're chasing the player
+        {
+            if(target != (Vector2) player.transform.position)
+            {//if the player has moved
+                goingAround = false;
+            }
+        }
+
         switch (ghostState)
         {
             case GhostState.idle: //if the ghost is in idle state
@@ -381,7 +418,7 @@ public class Ghost : MonoBehaviour
 
                 break;
             case GhostState.curious: //if the ghost is in curious state (state 1)
-                if (distanceToPlayer > outerRange) //player exits outer range 
+                if (distanceToPlayer > outerRange || playerIsInLight) //player exits outer range 
                 {
                     //Debug.Log("this should only happen once when player exits outer range");
                     ghostState = GhostState.idle; //idle to curious when player exits outer range
@@ -406,7 +443,7 @@ public class Ghost : MonoBehaviour
 
                     break;
                 }
-                else
+                else //if player isn't in light 
                 {
                     target = player.transform.position;
 
