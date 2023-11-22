@@ -404,7 +404,7 @@ Transform:
   m_GameObject: {fileID: 5777465950325193141}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.68, z: 0}
+  m_LocalPosition: {x: 0, y: -0.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -506,8 +506,8 @@ MonoBehaviour:
   player: {fileID: 0}
   lamp: {fileID: 7244867549910600660}
   innerRange: 5
-  outerRange: 9
-  fastSpeed: 2.7
+  outerRange: 12
+  fastSpeed: 2.5
   slowSpeed: 1.5
   currentSpeed: 0
   patrolRange: 5

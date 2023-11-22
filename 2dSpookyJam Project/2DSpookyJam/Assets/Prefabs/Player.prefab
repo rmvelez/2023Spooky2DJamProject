@@ -164,7 +164,7 @@ MonoBehaviour:
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
-  m_PointLightOuterRadius: 8
+  m_PointLightOuterRadius: 12
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
@@ -375,6 +375,7 @@ MonoBehaviour:
   hitBoxCollider: {fileID: 0}
   spotLight: {fileID: 0}
   lantern: {fileID: 1322536180667234740}
+  isInLight: 0
   playerInput: {fileID: 8371392941504028850}
   playerSpeed: 7
   moveInput: {x: 0, y: 0}

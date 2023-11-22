@@ -445,7 +445,7 @@ public class Ghost : MonoBehaviour
                 {
                     ghostState = GhostState.wary; //hostile to wary upon exiting outer range
                     lastSeenPlayerPos = player.transform.position;
-                    if (playerIsInLight)
+                    if (playerIsInLight && lampCollider != null) // and lampcollider 
                     {
                         CheckIfPointIsInLight( lampCollider, lastSeenPlayerPos, out Vector2 closestPointToPlayer );
                         lastSeenPlayerPos = closestPointToPlayer;
@@ -493,18 +493,12 @@ public class Ghost : MonoBehaviour
                     break;
                 }
 
-                //if (!loopSource.isPlaying || loopSource.clip != curiousLoop) //if it's not playing, or it's not set to the correct loop
-                //{
-                //    loopSource.clip = curiousLoop;
-                //    loopSource.Play();
-                //}
 
                 break;
             case GhostState.fleeing:
                 if(Vector2.Distance(transform.position, target) < .1) //if the ghost is running away and reach the outside of the circle
                 {
-                    //patrolCentre = lampLit ? transform.position : lamp.transform.position;
-                    patrolCentre = transform.position;//probably redundant
+                    //patrolCentre = transform.position;//probably redundant
                     ghostState = GhostState.idle;
                     currentSpeed = slowSpeed;
                 }
@@ -512,7 +506,6 @@ public class Ghost : MonoBehaviour
                 if (loopSource.isPlaying)
                 {
                     StopPlayingSound();
-                    //loopSource.Stop();
                 }
 
                 break;
