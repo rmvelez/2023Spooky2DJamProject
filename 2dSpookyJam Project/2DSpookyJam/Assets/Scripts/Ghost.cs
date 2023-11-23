@@ -29,6 +29,8 @@ public class Ghost : MonoBehaviour
     [SerializeField] AudioClip hostileLoop;
     [SerializeField] AudioClip curiousLoop;
 
+    private AudioPauser loopPauser;
+
     [SerializeField] private Vector2 target;
     [Tooltip("theoretically set by referencing GameManager.playerController")]
     [SerializeField] private GameObject player;
@@ -64,6 +66,7 @@ public class Ghost : MonoBehaviour
     private Vector3 patrolCentre;
 
     [SerializeField] private AudioSource stingerSound;
+    private AudioPauser stingerPauser;
 
     //= lampLit ? lastSeenPlayerPos.position : lamp.transform.position;
 
@@ -78,16 +81,12 @@ public class Ghost : MonoBehaviour
     [Tooltip("the angle used to calculate how much to rotate our movement vector by so as to go around the lamp collider when our destination is on the other side")]
     float rotationAngle;
 
-    private bool loopIsPaused = false;
-    private bool stingerIsPaused = false;
-
     private bool newPointMightBeInRangeOfLight;
 
     private Vector2 moveTo;
 
     private bool goingAround = false;
     private Vector2 goingAroundDest;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -116,8 +115,10 @@ public class Ghost : MonoBehaviour
         gameManager.onGameResume.AddListener(UnPauseSounds);
 
         Physics2D.queriesHitTriggers = true;
-
         lampCollider = lamp.GetComponent<CircleCollider2D>();
+        
+        loopPauser = new AudioPauser(loopSource);
+        stingerPauser = new AudioPauser(stingerSound);
 
     }
 
@@ -554,33 +555,15 @@ public class Ghost : MonoBehaviour
 
     private void PauseSounds()
     {
-        if(loopSource.isPlaying)
-        {
-            loopSource.Pause();
-            loopIsPaused = true;
-        }
+        loopPauser.Pause(out loopSource);
+        stingerPauser.Pause(out stingerSound);
 
-        if (stingerSound.isPlaying)
-        {
-            stingerSound.Pause();
-            stingerIsPaused = true;
-        }
     }
 
     private void UnPauseSounds()
     {
-
-        if (loopIsPaused)
-        {
-            loopSource.UnPause();
-            loopIsPaused = false;
-        }
-
-        if (stingerIsPaused)
-        {
-            stingerIsPaused = false;
-            stingerSound.UnPause();
-        }
+        loopPauser.Resume(out loopSource);
+        stingerPauser.Resume(out stingerSound);
     }
 
     //sets target to a new random position within range of the relevant point 

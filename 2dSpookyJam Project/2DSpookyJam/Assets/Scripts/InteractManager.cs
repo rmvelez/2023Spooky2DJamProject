@@ -90,12 +90,12 @@ public class InteractManager : MonoBehaviour
                 if (!lamp.isLit)
                 {
                     trackedObjects.Add(objectToTrack);
-                    gameManager.showInterractPrompt = true;
+                    gameManager.showInteractPrompt = true;
                 }
             } else//it must not be a lamp, or we've somehow messed up on this check
             {
                 trackedObjects.Add(objectToTrack);
-                gameManager.showInterractPrompt = true;
+                gameManager.showInteractPrompt = true;
             }
         }
 
@@ -111,7 +111,7 @@ public class InteractManager : MonoBehaviour
         if (trackedObjects.Contains(trackedObject))
         {
             trackedObjects.Remove(trackedObject);
-            gameManager.showInterractPrompt = trackedObjects.Count > 0;
+            gameManager.showInteractPrompt = trackedObjects.Count > 0;
         }
     }
 

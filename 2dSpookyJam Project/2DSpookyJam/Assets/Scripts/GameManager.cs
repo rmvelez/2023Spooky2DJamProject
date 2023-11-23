@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,6 +6,47 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
+[Tooltip("a custom class, subclass of GameManager, used to circumvent a bug in Unity WebGL builds when pausing audio sources")]
+public class AudioPauser
+{
+    public AudioSource source;
+    [Tooltip("the time stored in the AudioStruct before the game paused")]
+    public float prevTime;
+    public bool isPaused;
+    //volume?
+
+    public AudioPauser(AudioSource source)
+    {
+        this.source = source;
+        prevTime = this.source.time;
+        isPaused = false;
+    }
+
+
+    public void Pause(out AudioSource outSource)
+    {
+        if (source.isPlaying)
+        {
+            source.Pause();
+            prevTime = source.time;
+            isPaused =true;
+
+        }
+        outSource = source;
+    }
+
+    public void Resume(out AudioSource outSource)
+    {
+        if (isPaused){
+            source.time = prevTime;
+            source.UnPause();
+            isPaused = false;
+        }
+
+        outSource = source;
+    }
+
+}
 public class GameManager : MonoBehaviour
 {
 
@@ -20,12 +62,13 @@ public class GameManager : MonoBehaviour
 
     public float gameTime;
     [SerializeField] AudioSource backGroundMusic;
+    private AudioPauser musicPauser;
 
     [Header("lamps")]
     public int numLamps;
     public int numLitLamps;
 
-    public bool showInterractPrompt;
+    public bool showInteractPrompt;
     public bool showRefillPrompt;
 
     [Header("Oil")]
@@ -73,13 +116,14 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         OilLevel = oilStartingLevel;
+        musicPauser = new AudioPauser(backGroundMusic);
     }
 
     // Update is called once per frame
     void Update()
     {
         gameTime = Time.timeSinceLevelLoad;
-        if(gameTime >= (60 * 10))
+        if(gameTime >= (60 * 12))
         {
             SwitchToScene(LOSESCENE, ScoreKeeper.LossReason.Timeout);
         } 
@@ -115,7 +159,8 @@ public class GameManager : MonoBehaviour
 
         paused = true;
         Time.timeScale = 0f;
-        backGroundMusic.Pause();
+        //backGroundMusic.Pause();
+        musicPauser.Pause(out backGroundMusic);
         onGamePause.Invoke();
     }
 
@@ -123,7 +168,8 @@ public class GameManager : MonoBehaviour
     {
         paused = false;
         Time.timeScale = 1f;
-        backGroundMusic.UnPause();
+        //backGroundMusic.UnPause();
+        musicPauser.Resume(out backGroundMusic);
         onGameResume.Invoke();
     }
 
