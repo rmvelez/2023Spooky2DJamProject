@@ -123,7 +123,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         gameTime = Time.timeSinceLevelLoad;
-        if(gameTime >= (60 * 10))
+        if(gameTime >= (60 * 12))
         {
             SwitchToScene(LOSESCENE, ScoreKeeper.LossReason.Timeout);
         } 
