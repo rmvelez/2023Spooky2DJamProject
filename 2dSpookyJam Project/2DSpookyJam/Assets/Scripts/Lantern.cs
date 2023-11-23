@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -15,7 +16,7 @@ public class Lantern : MonoBehaviour
 
     [SerializeField] private float outerMax;
     [SerializeField] private float outerMin;
-    private float outerRange;
+    [SerializeField] private float outerRange;
     
     [SerializeField] public float lanternOilLevelCurrent;
     [SerializeField] public float lanternOilLevelMax;
@@ -26,6 +27,8 @@ public class Lantern : MonoBehaviour
     [SerializeField] private int promptThreshold;
 
     private GameManager gameManager;
+
+    public float LightRange { get { return lampLight.pointLightOuterRadius; } }
 
     // Start is called before the first frame update
     void Start()

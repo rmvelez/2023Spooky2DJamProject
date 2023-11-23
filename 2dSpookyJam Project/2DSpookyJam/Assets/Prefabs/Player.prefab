@@ -224,6 +224,7 @@ MonoBehaviour:
   intensityMax: 1
   outerMax: 8
   outerMin: 1.75
+  outerRange: 0
   lanternOilLevelCurrent: 32.074684
   lanternOilLevelMax: 100
   lanternOilDecreasePerSecond: 4
@@ -281,7 +282,7 @@ MonoBehaviour:
   OnInteractablesDoNotExist:
     m_PersistentCalls:
       m_Calls: []
-  playerController: {fileID: 0}
+  playerController: {fileID: 5379192006280101408}
   interactableColliders: []
 --- !u!70 &2879735444545107885
 CapsuleCollider2D:
