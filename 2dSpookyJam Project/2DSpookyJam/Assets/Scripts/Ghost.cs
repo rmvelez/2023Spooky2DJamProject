@@ -72,16 +72,16 @@ public class Ghost : MonoBehaviour
 
     private float maxLoopVol;
 
-    [SerializeField] Rigidbody2D rigidbody; 
+    [SerializeField] private new  Rigidbody2D rigidbody; 
 
-    [SerializeField] float loopVolInc;
+    [SerializeField] private float loopVolInc;
     private bool isCoroutineRunning;
     IEnumerator increaseVolCoroutine;
 
     [Tooltip("the angle used to calculate how much to rotate our movement vector by so as to go around the lamp collider when our destination is on the other side")]
     float rotationAngle;
 
-    private bool newPointMightBeInRangeOfLight;
+    private bool newPointMightBeInRangeOfLight; //unity throws a warning that this variable isn't being used, but it is
 
     private Vector2 moveTo;
 
@@ -270,7 +270,6 @@ public class Ghost : MonoBehaviour
 
                             goingAroundDest = moveTo;
 
-                            Vector2 shiftVect;
                             Quaternion rotation;
 
                             rotation = (rightAngle >= leftAngle) ? Quaternion.Euler(0f, 0f, 5f) : Quaternion.Euler(0f, 0f, -5f);

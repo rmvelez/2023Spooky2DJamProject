@@ -12,7 +12,7 @@ public class Lamp : MonoBehaviour, IInteractable
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Animator animator;
 
-    [SerializeField] private Collider2D collider;
+    [SerializeField] private new Collider2D collider;
 
     private GameManager gameManager;
 

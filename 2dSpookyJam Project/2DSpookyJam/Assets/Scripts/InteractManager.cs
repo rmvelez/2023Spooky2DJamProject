@@ -25,8 +25,6 @@ public class InteractManager : MonoBehaviour
 
     [SerializeField] private Collider2D[] interactableColliders;
 
-    IEnumerator objectFinderCoroutine;
-    bool lookingForObjects = true;
 
 
     // Start is called before the first frame update
