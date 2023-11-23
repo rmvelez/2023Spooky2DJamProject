@@ -99,7 +99,6 @@ public class InteractManager : MonoBehaviour
             Vector3 distToLight = objectToTrack.transform.position - transform.position;
             if (Mathf.Pow(playerController.lantern.LightRange, 2) > (distToLight.sqrMagnitude))
             {//object is within range
-                Debug.Log("object is within range");
                 Lamp lamp;
                 //next, check if it's a lamp
                 if (lamp = objectToTrack.GetComponent<Lamp>())

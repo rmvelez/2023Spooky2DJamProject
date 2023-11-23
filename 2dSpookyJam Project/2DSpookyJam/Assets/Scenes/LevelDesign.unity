@@ -6310,7 +6310,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -3279526071680344383, guid: fbff2f82667fe574aad31242a7af2e3a, type: 2}
-  m_audioClip: {fileID: 8300000, guid: a11b7d41fdeba8547aa84955c2740a3e, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 4a49c92dd16cfc443b2720368ca5d0f7, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.6
   m_Pitch: 1
@@ -9360,7 +9360,7 @@ MonoBehaviour:
   backGroundMusic: {fileID: 1296274793}
   numLamps: 0
   numLitLamps: 0
-  showInterractPrompt: 0
+  showInteractPrompt: 0
   showRefillPrompt: 0
   OilLevel: 100
   lampLightCost: 20
