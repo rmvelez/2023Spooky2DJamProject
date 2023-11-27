@@ -41,6 +41,7 @@ public class PlayerController : MonoBehaviour
     private const int IDLE_UP_DIRECTION = 5;
     private const int IDLE_DOWN_DIRECTION = 6;
 
+    private bool mapUp = false;
 
     #region Unity Built in
     private void Awake()
@@ -68,10 +69,15 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
 
-
-        Move(moveInput);
-
-
+        if (!mapUp)
+        {
+            Move(moveInput);
+        }
+        else
+        {//if the map is up then we don't want the player to move
+            Move(Vector2.zero);
+            Debug.Log("hiding map");
+        }
     }
 
     private void OnDestroy()
@@ -85,7 +91,7 @@ public class PlayerController : MonoBehaviour
     public void Move(Vector2 direction)
     {
 
-        if (playerInput != null)
+        if (playerInput != null )
         {
             rigidBody.velocity = direction * playerSpeed;
         }
@@ -157,7 +163,7 @@ public class PlayerController : MonoBehaviour
 
     public void MoveActionPerformed(InputAction.CallbackContext context)
     {
-        moveInput = context.ReadValue<Vector2>();
+         moveInput = context.ReadValue<Vector2>();
     }
 
     public void MoverVertActionPerformed(InputAction.CallbackContext context)
@@ -179,14 +185,14 @@ public class PlayerController : MonoBehaviour
 
     public void MoverHorizActionPerformed(InputAction.CallbackContext context)
     {
-        if (context.started)
+        if (context.started && !mapUp)
         {
             moveInput.x = context.ReadValue<float>();
             prevInput.x = context.ReadValue<float>();
             moveInput.y = 0;
         }
 
-        if (context.canceled)
+        if (context.canceled || mapUp)
         {
             moveInput.y = prevInput.y;
             moveInput.x = 0;
@@ -214,12 +220,13 @@ public class PlayerController : MonoBehaviour
     {
         if (context.performed)
         {
+            mapUp = true;
             gameManager.hudController.ShowMap();
         }
         if (context.canceled)
         {
+            mapUp = false;
             gameManager.hudController.HideMap();
-
         }
     }
 
