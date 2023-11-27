@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HUDControl : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class HUDControl : MonoBehaviour
 
     [SerializeField] private TMP_Text interactPrompt;
     [SerializeField] private TMP_Text refillPrompt;
+    [SerializeField] private RawImage map;
 
     private OptionsManager optionsManager;
 
@@ -57,6 +59,7 @@ public class HUDControl : MonoBehaviour
         ReserveBarStartPos = reserveBar.transform.position;
         LanternBarStartPos = lanternBar.transform.position;
 
+        HideMap();
 
         //UILitNumber = UIDoc.rootVisualElement.Q<Label>("litNumber");
         //UITotNumber = UIDoc.rootVisualElement.Q<Label>("totNumber");
@@ -101,4 +104,15 @@ public class HUDControl : MonoBehaviour
         interactPrompt.enabled = (gameManager.showInteractPrompt && optionsManager.showToolTips);
         
     }
+
+    public void ShowMap()
+    {
+        map.gameObject.SetActive(true);
+    }
+
+    public void HideMap()
+    {
+        map.gameObject.SetActive(false);
+    }
+
 }

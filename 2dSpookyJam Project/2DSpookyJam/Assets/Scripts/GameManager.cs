@@ -13,6 +13,7 @@ public class AudioPauser
     [Tooltip("the time stored in the AudioStruct before the game paused")]
     public float prevTime;
     public bool isPaused;
+    public bool showMapPrompt;
     //volume?
 
     public AudioPauser(AudioSource source)
@@ -23,7 +24,7 @@ public class AudioPauser
     }
 
 
-    public void Pause(out AudioSource outSource)
+    public void PauseSound(out AudioSource outSource)
     {
         if (source.isPlaying)
         {
@@ -35,7 +36,7 @@ public class AudioPauser
         outSource = source;
     }
 
-    public void Resume(out AudioSource outSource)
+    public void ResumeSound(out AudioSource outSource)
     {
         if (isPaused){
             source.time = prevTime;
@@ -81,7 +82,7 @@ public class GameManager : MonoBehaviour
     public float refillCost;
 
 
-
+    public HUDControl hudController;
     public PlayerController playerController;
     public Lantern lantern;
 
@@ -160,7 +161,7 @@ public class GameManager : MonoBehaviour
         paused = true;
         Time.timeScale = 0f;
         //backGroundMusic.Pause();
-        musicPauser.Pause(out backGroundMusic);
+        musicPauser.PauseSound(out backGroundMusic);
         onGamePause.Invoke();
     }
 
@@ -169,7 +170,7 @@ public class GameManager : MonoBehaviour
         paused = false;
         Time.timeScale = 1f;
         //backGroundMusic.UnPause();
-        musicPauser.Resume(out backGroundMusic);
+        musicPauser.ResumeSound(out backGroundMusic);
         onGameResume.Invoke();
     }
 

@@ -177,7 +177,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
     public void MoverHorizActionPerformed(InputAction.CallbackContext context)
     {
         if (context.started)
@@ -210,6 +209,20 @@ public class PlayerController : MonoBehaviour
 
         }
     }
+
+    public void MapAction(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            gameManager.hudController.ShowMap();
+        }
+        if (context.canceled)
+        {
+            gameManager.hudController.HideMap();
+
+        }
+    }
+
     #endregion input actions
 
 
