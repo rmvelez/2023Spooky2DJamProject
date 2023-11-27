@@ -71,6 +71,10 @@ public class GameManager : MonoBehaviour
 
     public bool showInteractPrompt;
     public bool showRefillPrompt;
+    [Tooltip("the minimum number of lamps needed before the player can use the map")]
+    [SerializeField] private int lampMapThreshold;
+    [Tooltip("whether or not the player can use the map, depending on whether the number of lit lamps >= a threshold")]
+    public bool canViewMap { get { return numLitLamps >= lampMapThreshold; } }
 
     [Header("Oil")]
     [SerializeField] public float OilLevel;

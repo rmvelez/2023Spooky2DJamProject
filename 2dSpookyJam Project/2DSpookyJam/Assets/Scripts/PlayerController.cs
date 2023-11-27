@@ -218,15 +218,18 @@ public class PlayerController : MonoBehaviour
 
     public void MapAction(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if(gameManager.canViewMap) //calculated based on number of lamps the player has lit
         {
-            mapUp = true;
-            gameManager.hudController.ShowMap();
-        }
-        if (context.canceled)
-        {
-            mapUp = false;
-            gameManager.hudController.HideMap();
+            if (context.performed)
+            {
+                mapUp = true;
+                gameManager.hudController.ShowMap();
+            }
+            if (context.canceled)
+            {
+                mapUp = false;
+                gameManager.hudController.HideMap();
+            }
         }
     }
 

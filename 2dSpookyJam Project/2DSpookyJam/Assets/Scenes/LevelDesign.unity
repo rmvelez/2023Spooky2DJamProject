@@ -9586,6 +9586,7 @@ MonoBehaviour:
   numLitLamps: 0
   showInteractPrompt: 0
   showRefillPrompt: 0
+  lampMapThreshold: 15
   OilLevel: 100
   lampLightCost: 20
   OilIncrement: 30
