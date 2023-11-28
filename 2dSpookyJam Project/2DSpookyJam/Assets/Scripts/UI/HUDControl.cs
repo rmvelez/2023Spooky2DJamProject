@@ -25,6 +25,7 @@ public class HUDControl : MonoBehaviour
     [SerializeField] private TMP_Text refillPrompt;
     [SerializeField] private TMP_Text mapPrompt;
     [SerializeField] private RawImage map;
+    [SerializeField] private MapCamera mapCamController;
 
     private OptionsManager optionsManager;
 
@@ -134,11 +135,11 @@ public class HUDControl : MonoBehaviour
         {
             timeSinceMapPromptChecked = Time.time;
         }
-
     }
 
     public void ShowMap()
     {
+        mapCamController.SetPosition();
         map.gameObject.SetActive(true);
         mapPrompt.enabled = false;
         timeSinceMapPromptChecked = Time.time;

@@ -5476,6 +5476,7 @@ GameObject:
   - component: {fileID: 1079967447}
   - component: {fileID: 1079967446}
   - component: {fileID: 1079967444}
+  - component: {fileID: 1079967448}
   m_Layer: 0
   m_Name: Map Camera
   m_TagString: MainCamera
@@ -5562,7 +5563,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 70
+  orthographic size: 30
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -5593,6 +5594,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1333088469}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1079967448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1079967443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df61e9495e841e745a5bffdd0c9f2d1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Camera: {fileID: 1079967446}
+  cameraZoom: 0
+  backgroundSprite: {fileID: 925679445}
 --- !u!1001 &1107663684
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5773,6 +5789,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5584202209420348168, guid: 15d054c9bfe83664cade4925f480d27e, type: 3}
+      propertyPath: mapCamController
+      value: 
+      objectReference: {fileID: 1079967448}
     - target: {fileID: 6598837902019310270, guid: 15d054c9bfe83664cade4925f480d27e, type: 3}
       propertyPath: OptionsMenu
       value: 
