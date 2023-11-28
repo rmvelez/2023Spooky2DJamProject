@@ -13,7 +13,6 @@ public class AudioPauser
     [Tooltip("the time stored in the AudioStruct before the game paused")]
     public float prevTime;
     public bool isPaused;
-    public bool showMapPrompt;
     //volume?
 
     public AudioPauser(AudioSource source)
@@ -74,7 +73,9 @@ public class GameManager : MonoBehaviour
     [Tooltip("the minimum number of lamps needed before the player can use the map")]
     [SerializeField] private int lampMapThreshold;
     [Tooltip("whether or not the player can use the map, depending on whether the number of lit lamps >= a threshold")]
-    public bool canViewMap { get { return numLitLamps >= lampMapThreshold; } }
+    public bool canViewMap { get { return numLitLamps >= lampMapThreshold; } private set { } }
+    public bool showMap { get; private set; }
+
 
     [Header("Oil")]
     [SerializeField] public float OilLevel;
@@ -143,7 +144,10 @@ public class GameManager : MonoBehaviour
         //MathF.Min(lantern.lanternOilLevelCurrent, lantern.lanternOilLevelMax);
 
         lantern.lanternOilLevelCurrent =Mathf.Min(lantern.lanternOilLevelCurrent+  lampLightCost, lantern.lanternOilLevelMax);
-        
+
+
+        hudController.timeSinceMapPromptChecked = Time.time;
+
         if(numLitLamps == numLamps)
         {
             SwitchToScene(WINSCENE);
