@@ -70,8 +70,9 @@ public class GameManager : MonoBehaviour
 
     public bool showInteractPrompt;
     public bool showRefillPrompt;
-    [Tooltip("the minimum number of lamps needed before the player can use the map")]
-    [SerializeField] private int lampMapThreshold;
+    [Tooltip("the minimum number of lamps needed before the player can use the map \n \n if you change this, you also have to change the value in the instruction")]
+    [SerializeField] private int lampMapThreshold; //the gameManager and instructions are in separate scenes, any means to link the two values would be complicated and not worth the time to implement given this value won't
+                                                   //change often, plus they'd likely result in having to set that value from within the main menu scene, and that's even less intuitive than just changing the value manually
     [Tooltip("whether or not the player can use the map, depending on whether the number of lit lamps >= a threshold")]
     public bool canViewMap { get { return numLitLamps >= lampMapThreshold; } private set { } }
     public bool showMap { get; private set; }

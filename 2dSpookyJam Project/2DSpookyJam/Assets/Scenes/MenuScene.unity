@@ -585,8 +585,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 30}
-  m_SizeDelta: {x: 80, y: 30}
+  m_AnchoredPosition: {x: 0, y: 13}
+  m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &559505984
 MonoBehaviour:
@@ -730,8 +730,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 30}
-  m_SizeDelta: {x: 80, y: 30}
+  m_AnchoredPosition: {x: 0, y: 13}
+  m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &599166327
 MonoBehaviour:
@@ -3516,7 +3516,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -17}
+  m_AnchoredPosition: {x: 0, y: -34.7}
   m_SizeDelta: {x: 310.41, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2133739053
@@ -3550,7 +3550,10 @@ MonoBehaviour:
     Use the R or Q Key to
     refill your Lantern
 
-    Press the P Key to Pause the Game'
+    Press the P Key to Pause the Game
+
+    Once you''ve
+    collected 15 Lanterns, hold Shift to veiew the map'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: eafea52b20c7d7444aeec7e8df1e033c, type: 2}
   m_sharedMaterial: {fileID: -8591331477396910553, guid: eafea52b20c7d7444aeec7e8df1e033c, type: 2}
