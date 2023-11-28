@@ -518,7 +518,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 255
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -5563,11 +5563,11 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 30
+  orthographic size: 40
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 251
+    m_Bits: 507
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 1149b86d061790e46a41daa8629e0aff, type: 2}
   m_TargetDisplay: 0
@@ -5720,6 +5720,14 @@ PrefabInstance:
     - target: {fileID: 2937521981925927874, guid: 15d054c9bfe83664cade4925f480d27e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3505665777500195055, guid: 15d054c9bfe83664cade4925f480d27e, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 700
+      objectReference: {fileID: 0}
+    - target: {fileID: 3505665777500195055, guid: 15d054c9bfe83664cade4925f480d27e, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 350
       objectReference: {fileID: 0}
     - target: {fileID: 3505665777500195055, guid: 15d054c9bfe83664cade4925f480d27e, type: 3}
       propertyPath: m_LocalPosition.z
