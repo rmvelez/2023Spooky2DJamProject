@@ -77,9 +77,11 @@ public class HUDControl : MonoBehaviour
         HideMap();
         mapPrompt.enabled = false;
 
+
+
         //UILitNumber = UIDoc.rootVisualElement.Q<Label>("litNumber");
         //UITotNumber = UIDoc.rootVisualElement.Q<Label>("totNumber");
-        
+
 
     }
 
@@ -89,7 +91,8 @@ public class HUDControl : MonoBehaviour
         if (init)
         {
             //UILitNumber.text= string.Concat("/", gameManager.numLamps.ToString());
-            UITotNumber = string.Concat("/", gameManager.numLamps.ToString());
+            UITotNumber = string.Concat( "/", gameManager.numLamps.ToString());
+            UILitNumber.text = string.Concat("0", UITotNumber);
             init = false;
         }
 

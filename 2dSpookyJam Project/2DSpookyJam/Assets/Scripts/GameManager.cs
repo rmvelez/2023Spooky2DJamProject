@@ -147,7 +147,7 @@ public class GameManager : MonoBehaviour
         lantern.lanternOilLevelCurrent =Mathf.Min(lantern.lanternOilLevelCurrent+  lampLightCost, lantern.lanternOilLevelMax);
 
 
-        hudController.timeSinceMapPromptChecked = Time.time;
+        hudController.LampLit();
 
         if(numLitLamps == numLamps)
         {

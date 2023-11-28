@@ -7,6 +7,7 @@ public class Lamp : MonoBehaviour, IInteractable
 {
     public bool isLit = false;
     public Light2D lampLight;
+    [SerializeField] Light2D mapLight; 
     [SerializeField] private Ghost ghost;
 
     [SerializeField] private SpriteRenderer spriteRenderer;
@@ -16,7 +17,8 @@ public class Lamp : MonoBehaviour, IInteractable
 
     private GameManager gameManager;
 
-    private float intensity;
+    private float mainLightIntensity;
+    private float mapLightIntensity;
 
     private AudioSource lampSound;
 
@@ -31,8 +33,9 @@ public class Lamp : MonoBehaviour, IInteractable
     // Start is called before the first frame update
     void Start()
     {
-        intensity = lampLight.intensity;
-        lampLight.intensity = 0;
+
+        lampLight.enabled = false;
+        mapLight.enabled = false;
 
         gameManager = GameManager.Instance;
         gameManager.numLamps++;
@@ -59,7 +62,9 @@ public class Lamp : MonoBehaviour, IInteractable
         if (!isLit)
         {
             isLit = true;
-            lampLight.intensity = intensity;
+
+            lampLight.enabled = true;
+            mapLight.enabled = true;
 
             animator.SetBool("isLit", true);
 
