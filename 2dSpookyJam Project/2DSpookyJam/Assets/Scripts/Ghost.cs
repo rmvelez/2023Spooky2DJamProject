@@ -102,7 +102,7 @@ public class Ghost : MonoBehaviour
 
         rotationAngle = 0; 
 
-        patrolCentre = lamp.lampLight.transform.position;
+        patrolCentre = lamp.transform.position;
 
         maxLoopVol = loopSource.volume;
 
