@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3508066568803110142}
   - component: {fileID: 1982435325885380005}
   - component: {fileID: 6507077477766678773}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: OilCan
   m_TagString: Interactable
   m_Icon: {fileID: 0}
