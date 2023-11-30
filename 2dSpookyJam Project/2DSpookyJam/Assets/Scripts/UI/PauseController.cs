@@ -16,7 +16,7 @@ public class PauseController : MonoBehaviour
     private Button optionsButton;
 
     private GameManager gameManager;
-    private AudioSource pauseSound;
+    [SerializeField] private AudioSource pauseSound;
 
     
     // Start is called before the first frame update
@@ -39,7 +39,6 @@ public class PauseController : MonoBehaviour
 
         root.visible = false;
 
-        pauseSound = this.gameObject.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame

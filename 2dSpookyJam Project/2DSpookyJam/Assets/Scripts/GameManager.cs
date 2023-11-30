@@ -124,6 +124,7 @@ public class GameManager : MonoBehaviour
     {
         OilLevel = oilStartingLevel;
         musicPauser = new AudioPauser(backGroundMusic);
+        ResumeGame();
     }
 
     // Update is called once per frame
