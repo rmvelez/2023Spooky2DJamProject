@@ -2192,7 +2192,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 0.5
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -3553,7 +3553,7 @@ MonoBehaviour:
     Press the P Key to Pause the Game
 
     Once you''ve
-    collected 15 Lanterns, hold Shift to veiew the map'
+    collected 15 Lanterns, hold Shift to view the map'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: eafea52b20c7d7444aeec7e8df1e033c, type: 2}
   m_sharedMaterial: {fileID: -8591331477396910553, guid: eafea52b20c7d7444aeec7e8df1e033c, type: 2}
