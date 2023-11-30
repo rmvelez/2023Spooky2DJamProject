@@ -23,7 +23,7 @@ public class AudioPauser
     }
 
 
-    public void Pause(out AudioSource outSource)
+    public void PauseSound(out AudioSource outSource)
     {
         if (source.isPlaying)
         {
@@ -35,7 +35,7 @@ public class AudioPauser
         outSource = source;
     }
 
-    public void Resume(out AudioSource outSource)
+    public void ResumeSound(out AudioSource outSource)
     {
         if (isPaused){
             source.time = prevTime;
@@ -70,6 +70,13 @@ public class GameManager : MonoBehaviour
 
     public bool showInteractPrompt;
     public bool showRefillPrompt;
+    [Tooltip("the minimum number of lamps needed before the player can use the map \n \n if you change this, you also have to change the value in the instruction")]
+    [SerializeField] private int lampMapThreshold; //the gameManager and instructions are in separate scenes, any means to link the two values would be complicated and not worth the time to implement given this value won't
+                                                   //change often, plus they'd likely result in having to set that value from within the main menu scene, and that's even less intuitive than just changing the value manually
+    [Tooltip("whether or not the player can use the map, depending on whether the number of lit lamps >= a threshold")]
+    public bool canViewMap { get { return numLitLamps >= lampMapThreshold; } private set { } }
+    public bool showMap { get; private set; }
+
 
     [Header("Oil")]
     [SerializeField] public float OilLevel;
@@ -81,7 +88,7 @@ public class GameManager : MonoBehaviour
     public float refillCost;
 
 
-
+    public HUDControl hudController;
     public PlayerController playerController;
     public Lantern lantern;
 
@@ -117,6 +124,7 @@ public class GameManager : MonoBehaviour
     {
         OilLevel = oilStartingLevel;
         musicPauser = new AudioPauser(backGroundMusic);
+        ResumeGame();
     }
 
     // Update is called once per frame
@@ -138,7 +146,10 @@ public class GameManager : MonoBehaviour
         //MathF.Min(lantern.lanternOilLevelCurrent, lantern.lanternOilLevelMax);
 
         lantern.lanternOilLevelCurrent =Mathf.Min(lantern.lanternOilLevelCurrent+  lampLightCost, lantern.lanternOilLevelMax);
-        
+
+
+        hudController.LampLit();
+
         if(numLitLamps == numLamps)
         {
             SwitchToScene(WINSCENE);
@@ -160,7 +171,7 @@ public class GameManager : MonoBehaviour
         paused = true;
         Time.timeScale = 0f;
         //backGroundMusic.Pause();
-        musicPauser.Pause(out backGroundMusic);
+        musicPauser.PauseSound(out backGroundMusic);
         onGamePause.Invoke();
     }
 
@@ -169,7 +180,7 @@ public class GameManager : MonoBehaviour
         paused = false;
         Time.timeScale = 1f;
         //backGroundMusic.UnPause();
-        musicPauser.Resume(out backGroundMusic);
+        musicPauser.ResumeSound(out backGroundMusic);
         onGameResume.Invoke();
     }
 

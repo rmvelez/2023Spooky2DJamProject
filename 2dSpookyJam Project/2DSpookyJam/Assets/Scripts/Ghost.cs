@@ -102,7 +102,7 @@ public class Ghost : MonoBehaviour
 
         rotationAngle = 0; 
 
-        patrolCentre = lamp.lampLight.transform.position;
+        patrolCentre = lamp.transform.position;
 
         maxLoopVol = loopSource.volume;
 
@@ -552,15 +552,15 @@ public class Ghost : MonoBehaviour
 
     private void PauseSounds()
     {
-        loopPauser.Pause(out loopSource);
-        stingerPauser.Pause(out stingerSound);
+        loopPauser.PauseSound(out loopSource);
+        stingerPauser.PauseSound(out stingerSound);
 
     }
 
     private void UnPauseSounds()
     {
-        loopPauser.Resume(out loopSource);
-        stingerPauser.Resume(out stingerSound);
+        loopPauser.ResumeSound(out loopSource);
+        stingerPauser.ResumeSound(out stingerSound);
     }
 
     //sets target to a new random position within range of the relevant point 

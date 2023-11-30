@@ -45,12 +45,12 @@ public class OptionsManager : MonoBehaviour
     void Start()
     {
 
-        //SINGLETON PATTERN - ensures that there only ever exists a single gamemanager
+        //SINGLETON PATTERN - ensures that there only ever exists a single optionsManager
 
         //is this the first time we've created this singleton
         if (_instance == null)
         {
-            //we're the first gameManager, so assign ourselves to this instance
+            //we're the first optionsManager, so assign ourselves to this instance
             _instance = this;
 
             // don't keep ourselves between levels
