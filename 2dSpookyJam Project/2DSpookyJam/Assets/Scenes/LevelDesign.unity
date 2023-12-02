@@ -1950,11 +1950,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 930884745922700281, guid: 2b47551750272db43af793e4f6a4b2be, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -65.5
+      value: -63.85
       objectReference: {fileID: 0}
     - target: {fileID: 930884745922700281, guid: 2b47551750272db43af793e4f6a4b2be, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -57.5
+      value: -53.01
       objectReference: {fileID: 0}
     - target: {fileID: 930884745922700281, guid: 2b47551750272db43af793e4f6a4b2be, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2675,7 +2675,7 @@ Transform:
   m_GameObject: {fileID: 427952051}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 69.23, y: 11.71409, z: 0}
+  m_LocalPosition: {x: 69.23, y: 14.27825, z: 0}
   m_LocalScale: {x: 1.0638298, y: 1.0638298, z: 1.0638298}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6225,7 +6225,7 @@ Transform:
   m_GameObject: {fileID: 1194902324}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -70.369995, y: -29.615906, z: 0}
+  m_LocalPosition: {x: -70.369995, y: -27.051794, z: 0}
   m_LocalScale: {x: 1.0638298, y: 1.0638298, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9978,7 +9978,7 @@ MonoBehaviour:
   numLitLamps: 0
   showInteractPrompt: 0
   showRefillPrompt: 0
-  lampMapThreshold: 15
+  lampMapThreshold: 10
   OilLevel: 100
   lampLightCost: 20
   OilIncrement: 30

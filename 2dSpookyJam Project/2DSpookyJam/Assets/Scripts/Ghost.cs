@@ -461,10 +461,20 @@ public class Ghost : MonoBehaviour
 
                 break;
             case GhostState.fleeing:
+
                 if(Vector2.Distance(transform.position, target) < .1) //if the ghost is running away and reach the outside of the circle
                 {
-                    ghostState = GhostState.idle;
-                    currentSpeed = slowSpeed;
+                    if(!CheckIfPointIsInLight(lampCollider, transform.position, out target))
+                    {
+
+                        ghostState = GhostState.idle;
+                        currentSpeed = slowSpeed;
+                    }
+                }
+
+                if(stingerSound.isPlaying) 
+                { 
+                    stingerSound.Stop(); 
                 }
 
                 if (loopSource.isPlaying)
