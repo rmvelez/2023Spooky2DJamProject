@@ -206,11 +206,11 @@ public class Ghost : MonoBehaviour
         else //if we're not moving
         {
 
-            if (ghostState == GhostState.wary)
-            {
-                Debug.Log("should be transitioning to idle");
-                //if we implement a wait coroutine, start it here.
-            }
+            //if (ghostState == GhostState.wary)
+            //{
+            //    //Debug.Log("should be transitioning to idle");
+            //    //if we implement a wait coroutine, start it here.
+            //}
         }
 
     }

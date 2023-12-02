@@ -1213,10 +1213,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5008360960572906037}
+  - component: {fileID: 5217738150173944701}
   - component: {fileID: 6103596298057670702}
   - component: {fileID: 7060816811588735234}
   - component: {fileID: 52912913713094826}
-  - component: {fileID: 5217738150173944701}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1240,6 +1240,24 @@ Transform:
   - {fileID: 4678005586988237544}
   m_Father: {fileID: 5770048740905962476}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5217738150173944701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6175285434935846331}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa0b857074193ae4d9945b55624a8e4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  lerpFactor: 0.1
+  zoomFromTarget: -10
+  m_Camera: {fileID: 6103596298057670702}
+  cameraZoom: 0
+  backgroundSprite: {fileID: 0}
 --- !u!20 &6103596298057670702
 Camera:
   m_ObjectHideFlags: 0
@@ -1343,21 +1361,6 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
---- !u!114 &5217738150173944701
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6175285434935846331}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa0b857074193ae4d9945b55624a8e4f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  lerpFactor: 0.1
-  zoomFromTarget: -10
 --- !u!1 &6848033034642238802
 GameObject:
   m_ObjectHideFlags: 0

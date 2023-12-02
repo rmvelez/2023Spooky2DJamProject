@@ -5188,7 +5188,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3372731754556985449, guid: 9a4dd4a2e62b8ec4a9d49e0a148a359c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 57.57
+      value: 53
       objectReference: {fileID: 0}
     - target: {fileID: 3372731754556985449, guid: 9a4dd4a2e62b8ec4a9d49e0a148a359c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -5318,7 +5318,7 @@ GameObject:
   - component: {fileID: 925679446}
   - component: {fileID: 925679445}
   m_Layer: 0
-  m_Name: map
+  m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10433,10 +10433,18 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5008360960572906037, guid: cbe7a5ca6d360184cbec6c0e3bc9bd92, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 53
+      objectReference: {fileID: 0}
     - target: {fileID: 5217738150173944701, guid: cbe7a5ca6d360184cbec6c0e3bc9bd92, type: 3}
       propertyPath: target
       value: 
       objectReference: {fileID: 857497415}
+    - target: {fileID: 5217738150173944701, guid: cbe7a5ca6d360184cbec6c0e3bc9bd92, type: 3}
+      propertyPath: backgroundSprite
+      value: 
+      objectReference: {fileID: 925679445}
     - target: {fileID: 5283622311734109314, guid: cbe7a5ca6d360184cbec6c0e3bc9bd92, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0

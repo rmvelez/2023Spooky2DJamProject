@@ -43,6 +43,8 @@ public class PlayerController : MonoBehaviour
 
     private bool mapUp = false;
 
+    public float distFromHitboxToSprite;
+
     #region Unity Built in
     private void Awake()
     {
@@ -53,6 +55,8 @@ public class PlayerController : MonoBehaviour
             Debug.LogError("player controller added a gameObject that doesn't have a PlayerInput on it -- which is definitely a bug");
         }
         movementAnimationDirection = IDLE_DOWN_DIRECTION;
+
+        distFromHitboxToSprite = spriteRenderer.bounds.size.y - hitBoxCollider.bounds.size.y;
     }
 
     // Start is called before the first frame update
@@ -63,6 +67,7 @@ public class PlayerController : MonoBehaviour
 
         gameManager.onGamePause.AddListener(SwitchActionMapUI);
         gameManager.onGameResume.AddListener(SwitchActionMapPlayer);
+
     }
 
     // Update is called once per frame
@@ -76,7 +81,7 @@ public class PlayerController : MonoBehaviour
         else
         {//if the map is up then we don't want the player to move
             Move(Vector2.zero);
-            Debug.Log("hiding map");
+            //Debug.Log("hiding map");
         }
     }
 

@@ -55,8 +55,6 @@ public class MapCamera : MonoBehaviour
     // Update is called once per frame
     public void SetPosition()
     {
-        CalculateBounds();
-
         Vector3 newPosition = player.transform.position;
         newPosition.z = transform.position.z;
 
