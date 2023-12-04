@@ -72,17 +72,6 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "3c42d607-c5eb-4810-a227-15d4143058af",
-                    "path": "<Keyboard>/e",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Interact",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "649d6fdb-ebf5-4f03-893c-1884e21be175",
                     "path": "<Keyboard>/space",
                     "interactions": "",

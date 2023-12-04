@@ -2308,7 +2308,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1178927864
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3519,7 +3519,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -34.7}
-  m_SizeDelta: {x: 310.41, y: 200}
+  m_SizeDelta: {x: 322.4, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2133739053
 MonoBehaviour:
@@ -3542,11 +3542,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "Light up all the lamps, avoid the ghosts, and collect oil cans to keep
-    your lantern alight\nYou'll perish if a ghost catches you, expend all your oil,
-    or run out of time\nUse the Arrow Keys or WASD to Move\nUse the Space Bar or
-    E Key to ignite lamps and collect oil cans, provided your lantern is bright enough
-    \nUse the R or Q Key to refill your Lantern\nPress the P Key to Pause the Game\nOnce
-    you've collected 10 Lanterns, hold Shift to view the map"
+    your lantern alight\nYou'll perish if a ghost catches you, you expend all your
+    oil, or run out of time\nUse the Arrow Keys or WASD to Move\nUse the Space Bar
+    to ignite lamps and collect oil cans, your reach is dependant on the brightness
+    of your lantern \nUse the R or Q Key to refill your Lantern\nPress the P Key
+    to Pause the Game\nOnce you've collected 10 Lanterns, hold Shift to view the
+    map"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: eafea52b20c7d7444aeec7e8df1e033c, type: 2}
   m_sharedMaterial: {fileID: -8591331477396910553, guid: eafea52b20c7d7444aeec7e8df1e033c, type: 2}
@@ -3573,8 +3574,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 12
-  m_fontSizeBase: 12
+  m_fontSize: 13
+  m_fontSizeBase: 13
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
