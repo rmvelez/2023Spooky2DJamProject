@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b82d9bf91c278a4bac110d4efd68ccc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oilIncreaseLevel: 35
+  oilIncreaseLevel: 40
 --- !u!61 &6507077477766678773
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -227,8 +227,8 @@ MonoBehaviour:
   outerRange: 0
   lanternOilLevelCurrent: 32.074684
   lanternOilLevelMax: 100
-  lanternOilDecreasePerSecond: 4
-  lanternRefillAmount: 50
+  lanternOilDecreasePerSecond: 3.5
+  lanternRefillAmount: 25
   promptThreshold: 30
 --- !u!1 &4404824824134183980
 GameObject:
