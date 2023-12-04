@@ -142,7 +142,7 @@ public class Ghost : MonoBehaviour
 
         ExitCircle();
 
-        moveTo = goingAround ? goingAroundDest: moveTo;
+        moveTo = goingAround ? goingAroundDest: moveTo; //to polish the ghost code, refactor this to add a check if(goingAround && the ghost has reached goingaroundDest, then set goingAround = false;
 
         if (ghostState != GhostState.idle)
         {
