@@ -213,7 +213,7 @@ GameObject:
   - component: {fileID: 3564598398552096559}
   - component: {fileID: 1656814518508420796}
   - component: {fileID: 4110223820935257343}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Lamp
   m_TagString: Interactable
   m_Icon: {fileID: 0}
