@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,6 +6,47 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
+[Tooltip("a custom class, subclass of GameManager, used to circumvent a bug in Unity WebGL builds when pausing audio sources")]
+public class AudioPauser
+{
+    public AudioSource source;
+    [Tooltip("the time stored in the AudioStruct before the game paused")]
+    public float prevTime;
+    public bool isPaused;
+    //volume?
+
+    public AudioPauser(AudioSource source)
+    {
+        this.source = source;
+        prevTime = this.source.time;
+        isPaused = false;
+    }
+
+
+    public void PauseSound(out AudioSource outSource)
+    {
+        if (source.isPlaying)
+        {
+            source.Pause();
+            prevTime = source.time;
+            isPaused =true;
+
+        }
+        outSource = source;
+    }
+
+    public void ResumeSound(out AudioSource outSource)
+    {
+        if (isPaused){
+            source.time = prevTime;
+            source.UnPause();
+            isPaused = false;
+        }
+
+        outSource = source;
+    }
+
+}
 public class GameManager : MonoBehaviour
 {
 
@@ -20,11 +62,20 @@ public class GameManager : MonoBehaviour
 
     public float gameTime;
     [SerializeField] AudioSource backGroundMusic;
+    private AudioPauser musicPauser;
 
     [Header("lamps")]
     public int numLamps;
     public int numLitLamps;
 
+    public bool showInteractPrompt;
+    public bool showRefillPrompt;
+    [Tooltip("the minimum number of lamps needed before the player can use the map \n \n if you change this, you also have to change the value in the instruction")]
+    [SerializeField] private int lampMapThreshold; //the gameManager and instructions are in separate scenes, any means to link the two values would be complicated and not worth the time to implement given this value won't
+                                                   //change often, plus they'd likely result in having to set that value from within the main menu scene, and that's even less intuitive than just changing the value manually
+    [Tooltip("whether or not the player can use the map, depending on whether the number of lit lamps >= a threshold")]
+    public bool canViewMap { get { return numLitLamps >= lampMapThreshold; } private set { } }
+    public bool showMap { get; private set; }
 
 
     [Header("Oil")]
@@ -34,10 +85,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] public int oilMax;
     [SerializeField] private int oilStartingLevel;
     [SerializeField] private float OilLossOverTime;
-    [SerializeField] private float refillCost;
+    public float refillCost;
 
 
-
+    public HUDControl hudController;
     public PlayerController playerController;
     public Lantern lantern;
 
@@ -72,13 +123,15 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         OilLevel = oilStartingLevel;
+        musicPauser = new AudioPauser(backGroundMusic);
+        ResumeGame();
     }
 
     // Update is called once per frame
     void Update()
     {
         gameTime = Time.timeSinceLevelLoad;
-        if(gameTime >= (60 * 10))
+        if(gameTime >= (60 * 12))
         {
             SwitchToScene(LOSESCENE, ScoreKeeper.LossReason.Timeout);
         } 
@@ -87,13 +140,16 @@ public class GameManager : MonoBehaviour
     public void LightLamp()
     {
         numLitLamps++;
-        lantern.lanternOilLevelCurrent += lampLightCost;
+        //lantern.lanternOilLevelCurrent += lampLightCost;
 
         //MathF.Max(lantern.lanternOilLevelCurrent, 0);
         //MathF.Min(lantern.lanternOilLevelCurrent, lantern.lanternOilLevelMax);
 
         lantern.lanternOilLevelCurrent =Mathf.Min(lantern.lanternOilLevelCurrent+  lampLightCost, lantern.lanternOilLevelMax);
-        
+
+
+        hudController.LampLit();
+
         if(numLitLamps == numLamps)
         {
             SwitchToScene(WINSCENE);
@@ -103,7 +159,10 @@ public class GameManager : MonoBehaviour
 
     public void RefillLantern()
     {
-        OilLevel = Mathf.Max(OilLevel- refillCost, 0);
+        if(OilLevel > 0)
+        {
+            OilLevel = Mathf.Max(OilLevel- refillCost, 0);
+        }
     }
 
     public void PauseGame()
@@ -111,7 +170,8 @@ public class GameManager : MonoBehaviour
 
         paused = true;
         Time.timeScale = 0f;
-        backGroundMusic.Pause();
+        //backGroundMusic.Pause();
+        musicPauser.PauseSound(out backGroundMusic);
         onGamePause.Invoke();
     }
 
@@ -119,7 +179,8 @@ public class GameManager : MonoBehaviour
     {
         paused = false;
         Time.timeScale = 1f;
-        backGroundMusic.UnPause();
+        //backGroundMusic.UnPause();
+        musicPauser.ResumeSound(out backGroundMusic);
         onGameResume.Invoke();
     }
 

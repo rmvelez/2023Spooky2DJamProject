@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -15,7 +16,7 @@ public class Lantern : MonoBehaviour
 
     [SerializeField] private float outerMax;
     [SerializeField] private float outerMin;
-    private float outerRange;
+    [SerializeField] private float outerRange;
     
     [SerializeField] public float lanternOilLevelCurrent;
     [SerializeField] public float lanternOilLevelMax;
@@ -23,7 +24,11 @@ public class Lantern : MonoBehaviour
     [Tooltip("how much oil is added to the lantern when refilled")]
     [SerializeField] private float lanternRefillAmount;
 
+    [SerializeField] private int promptThreshold;
 
+    private GameManager gameManager;
+
+    public float LightRange { get { return lampLight.pointLightOuterRadius; } }
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +36,7 @@ public class Lantern : MonoBehaviour
         intensityMax = lampLight.intensity;
         lanternOilLevelCurrent = lanternOilLevelMax;
         outerRange = outerMax - outerMin;
+        gameManager = GameManager.Instance;
     }
 
     // Update is called once per frame
@@ -54,15 +60,28 @@ public class Lantern : MonoBehaviour
             }
         }
 
+        gameManager.showRefillPrompt = (lanternOilLevelCurrent < promptThreshold);
+
     }
 
     public void Refill(InputAction.CallbackContext context)
     {
         if (context.started)
         {
-            lanternOilLevelCurrent = Mathf.Min(lanternOilLevelMax, lanternOilLevelCurrent + lanternRefillAmount);
-            GameManager.Instance.RefillLantern();
-
+            if(GameManager.Instance.OilLevel > 0)
+            {
+                lanternOilLevelCurrent = Mathf.Min(lanternOilLevelMax, lanternOilLevelCurrent + lanternRefillAmount);
+                GameManager.Instance.RefillLantern();
+            }
         }
+    }
+
+    public void FillFromOverflow( float overflow)
+    {
+        float oilRatio =  (lanternRefillAmount / gameManager.refillCost) / 1.5f ;
+        //float oilRatio = gameManager.refillCost / lanternRefillAmount;
+        float oilIncrease = oilRatio * overflow;
+        //Debug.Log("overflow amount: " + overflow + " amount of oil added to lantern: " + oilIncrease);
+        lanternOilLevelCurrent = Mathf.Min(lanternOilLevelMax, lanternOilLevelCurrent + oilIncrease);
     }
 }
