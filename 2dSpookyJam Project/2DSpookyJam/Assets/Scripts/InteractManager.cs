@@ -101,12 +101,18 @@ public class InteractManager : MonoBehaviour
                 //next, check if it's a lamp
                 if (lamp = objectToTrack.GetComponent<Lamp>())
                 {
-                    CheckIfLampIsInRange(lamp);
+                    //if it is a lamp, the player should only be able to interact while it's lit
+                    if (!lamp.isLit)
+                    {
+                        trackedObject = objectToTrack;
+                    gameManager.showInteractPrompt = true;
+
+                    }
                 }
                 else//it must not be a lamp, no need to check if it's lit or anything, cause oil cans are always interactable until they're collected (and destroyed)
                 {
                     trackedObject = objectToTrack;
-                    gameManager.showInteractPrompt = true;
+                gameManager.showInteractPrompt = true;
                 }
                 //trackedObject = lamp.gameObject;
 
@@ -167,7 +173,8 @@ public class InteractManager : MonoBehaviour
     }
     private void CheckIfLampIsInRange(Lamp lamp)
     {
-        //the player can only interact with the lamp if the lamp is not lit...
+
+        //the player can only interact with the lamp if the lamp is lit...
         if (!lamp.isLit)
         {
             Vector3 distToLight = lamp.transform.position - transform.position;
