@@ -6,15 +6,16 @@ using UnityEngine.Rendering.Universal;
 public class Lamp : MonoBehaviour, IInteractable
 {
     public bool isLit = false;
-    public Light2D lampLight;
+    [SerializeField] private GameObject lights;
     [SerializeField] private Ghost ghost;
 
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Animator animator;
 
+    [SerializeField] private new Collider2D collider;
+
     private GameManager gameManager;
 
-    private float intensity;
 
     private AudioSource lampSound;
 
@@ -29,13 +30,14 @@ public class Lamp : MonoBehaviour, IInteractable
     // Start is called before the first frame update
     void Start()
     {
-        intensity = lampLight.intensity;
-        lampLight.intensity = 0;
+        lights.SetActive(false);
 
         gameManager = GameManager.Instance;
         gameManager.numLamps++;
 
         lampSound = this.gameObject.GetComponent<AudioSource>();
+
+        collider.gameObject.SetActive(false);
 
     }
 
@@ -52,13 +54,17 @@ public class Lamp : MonoBehaviour, IInteractable
 
     public void Light()
     {
-        isLit = true;
-        lampLight.intensity = intensity;
+        if (!isLit)
+        {
+            isLit = true;
 
-        animator.SetBool("isLit", true);
+            lights.SetActive(true);
 
-        ghost.SetLampLit();
-        gameManager.LightLamp();
-        lampSound.Play();
+            animator.SetBool("isLit", true);
+
+            gameManager.LightLamp();
+            lampSound.Play();
+            collider.gameObject.SetActive(true);
+        }        
     }
 }

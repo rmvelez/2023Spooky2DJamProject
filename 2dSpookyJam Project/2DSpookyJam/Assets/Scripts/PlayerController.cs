@@ -12,9 +12,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Collider2D hitBoxCollider;
     [SerializeField] private Light2D spotLight; //spotlight?
 
-    [SerializeField] private Lantern lantern;
+    public Lantern lantern;
 
-
+    public bool isInLight;
 
     [Header("movement")]
 
@@ -41,6 +41,10 @@ public class PlayerController : MonoBehaviour
     private const int IDLE_UP_DIRECTION = 5;
     private const int IDLE_DOWN_DIRECTION = 6;
 
+    private bool mapUp = false;
+
+    public float distFromHitboxToSprite;
+
     #region Unity Built in
     private void Awake()
     {
@@ -51,7 +55,8 @@ public class PlayerController : MonoBehaviour
             Debug.LogError("player controller added a gameObject that doesn't have a PlayerInput on it -- which is definitely a bug");
         }
         movementAnimationDirection = IDLE_DOWN_DIRECTION;
-        rigidBody.interpolation = RigidbodyInterpolation2D.Extrapolate;
+
+        distFromHitboxToSprite = spriteRenderer.bounds.size.y - hitBoxCollider.bounds.size.y;
     }
 
     // Start is called before the first frame update
@@ -62,15 +67,22 @@ public class PlayerController : MonoBehaviour
 
         gameManager.onGamePause.AddListener(SwitchActionMapUI);
         gameManager.onGameResume.AddListener(SwitchActionMapPlayer);
+
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
 
-
-        Move(moveInput);
-
+        if (!mapUp)
+        {
+            Move(moveInput);
+        }
+        else
+        {//if the map is up then we don't want the player to move
+            Move(Vector2.zero);
+            //Debug.Log("hiding map");
+        }
     }
 
     private void OnDestroy()
@@ -84,7 +96,7 @@ public class PlayerController : MonoBehaviour
     public void Move(Vector2 direction)
     {
 
-        if (playerInput != null)
+        if (playerInput != null )
         {
             rigidBody.velocity = direction * playerSpeed;
         }
@@ -93,7 +105,10 @@ public class PlayerController : MonoBehaviour
         {
             Vector3 targetPosition = new Vector3(this.transform.position.x + direction.y, this.transform.position.y - direction.x, 0);
 
-            if (direction.x < 0)//if we're moving left
+
+
+            //override if moving sideways
+            if (direction.x < 0)// override if we're moving left
             {
 
                 GetComponent<SpriteRenderer>().flipX = true;
@@ -101,7 +116,7 @@ public class PlayerController : MonoBehaviour
 
                 //flip sprite left
             }
-            else if (direction.x > 0) //if we're moving right
+            else if (direction.x > 0) // or if we're moving right
             {
                 GetComponent<SpriteRenderer>().flipX = false;
 
@@ -110,18 +125,20 @@ public class PlayerController : MonoBehaviour
                 movementAnimationDirection = WALK_SIDE_DIRECTION;
             }
 
-            if (direction.y > 0) //override if the player is moving up
+            if (direction.y > 0) //if the player is moving up
             {
+                GetComponent<SpriteRenderer>().flipX = false;
                 movementAnimationDirection = WALK_UP_DIRECTION;
             }
             else if (direction.y < 0) //if we're moving down
             {
+                GetComponent<SpriteRenderer>().flipX = false;
                 movementAnimationDirection = WALK_DOWN_DIRECTION;
             }
 
         } else { //not moving
         
-
+            //if we were in a moving anim direction, switch to that respective idle direction
             switch (movementAnimationDirection)
             {
                 case (IDLE_DOWN_DIRECTION):
@@ -151,7 +168,7 @@ public class PlayerController : MonoBehaviour
 
     public void MoveActionPerformed(InputAction.CallbackContext context)
     {
-        moveInput = context.ReadValue<Vector2>();
+         moveInput = context.ReadValue<Vector2>();
     }
 
     public void MoverVertActionPerformed(InputAction.CallbackContext context)
@@ -171,17 +188,16 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
     public void MoverHorizActionPerformed(InputAction.CallbackContext context)
     {
-        if (context.started)
+        if (context.started && !mapUp)
         {
             moveInput.x = context.ReadValue<float>();
             prevInput.x = context.ReadValue<float>();
             moveInput.y = 0;
         }
 
-        if (context.canceled)
+        if (context.canceled || mapUp)
         {
             moveInput.y = prevInput.y;
             moveInput.x = 0;
@@ -204,6 +220,24 @@ public class PlayerController : MonoBehaviour
 
         }
     }
+
+    public void MapAction(InputAction.CallbackContext context)
+    {
+        if(gameManager.canViewMap) //calculated based on number of lamps the player has lit
+        {
+            if (context.performed)
+            {
+                mapUp = true;
+                gameManager.hudController.ShowMap();
+            }
+            if (context.canceled)
+            {
+                mapUp = false;
+                gameManager.hudController.HideMap();
+            }
+        }
+    }
+
     #endregion input actions
 
 
@@ -213,7 +247,6 @@ public class PlayerController : MonoBehaviour
     public void SwitchActionMapUI() { SwitchActionMap("PauseMenu"); }
     public void SwitchActionMap(string mapName)
     {
-        Debug.Log("switching action map to " + mapName);
         playerInput.currentActionMap.Disable();
         playerInput.SwitchCurrentActionMap(mapName);
 
@@ -234,12 +267,30 @@ public class PlayerController : MonoBehaviour
 
     #region collisions
 
+    /*
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Ghost"))
         {
             gameManager.SwitchToScene(GameManager.LOSESCENE, ScoreKeeper.LossReason.Ghost);
 
+        }
+    }
+    */
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Lamp"))
+        {
+            isInLight = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Lamp"))
+        {
+            isInLight = false;
         }
     }
 

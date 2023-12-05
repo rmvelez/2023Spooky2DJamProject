@@ -6,17 +6,19 @@ TagManager:
   tags:
   - Interactable
   - Ghost
+  - VertBuilding
+  - Lamp
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - interaction
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - Lamp
+  - MapLights
+  - HideFromMap
   - 
   - 
   - 
@@ -40,6 +42,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: background
+    uniqueID: 3563329005
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Buildings
+    uniqueID: 3413580361
     locked: 0
