@@ -59,6 +59,7 @@ public class HUDControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("hudcontroller start");
         optionsManager = OptionsManager.Instance;
         // sets this variable to an instance of the game manager
         gameManager = GameManager.Instance;
@@ -109,7 +110,7 @@ public class HUDControl : MonoBehaviour
         lanternBar.transform.localPosition = new Vector3(-63f * (1-lanternProgPercent), 0, 0);
         lanternBar.transform.localScale = new Vector3(lanternProgPercent, 1, 1);
 
-        refillPrompt.enabled = (gameManager.showRefillPrompt && optionsManager.showToolTips);
+        refillPrompt.enabled = gameManager.showRefillPrompt && optionsManager.showToolTips;
         interactPrompt.enabled = (gameManager.showInteractPrompt && optionsManager.showToolTips);
 
         if (gameManager.canViewMap)

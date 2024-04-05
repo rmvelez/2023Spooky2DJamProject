@@ -41,15 +41,13 @@ public class OptionsManager : MonoBehaviour
 
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-        //SINGLETON PATTERN - ensures that there only ever exists a single optionsManager
+    private void Awake(){
+    //SINGLETON PATTERN - ensures that there only ever exists a single optionsManager
 
         //is this the first time we've created this singleton
         if (_instance == null)
         {
+            Debug.Log("first inst created");
             //we're the first optionsManager, so assign ourselves to this instance
             _instance = this;
 
@@ -57,9 +55,16 @@ public class OptionsManager : MonoBehaviour
         }
         else
         {
+            Debug.Log("second inst created");
             //if there's another one, then destroy this one
             Destroy(this.gameObject);
         }
+    }
+
+
+    // Start is called before the first frame update
+    void Start()
+    {       
 
         if (!PlayerPrefs.HasKey("masterVolume"))
         {
