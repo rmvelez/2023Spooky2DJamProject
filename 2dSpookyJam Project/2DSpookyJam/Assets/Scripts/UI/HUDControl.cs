@@ -59,7 +59,6 @@ public class HUDControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("hudcontroller start");
         optionsManager = OptionsManager.Instance;
         // sets this variable to an instance of the game manager
         gameManager = GameManager.Instance;

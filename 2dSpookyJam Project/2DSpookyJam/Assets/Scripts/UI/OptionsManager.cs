@@ -47,7 +47,6 @@ public class OptionsManager : MonoBehaviour
         //is this the first time we've created this singleton
         if (_instance == null)
         {
-            Debug.Log("first inst created");
             //we're the first optionsManager, so assign ourselves to this instance
             _instance = this;
 
@@ -55,7 +54,6 @@ public class OptionsManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("second inst created");
             //if there's another one, then destroy this one
             Destroy(this.gameObject);
         }
@@ -104,10 +102,7 @@ public class OptionsManager : MonoBehaviour
 
     public void OnIGTTTogleChange(bool value)
     {
-        Debug.Log("toggle changed1 " + value + " " + showToolTips);
-
         showToolTips = value;
-        Debug.Log("toggle changed2 " + value + " " + showToolTips);
         PlayerPrefs.SetInt("showToolTips", BoolToInt(value));
 
         //set in-class var
